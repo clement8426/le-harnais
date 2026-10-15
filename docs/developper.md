@@ -15,7 +15,7 @@ bun run verifier
 
 ## Lancer l'application en mode développement
 
-La première fois :
+La première fois (et après un nouveau patch qui ajoute des dépendances, `bun run dev` le fait tout seul) :
 
 ```bash
 bun scripts/preparer.ts
@@ -34,7 +34,7 @@ Pendant que l'application tourne :
 
 - extension modifiée : `bun scripts/preparer.ts --copier` (Vite recharge la fenêtre) ;
 - plugin modifié : `bun run --cwd packages/plugin construire`, puis copier `dist/le-harnais.js` dans `~/.le-harnais-dev/config/opencode/plugins/` (le serveur le recharge) ;
-- contenus modifiés : rien à faire, ils sont lus depuis `contenus/` à chaque appel.
+- contenus modifiés : le plugin les lit à son démarrage ; recopier le plugin (comme ci-dessus) le fait redémarrer et relire `contenus/`.
 
 La première compilation prend environ deux minutes. L'onglet « Missions » apparaît dans la zone latérale d'une session (bouton « Basculer la revue »).
 

@@ -15,12 +15,35 @@ export const Contrat = {
     repondre: { input: objet, output: objet },
     /** Une page ouverte dans le navigateur du harnais. */
     page: { input: objet, output: objet },
+    /** La fenêtre renvoie le résultat d'un outil des sens (voir l'événement « sens »). */
+    resultatSens: { input: objet, output: objet },
   },
   events: {
     /** L'état a changé : le panneau se recharge. */
     change: { schema: objet },
+    /** Le plugin demande à la fenêtre de faire tourner un outil des sens (voix, OCR, image) sur l'ordinateur. */
+    sens: { schema: objet },
   },
 } as const
+
+export type OutilSens = "transcrire" | "ocr" | "lire_a_voix_haute" | "detecter_objets"
+
+/** La demande envoyée à la fenêtre. Le fichier voyage en base64 : il ne quitte pas l'ordinateur. */
+export interface DemandeSens {
+  id: string
+  outil: OutilSens
+  nom?: string
+  donnees?: string
+  texte?: string
+  langue?: string
+  seuil?: number
+}
+
+export interface ReponseSens {
+  id: string
+  texte?: string
+  erreur?: string
+}
 
 export type EtatMission = "reussie" | "ouverte" | "nouvelle" | "mise-a-jour" | "verrouillee" | "en-cours"
 

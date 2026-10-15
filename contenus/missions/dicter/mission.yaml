@@ -12,5 +12,7 @@ preuves:
       fichier: note-vocale.wav
   - type: outil.resultat
     outil: transcrire
-    contient: ["poignet gauche", "12 août"]
+    # Whisper base se trompe parfois sur un mot (« poignage » pour « poignet ») : la preuve ne porte que sur
+    # ce qu'il entend de façon fiable. Repérer l'erreur fait partie de la mission (cours, étape 2).
+    contient: ["gauche", "12 août"]
 indice: Le fichier est dans missions/dicter/fichiers. Demande à ton IA « Transcris missions/dicter/fichiers/note-vocale.wav ». La première fois, le modèle Whisper se télécharge (quelques minutes).

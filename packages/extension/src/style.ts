@@ -9,6 +9,7 @@ export const STYLE = `
 .lh-discret { opacity: .65; margin: 0; }
 .lh-erreur { padding: 10px 12px; border-radius: 10px; background: rgba(217, 83, 79, .15); color: #e87d7a; margin: 0; }
 .lh-annonce { padding: 12px 14px; border-radius: 12px; background: #FFC23D; color: #2A2105; font-weight: 600; }
+.lh-sens { margin: 0; padding: 10px 12px; border-radius: 10px; background: rgba(43, 68, 232, .14); }
 .lh-bande { display: flex; height: 4px; border-radius: 2px; overflow: hidden; width: 96px; }
 .lh-bande i { flex: 1; }
 .lh-bande i:nth-child(1) { background: #6E4A8E; } .lh-bande i:nth-child(2) { background: #A63F17; } .lh-bande i:nth-child(3) { background: #24609A; }

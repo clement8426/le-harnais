@@ -33,7 +33,7 @@ Seul `src/opencode.ts` décrit l'API d'OpenCode : si elle change, c'est là qu'o
 
 Le navigateur d'OpenCode se pilote par l'outil `execute` (le mode code : `tools.browser.*`). Ses outils internes gardent leur propre permission (`browser`), si bien qu'autoriser `execute` n'ouvre rien par lui-même. Après chaque appel, `src/detection.ts` relève les pages citées dans le résultat, et lit les rapports Lighthouse que le navigateur enregistre dans le dossier temporaire du serveur (`opencode-browser-*/…/lighthouse.json`) : la preuve de l'audit ne dépend pas de ce que l'IA garde du résultat.
 
-L'atelier (`src/atelier.ts`) range tout dans `LeLabo/.labo/` : `harnais.json` (le parcours suivi), `progression.json`, `en-cours.json`, `journal.jsonl`. Après chaque événement, il réévalue les preuves de la mission en cours et la valide si tout est vert.
+L'atelier (`src/atelier.ts`) range tout dans `LeLabo/.labo/` : `harnais.json` (le parcours suivi), `progression.json`, `en-cours.json`, `journal.jsonl`. Après chaque événement, il réévalue les preuves de la mission en cours et la valide si tout est vert. Chaque seconde, il relit aussi les fichiers que surveillent ces preuves (`fichier.existe`, `fichier.contient`) : l'élève peut les corriger à la main, sans qu'aucun événement ne passe par OpenCode.
 
 ## L'extension (`packages/extension`)
 
@@ -41,6 +41,24 @@ Une extension d'interface d'OpenCode, copiée dans `packages/gui-extensions/src/
 
 - **Entrée « fenêtre »** (`renderer.tsx`) : l'onglet « Missions » (`panneau.tsx`), et la synchronisation des extensions (`synchro.ts`). Dès qu'une session d'atelier est ouverte, et à chaque changement d'état, elle demande au plugin les extensions débloquées.
 - **Entrée « processus principal »** (`main.ts`) : allume les extensions débloquées (ou prêtées par la mission en cours) et éteint les autres parmi les extensions gérées (`extensions_gerees` dans `capacites.yaml`). Elle passe par `ctx.leHarnais`, que le patch 03 ajoute au contexte de cette seule extension.
+
+## Les sens : voix, OCR, image
+
+Quatre outils pour l'IA, qui tournent **sur l'ordinateur de l'élève** : `transcrire` (Whisper), `lire_a_voix_haute` (la synthèse vocale du système), `ocr` (Tesseract, et pdf.js pour les PDF), `detecter_objets` (DETR). Ils n'existent pour l'IA que si leur capacité est active (`ctx.tool.transform`), et la capacité qui fournit un outil l'autorise aussi.
+
+Le serveur d'OpenCode n'a ni micro, ni haut-parleur, ni accès simple à WebAssembly dans un navigateur : le calcul se fait dans la fenêtre, qui est un Chromium.
+
+```text
+IA ──appel──▶ plugin (src/sens.ts)            lit le fichier dans l'atelier (25 Mo au plus)
+                 │ événement RPC « sens »
+                 ▼
+              fenêtre (extension/src/sens.ts → moteurs.ts)   calcule, sur l'ordinateur
+                 │ rpc.resultatSens
+                 ▼
+              plugin ──résultat──▶ IA
+```
+
+Les bibliothèques (tesseract.js 7, pdfjs-dist 6, @huggingface/transformers 4) sont ajoutées aux dépendances des extensions d'OpenCode par le patch 05, et chargées au premier usage seulement. Les modèles se téléchargent une fois (Whisper base, DETR), puis restent dans le cache de la fenêtre. Le panneau affiche ce que fait le moteur pendant le calcul.
 
 ## Le terminal de l'élève
 
@@ -59,6 +77,7 @@ Les deux écrivent une ligne JSON par commande dans `.labo/terminal.jsonl`, sans
 | `02-atelier-lelabo-par-defaut` | Le projet créé au premier lancement | C'est l'atelier `Documents/LeLabo`, marqué `.labo/harnais.json` |
 | `03-le-labo-gere-les-extensions` | Le contexte « processus principal » de l'extension `le-labo` | Lui permettre d'allumer et d'éteindre les autres extensions |
 | `04-integration-shell` | La création des terminaux (`core/src/pty.ts`) | Charger l'intégration PowerShell ou bash qui note les commandes |
+| `05-dependances-des-sens` | Les dépendances de `gui-extensions` (3 lignes) | Tesseract, pdf.js et transformers.js pour les sens, dans la fenêtre |
 
 ## Données de développement
 

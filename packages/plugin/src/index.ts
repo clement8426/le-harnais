@@ -10,7 +10,8 @@ import { decider } from "@le-harnais/moteur"
 import { appendFileSync, existsSync } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import { Contrat, type EntreeCommencer, type EntreePage, type EntreeRepondre } from "../../extension/src/contrat"
+import { Contrat, type EntreeCommencer, type EntreePage, type EntreeRepondre, type OutilSens, type ReponseSens } from "../../extension/src/contrat"
+import { OUTILS_SENS, Sens } from "./sens"
 import { Atelier, estUnAtelier } from "./atelier"
 import { pagesCitees, rapportsLighthouse } from "./detection"
 import { tmpdir } from "node:os"
@@ -52,7 +53,11 @@ export default {
     const modeles = new Map<string, { id: string; modele: string }>()
     let dernier: { id: string; modele: string } | undefined
 
+    // Les outils des sens tournent dans la fenêtre : le plugin lui envoie la demande, elle renvoie le résultat.
+    const sens = new Sens(dossier, (demande) => rpc.events.emit("sens", demande as unknown as Record<string, unknown>))
+
     const rpc = await ctx.rpc.register(Contrat, {
+      resultatSens: async (reponse: ReponseSens) => ({ attendue: sens.repondre(reponse) }),
       etat: async () => atelier.etat(dernier),
       commencer: async (entree: EntreeCommencer) => {
         atelier.commencer(entree.mission)
@@ -69,6 +74,29 @@ export default {
         await changement()
         return {}
       },
+    })
+
+    // Les outils des sens existent seulement quand leur capacité est active (débloquée ou prêtée par la mission).
+    await ctx.tool.transform((editeur) => {
+      const actifs = atelier.droits().outils
+      trace(`outils des sens actifs : ${actifs.join(",") || "aucun"}`)
+      for (const [nom, outil] of Object.entries(OUTILS_SENS) as [OutilSens, (typeof OUTILS_SENS)[OutilSens]][]) {
+        if (!actifs.includes(nom)) {
+          editeur.remove(nom)
+          continue
+        }
+        try {
+          editeur.add({
+            name: nom,
+            description: outil.description,
+            input: outil.input,
+            options: { codemode: false },
+            execute: async (entree: Record<string, unknown>) => ({ content: await sens.executer(sens.preparer(nom, entree)) }),
+          })
+        } catch (e) {
+          trace(`outil ${nom} : ajout impossible ${String(e)}`)
+        }
+      }
     })
 
     // Les connecteurs MCP des capacités actives sont branchés ; les autres connecteurs connus du Harnais, débranchés.
@@ -144,11 +172,13 @@ export default {
       await changement()
     })
 
-    // Les commandes de l'élève, notées par l'intégration du shell dans .labo/terminal.jsonl : relues chaque seconde.
-    // Au démarrage, on saute ce qui est déjà dans le fichier : c'était déjà importé dans le journal.
+    // Chaque seconde : les commandes de l'élève, notées par l'intégration du shell dans .labo/terminal.jsonl,
+    // et les fichiers que surveillent les preuves de la mission en cours (l'élève les corrige à la main).
+    // Au démarrage, on saute ce qui est déjà dans le fichier du terminal : c'était déjà importé dans le journal.
     atelier.sauterTerminal()
     const releve = setInterval(() => {
-      if (atelier.importerTerminal() > 0) void changement()
+      const commandes = atelier.importerTerminal() > 0
+      if (atelier.verifierFichiers() || commandes) void changement()
     }, 1000)
     releve.unref?.()
 

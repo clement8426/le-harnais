@@ -33,7 +33,12 @@ export function droits(actives: Set<string>, catalogue: Catalogue): Droits {
     extensions: ids("extension"),
     outils: ids("outil"),
     mcp: ids("mcp"),
-    regles: effets.flatMap((e) => (e.type === "permission" ? [{ outil: e.outil, motif: e.motif ?? "*", action: e.action }] : [])),
+    // Un outil fourni par une capacité est aussi autorisé : sans cela, la règle de base « tout refuser » l'interdirait.
+    regles: effets.flatMap((e): Regle[] => {
+      if (e.type === "permission") return [{ outil: e.outil, motif: e.motif ?? "*", action: e.action }]
+      if (e.type === "outil") return [{ outil: e.id, motif: "*", action: "allow" }]
+      return []
+    }),
   }
 }
 

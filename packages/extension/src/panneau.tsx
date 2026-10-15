@@ -19,7 +19,7 @@ const ICONES: Record<EtapeUI["etat"], string> = {
 /** Le navigateur d'OpenCode, quand son extension est allumée. */
 type Navigateur = () => { status: string; value?: { openFile(session: MountedSession, path: string): void } }
 
-export default function Panneau(props: { session: MountedSession; navigateur: Navigateur }) {
+export default function Panneau(props: { session: MountedSession; navigateur: Navigateur; statutSens: () => string | undefined }) {
   const [etat, setEtat] = createSignal<EtatUI>()
   const [erreur, setErreur] = createSignal<string>()
   const [choisie, setChoisie] = createSignal<string>()
@@ -85,6 +85,11 @@ export default function Panneau(props: { session: MountedSession; navigateur: Na
         <div class="lh-annonce" role="status">
           {annonce()}
         </div>
+      </Show>
+      <Show when={props.statutSens()}>
+        <p class="lh-sens" role="status">
+          {props.statutSens()}
+        </p>
       </Show>
       <Show when={etat()} fallback={<p class="lh-discret">Chargement de ton parcours…</p>}>
         {(e) => (

@@ -28,6 +28,7 @@ describe("droits", () => {
     const d = droits(new Set(["chat", "fichiers.ia.lire", "terminal.ia.demander", "ocr"]), catalogue)
     expect(d.extensions).toEqual(["terminal"])
     expect(d.outils).toEqual(["ocr"])
+    expect(decider(d.regles, "ocr", "*")).toBe("allow") // un outil fourni est aussi autorisé
     expect(decider(d.regles, "read", "notes.md")).toBe("allow")
     expect(decider(d.regles, "read", "secrets.env")).toBe("deny")
     expect(decider(d.regles, "bash", "ls -la")).toBe("ask")

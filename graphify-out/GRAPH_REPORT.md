@@ -1,17 +1,17 @@
 # Graph Report - le-harnais  (2026-10-15)
 
 ## Corpus Check
-- 80 files · ~26,267 words
+- 84 files · ~29,382 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 7 file(s) not represented in the graph (top: .patch 4, (none) 2, .lock 1)
+- Unclassified: 8 file(s) not represented in the graph (top: .patch 5, (none) 2, .lock 1)
 
 ## Summary
-- 449 nodes · 770 edges · 43 communities (27 shown, 16 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.92)
+- 488 nodes · 856 edges · 39 communities (23 shown, 16 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.93)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `26ddae3f`
+- Built from commit: `bb5feead`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,11 +19,10 @@
 - chargement.ts
 - Développer
 - moteur/src/index.ts
-- contenus.test.ts
+- main.ts
 - atelier.ts
 - moteur/package.json
 - index.js
-- dev.ts
 - package.json
 - compilerOptions
 - plugin/src/index.ts
@@ -31,7 +30,6 @@
 - Écrire, déplacer ou insérer une mission
 - Brancher ton IA
 - capture.ts
-- Journal des modifications
 - Le défi final
 - Les fichiers
 - Le navigateur
@@ -51,16 +49,14 @@
 - questions.md
 - plugin/package.json
 - extension/package.json
-- Architecture
+- moteurs.ts
 - plugin/tsconfig.json
-- ref_node_fs
+- plugin/src/index.ts
 - integration.sh script
 - opencode.ts
-- plugin/src/index.ts
-- preparer.ts
 
 ## God Nodes (most connected - your core abstractions)
-1. `Atelier` - 25 edges
+1. `Atelier` - 26 edges
 2. `ErreurContenu` - 18 edges
 3. `chargerContenus()` - 14 edges
 4. `chargerMission()` - 12 edges
@@ -74,19 +70,19 @@
 ## Surprising Connections (you probably didn't know these)
 - `Phase 0 · Faisabilité` --references--> `question()`  [INFERRED]
   docs/feuille-de-route.md → packages/moteur/src/chargement.ts
-- `Les preuves` --references--> `question()`  [INFERRED]
-  docs/ecrire-une-mission.md → packages/moteur/src/chargement.ts
-- `Les preuves` --references--> `motif()`  [INFERRED]
-  docs/ecrire-une-mission.md → packages/moteur/src/chargement.ts
-- `Atelier` --references--> `Contenus`  [EXTRACTED]
-  packages/plugin/src/atelier.ts → packages/moteur/src/types.ts
-- `afficherTicket()` --calls--> `formaterChf()`  [EXTRACTED]
-  contenus/missions/plugins-graphify/fichiers/projet/src/affichage.js → contenus/missions/plugins-graphify/fichiers/projet/src/outils.js
+- `Ajouté` --references--> `ocr()`  [INFERRED]
+  CHANGELOG.md → packages/extension/src/moteurs.ts
+- `Les sens : voix, OCR, image` --references--> `ocr()`  [INFERRED]
+  docs/architecture.md → packages/extension/src/moteurs.ts
+- `Ajouté` --references--> `transcrire()`  [INFERRED]
+  CHANGELOG.md → packages/extension/src/moteurs.ts
+- `Les sens : voix, OCR, image` --references--> `transcrire()`  [INFERRED]
+  docs/architecture.md → packages/extension/src/moteurs.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (43 total, 16 thin omitted)
+## Communities (39 total, 16 thin omitted)
 
 ### Community 0 - "chargement.ts"
 Cohesion: 0.23
@@ -98,23 +94,19 @@ Nodes (21): Capturer l'application, Deux pièges sous Windows, Développer, Lanc
 
 ### Community 2 - "moteur/src/index.ts"
 Cohesion: 0.06
-Nodes (53): afficher(), racine, correspond(), decider(), droits, Regle, Journal, avertissement() (+45 more)
+Nodes (51): afficher(), correspond(), decider(), droits, Regle, Journal, avertissement(), erreur() (+43 more)
 
-### Community 4 - "atelier.ts"
-Cohesion: 0.15
-Nodes (6): Atelier, creerAtelier(), estUnAtelier(), consignesDuProf(), contenus, nouvelAtelier()
+### Community 3 - "main.ts"
+Cohesion: 0.20
+Nodes (4): Harnais, Gestionnaire, setup(), trace()
 
 ### Community 5 - "moteur/package.json"
-Cohesion: 0.11
-Nodes (18): dependencies, yaml, description, devDependencies, @types/bun, typescript, exports, @types/bun (+10 more)
+Cohesion: 0.08
+Nodes (22): dependencies, yaml, description, devDependencies, @types/bun, typescript, exports, @types/bun (+14 more)
 
 ### Community 6 - "index.js"
 Cohesion: 0.22
 Nodes (11): afficherTicket(), panier, arrondir(), formaterChf(), ajouter(), creerPanier(), sousTotal(), total() (+3 more)
-
-### Community 7 - "dev.ts"
-Cohesion: 0.25
-Nodes (6): app, bunExe, env, opencode, plugins, racine
 
 ### Community 8 - "package.json"
 Cohesion: 0.14
@@ -125,8 +117,8 @@ Cohesion: 0.17
 Nodes (11): compilerOptions, exactOptionalPropertyTypes, module, moduleResolution, noEmit, noUncheckedIndexedAccess, skipLibCheck, strict (+3 more)
 
 ### Community 10 - "plugin/src/index.ts"
-Cohesion: 0.08
-Nodes (23): Contrat, EntreeCommencer, EntreePage, EntreeRepondre, EtapeUI, EtatMission, EtatUI, objet (+15 more)
+Cohesion: 0.15
+Nodes (16): Contrat, EtapeUI, EtatUI, echapper(), enLigne(), versHtml(), ICONES, Mission() (+8 more)
 
 ### Community 11 - "Règles du dépôt (pour les agents et les humains)"
 Cohesion: 0.25
@@ -143,10 +135,6 @@ Nodes (4): Brancher ton IA, Le réflexe à prendre, Trois façons de le brancher
 ### Community 14 - "capture.ts"
 Cohesion: 0.29
 Nodes (5): args, cibles, MODIFICATEURS, TOUCHES, ws
-
-### Community 15 - "Journal des modifications"
-Cohesion: 0.33
-Nodes (5): Ajouté, Journal des modifications, Modifié, Non publié, Vérifié dans l'application
 
 ### Community 16 - "Le défi final"
 Cohesion: 0.50
@@ -172,49 +160,41 @@ Nodes (18): dependencies, @le-harnais/moteur, description, devDependencies, @typ
 Cohesion: 0.18
 Nodes (10): description, devDependencies, @types/bun, @types/bun, name, private, scripts, test (+2 more)
 
-### Community 35 - "Architecture"
-Cohesion: 0.25
-Nodes (7): Architecture, Données de développement, L'extension (`packages/extension`), Le moteur (`packages/moteur`), Le plugin serveur (`packages/plugin`), Le terminal de l'élève, Les patchs d'OpenCode
+### Community 35 - "moteurs.ts"
+Cohesion: 0.08
+Nodes (26): Ajouté, Journal des modifications, Modifié, Non publié, Vérifié dans l'application, Architecture, Données de développement, L'extension (`packages/extension`) (+18 more)
 
 ### Community 36 - "plugin/tsconfig.json"
 Cohesion: 0.50
 Nodes (3): extends, include, ../moteur/tsconfig.json
 
-### Community 37 - "ref_node_fs"
-Cohesion: 0.24
-Nodes (4): Jeu, pagesCitees(), rapportsLighthouse(), yaml
+### Community 37 - "plugin/src/index.ts"
+Cohesion: 0.06
+Nodes (30): DemandeSens, EntreeCommencer, EntreePage, EntreeRepondre, EtatMission, objet, OutilSens, ReponseSens (+22 more)
 
 ### Community 40 - "opencode.ts"
-Cohesion: 0.13
-Nodes (8): ApresOutil, ContexteSession, Effet, Enregistrement, EvaluationPermission, EvenementOpenCode, OutilOpenCode, RIGUEUR
-
-### Community 41 - "plugin/src/index.ts"
-Cohesion: 0.22
-Nodes (3): actionDeLOutil(), ContexteOpenCode, plusStrict()
-
-### Community 42 - "preparer.ts"
-Cohesion: 0.29
-Nodes (5): cible, opencode, racine, seulementCopier, verrou
+Cohesion: 0.11
+Nodes (11): actionDeLOutil(), ApresOutil, ContexteOpenCode, ContexteSession, Effet, Enregistrement, EvaluationPermission, EvenementOpenCode (+3 more)
 
 ## Knowledge Gaps
 - **7 isolated node(s):** `@types/bun`, `@types/bun`, `typescript`, `@le-harnais/moteur`, `@types/bun` (+2 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 218 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 230 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `question()` connect `chargement.ts` to `Développer`?**
-  _High betweenness centrality (0.070) - this node is a cross-community bridge._
+  _High betweenness centrality (0.071) - this node is a cross-community bridge._
 - **What connects `@types/bun`, `@types/bun`, `typescript` to the rest of the system?**
   _7 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Développer` be split into smaller, more focused modules?**
   _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
 - **Why does `Phase 0 · Faisabilité` connect `Développer` to `chargement.ts`?**
-  _High betweenness centrality (0.061) - this node is a cross-community bridge._
+  _High betweenness centrality (0.063) - this node is a cross-community bridge._
 - **Should `moteur/src/index.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.05907172995780591 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06219918548685672 - nodes in this community are weakly interconnected._
 - **Should `moteur/package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._

@@ -77,6 +77,21 @@ describe("atelier", () => {
     expect(require("node:fs").readFileSync(wav, "utf8")).toBe("modifié par l'élève")
   })
 
+  test("un fichier corrigé à la main par l'élève valide la mission, sans autre événement", () => {
+    const a = nouvelAtelier()
+    ;["brancher-ia", "harnais-c-est-quoi", "terminal", "fichiers", "ia-et-terminal", "dicter", "ecouter"].forEach((id) =>
+      a["ecrireJson"]("progression.json", { ...a.progression, reussies: { ...a.progression.reussies, [id]: { version: 1, quand: t(0) } } }),
+    )
+    a.commencer("lire-scan")
+    a.enregistrer({ quand: new Date().toISOString(), type: "outil.appel", outil: "ocr", arguments: { fichier: "missions/lire-scan/fichiers/rapport-scan.pdf" } })
+    expect(a.verifierFichiers()).toBe(true) // première lecture : le fichier est absent
+    expect(a.verifierFichiers()).toBe(false) // rien n'a changé
+
+    writeFileSync(path.join(a.dossier, "missions/lire-scan/rapport-corrige.md"), "né le 03.04.1981, Le Locle, frontalier, ANS-2026-048213, poignet gauche")
+    expect(a.verifierFichiers()).toBe(true)
+    expect(a.progression.reussies["lire-scan"]).toBeDefined()
+  })
+
   test("une mission verrouillée ne peut pas être commencée", () => {
     expect(() => nouvelAtelier().commencer("defi-dossier-exemple")).toThrow("encore verrouillée")
   })

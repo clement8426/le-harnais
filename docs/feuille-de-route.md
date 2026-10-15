@@ -34,4 +34,7 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 
 - [ ] Phase 2 · Poste de travail et web
 - [ ] Phase 3 · Les sens et les extensions
+  - [x] Outils des sens fournis par le plugin, calculés dans la fenêtre (patch 05)
+  - [x] Missions « Dicter » et « Écouter » jouées dans l'application
+  - [ ] Missions « Lire un document » et « Voir une image » jouées dans l'application
 - [ ] Phase 4 · Ouverture (macOS, contenus séparés, autres parcours)

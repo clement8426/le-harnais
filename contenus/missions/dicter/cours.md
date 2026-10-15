@@ -11,7 +11,7 @@ Le modèle se télécharge la première fois : c'est internet qui vient vers toi
 ## À faire
 
 1. Demande à ton IA : « Transcris missions/dicter/fichiers/note-vocale.wav. »
-2. Lis la transcription. Le côté blessé et la date y sont-ils justes ?
+2. Lis la transcription. Le côté blessé et la date y sont-ils justes ? Un mot de travers, peut-être ? Whisper devine d'après le son : il se trompe parfois, surtout sur les noms propres. Relis toujours.
 3. Bonus : le bouton micro de la zone de saisie dicte ton propre message, avec le même outil.
 
 > **À retenir** : l'IA qui écoute n'est pas celle qui réfléchit. La voix peut rester chez toi.

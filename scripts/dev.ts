@@ -25,6 +25,8 @@ await arreterServiceDev()
 if (process.argv.includes("--neuf")) rmSync(donnees, { recursive: true, force: true })
 
 await $`bun ${path.join(import.meta.dir, "preparer.ts")}`
+// Un patch peut ajouter des dépendances (patch 05) : bun install ne fait rien si tout est déjà là.
+await $`bun install`.cwd(opencode).quiet()
 await $`bun run --cwd ${path.join(racine, "packages/plugin")} construire`.quiet()
 
 // OPENCODE_DESKTOP_TEST_ROOT range config, données, état et cache sous ce dossier (XDG_*), le service compris.

@@ -170,6 +170,28 @@ export class Atelier {
     return this.validerSiPret()
   }
 
+  private empreinte = ""
+
+  /**
+   * Relit les fichiers que surveillent les preuves de la mission en cours : l'élève peut les corriger à la main,
+   * sans qu'aucun événement ne passe par OpenCode. Vrai s'ils ont changé depuis le dernier appel (après validation éventuelle).
+   */
+  verifierFichiers() {
+    const chemins = (this.enCours?.preuves ?? []).flatMap((p) => (p.type === "fichier.existe" || p.type === "fichier.contient" ? [p.chemin] : []))
+    const empreinte = chemins
+      .map((c) => {
+        const fichier = path.join(this.dossier, c)
+        if (!existsSync(fichier)) return `${c}:absent`
+        const infos = statSync(fichier)
+        return `${c}:${infos.mtimeMs}:${infos.size}`
+      })
+      .join("|")
+    if (empreinte === this.empreinte) return false
+    this.empreinte = empreinte
+    this.validerSiPret()
+    return true
+  }
+
   /** Vrai si la mission en cours vient d'être réussie. */
   validerSiPret() {
     const mission = this.enCours
