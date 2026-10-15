@@ -26,14 +26,21 @@ export default function Panneau(props: { session: MountedSession }) {
   const rpc = () => props.session.server.client.rpc(Contrat)
   const options = () => ({ location: { directory: props.session.directory } })
 
+  // La dernière réussite connue à l'ouverture du panneau : seules les suivantes sont fêtées.
+  let fetee: string | undefined
+  let premier = true
   const appliquer = (nouvel: unknown) => {
     const e = nouvel as EtatUI
     setEtat(e)
     setErreur(undefined)
-    if (e.annonce) {
-      // Une mission vient d'être réussie : on montre la suivante.
+    const reussite = e.derniereReussite
+    if (premier) fetee = reussite?.quand
+    premier = false
+    if (reussite && reussite.quand !== fetee) {
+      fetee = reussite.quand
+      // Une mission vient d'être réussie : on la fête, puis on montre la suivante.
       setChoisie(undefined)
-      setAnnonce(e.annonce)
+      setAnnonce(`Mission réussie : ${reussite.titre}${/[.?!]$/.test(reussite.titre) ? "" : "."}`)
       setTimeout(() => setAnnonce(undefined), 6000)
     }
   }

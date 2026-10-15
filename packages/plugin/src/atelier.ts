@@ -49,7 +49,6 @@ export function creerAtelier(dossier: string, parcours = "debutant") {
 
 export class Atelier {
   readonly contenus: Contenus
-  private annonce?: string
 
   constructor(
     readonly dossier: string,
@@ -174,7 +173,6 @@ export class Atelier {
     if (!mission || !missionValidee(this.resultats(mission))) return false
     this.ecrireJson("progression.json", reussir(this.progression, mission))
     this.ecrireJson("en-cours.json", {})
-    this.annonce = `Mission réussie : ${mission.titre}${/[.?!]$/.test(mission.titre) ? "" : "."}`
     return true
   }
 
@@ -216,8 +214,8 @@ export class Atelier {
         ...(encours ? { preuves: this.resultats(m).map((r) => ({ ok: r.ok, detail: r.detail })) } : {}),
       }
     })
-    const annonce = this.annonce
-    this.annonce = undefined
+    const [derniere] = Object.entries(progression.reussies).sort(([, a], [, b]) => b.quand.localeCompare(a.quand))
+    const derniereMission = derniere && this.contenus.missions.get(derniere[0])
     const suivante = prochaine(etatsMissions)
     return {
       actif: true,
@@ -229,7 +227,7 @@ export class Atelier {
       capacites: [...this.capacites()].sort(),
       extensions: { allumees: this.droits().extensions, gerees: this.contenus.catalogue.extensionsGerees },
       ...(fournisseur ? { fournisseur } : {}),
-      ...(annonce ? { annonce } : {}),
+      ...(derniere && derniereMission ? { derniereReussite: { id: derniere[0], titre: derniereMission.titre, quand: derniere[1].quand } } : {}),
     }
   }
 }

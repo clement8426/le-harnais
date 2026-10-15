@@ -6,7 +6,7 @@ Jusqu'ici, ton IA pouvait lire. Maintenant, elle va pouvoir **proposer** des com
 | --- | --- |
 | Une fois | La commande s'exécute, cette fois seulement |
 | Toujours | Les commandes du même genre passent sans redemander, jusqu'à la fin de la session |
-| Refuser | Rien ne s'exécute ; ton IA en est informée et cherche autre chose |
+| Refuser | Rien ne s'exécute, et ton IA s'arrête là (« Interrompu »). À toi de lui dire ce que tu veux à la place |
 
 Certaines commandes sont refusées d'office, quoi que tu répondes : supprimer des fichiers (`rm`, `del`, `Remove-Item`), formater un disque.
 

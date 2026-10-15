@@ -51,8 +51,8 @@ export interface EtatUI {
   /** Les extensions d'OpenCode à allumer, et celles que le Harnais gère (les autres de cette liste sont éteintes). */
   extensions: { allumees: string[]; gerees: string[] }
   fournisseur?: { id: string; modele: string }
-  /** Message à montrer une fois (mission réussie, erreur de contenu…). */
-  annonce?: string
+  /** La dernière mission réussie : le panneau la fête quand elle change. */
+  derniereReussite?: { id: string; titre: string; quand: string }
 }
 
 export interface EntreeCommencer {

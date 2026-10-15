@@ -26,7 +26,7 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 - [x] Panneau des missions dans l'application : parcours, mission, cours, preuves, questions, indice
 - [x] Plugin serveur : droits de l'IA, journal, validation automatique, RPC avec le panneau
 - [x] Agent « prof » : consignes ajoutées au prompt système (mission en cours, preuves, droits)
-- [x] Missions 1 à 3 jouées de bout en bout dans l'application (IA, questions, terminal PowerShell)
+- [x] Missions 1 à 5 jouées de bout en bout dans l'application (IA, questions, terminal PowerShell, lecture de fichier, permissions acceptées et refusées)
 - [x] Allumer et éteindre les extensions selon les capacités (patch 03) : le terminal s'allume quand la mission le prête
 - [x] Preuves du terminal : intégrations PowerShell et bash (patch 04)
 

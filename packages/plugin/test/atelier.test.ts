@@ -58,7 +58,7 @@ describe("atelier", () => {
     expect(a.validerSiPret()).toBe(false) // déjà validée lors de l'import de « ls »
 
     const apres = a.etat()
-    expect(apres.annonce).toBe("Mission réussie : Le terminal.")
+    expect(apres.derniereReussite).toMatchObject({ id: "terminal", titre: "Le terminal" })
     expect(apres.etapes.find((e) => e.id === "terminal")!.etat).toBe("reussie")
     expect(apres.prochaine).toBe("fichiers")
     expect(a.capacites().has("terminal.eleve")).toBe(true)

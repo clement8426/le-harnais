@@ -24,6 +24,9 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 
 ### Modifié
 
+- Le panneau fête une mission réussie d'après la dernière réussite enregistrée (et non plus un message à usage unique), puis passe à la suivante.
+- Les consignes du prof : l'IA ne demande plus l'autorisation par écrit, le harnais affiche lui-même la demande de permission.
+- Le cours « Ton IA agit, avec ton accord » : un refus arrête l'IA (« Interrompu »).
 - La preuve `terminal.commande` vérifie la commande et sa réussite (et non plus sa sortie) : la lecture de l'écran du terminal est remplacée par l'intégration au shell, plus fiable.
 - Le script `scripts/preparer.ts` et le premier patch d'OpenCode (`upstream/patches/01-enregistrer-extension-le-labo.patch`, 7 lignes). Sous Windows, il remplace aussi les liens symboliques du dépôt d'OpenCode par des copies.
 - La documentation de départ : README, règles du dépôt, feuille de route, guide de développement, questions ouvertes, licences.
