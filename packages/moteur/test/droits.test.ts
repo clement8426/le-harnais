@@ -1,7 +1,8 @@
 import { describe, expect, test } from "bun:test"
-import { correspond, decider, droits, versPermissionOpenCode, type Catalogue } from "../src"
+import { correspond, decider, droits, type Catalogue } from "../src"
 
 const catalogue: Catalogue = {
+  extensionsGerees: ["terminal"],
   capacites: [
     { id: "chat", titre: "", description: "", effets: [] },
     { id: "fichiers.ia.lire", titre: "", description: "", effets: [{ type: "permission", outil: "read", action: "allow" }, { type: "permission", outil: "glob", action: "allow" }] },
@@ -33,15 +34,16 @@ describe("droits", () => {
     expect(decider(d.regles, "bash", "rm -rf dossier")).toBe("deny")
   })
 
-  test("le bloc OpenCode garde l'ordre « global d'abord, précis ensuite »", () => {
-    const d = droits(new Set(["chat", "fichiers.ia.lire", "terminal.ia.demander"]), catalogue)
-    expect(versPermissionOpenCode(d.regles)).toEqual({
-      "*": "deny",
-      glob: "allow",
-      read: { "*": "allow", "*.env": "deny" },
-      bash: { "*": "ask", "rm *": "deny" },
-      external_directory: "deny",
-    })
+  test("les règles gardent l'ordre : tout refuser, puis les capacités, puis « toujours »", () => {
+    const d = droits(new Set(["chat", "fichiers.ia.lire"]), catalogue)
+    expect(d.regles.map((r) => `${r.outil} ${r.motif} ${r.action}`)).toEqual([
+      "* * deny",
+      "read * allow",
+      "glob * allow",
+      "read *.env deny",
+      "bash rm * deny",
+      "external_directory * deny",
+    ])
   })
 
   test("motifs : * et ? comme dans OpenCode, le reste à l'identique", () => {

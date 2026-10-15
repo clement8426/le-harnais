@@ -40,6 +40,16 @@ export function verifier(contenus: Contenus, parcoursId: string): Diagnostic[] {
     .filter((id, i, ids) => ids.indexOf(id) !== i)
     .forEach((id) => diagnostics.push(erreur("capacite-en-double", `La capacité « ${id} » est déclarée deux fois.`)))
 
+  contenus.catalogue.capacites.forEach((c) =>
+    c.effets
+      .filter((e) => e.type === "extension" && !contenus.catalogue.extensionsGerees.includes(e.id))
+      .forEach((e) =>
+        diagnostics.push(
+          erreur("extension-non-geree", `La capacité « ${c.id} » allume l'extension « ${e.type === "extension" ? e.id : ""} », absente de « extensions_gerees » : elle ne serait jamais éteinte.`),
+        ),
+      ),
+  )
+
   parcours.chapitres
     .filter((c) => c.missions.length === 0)
     .forEach((c) => diagnostics.push(avertissement("chapitre-vide", `Le chapitre « ${c.id} » ne contient aucune mission.`)))
@@ -64,7 +74,7 @@ export function verifier(contenus: Contenus, parcoursId: string): Diagnostic[] {
   ordre.forEach((id, place) => {
     const mission = contenus.missions.get(id)
     if (!mission) return
-    ;[...mission.requiert, ...mission.debloque]
+    ;[...mission.requiert, ...mission.prete, ...mission.debloque]
       .filter((cap) => !capacites.has(cap))
       .forEach((cap) => diagnostics.push(erreur("capacite-inconnue", `« ${id} » cite la capacité « ${cap} », absente de capacites.yaml.`)))
     mission.requiert

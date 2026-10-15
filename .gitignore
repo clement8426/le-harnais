@@ -8,6 +8,6 @@ out/
 .DS_Store
 Thumbs.db
 
-# Graphify : le graphe se régénère avec `bun run graphe`.
-graphify-out/cache/
-graphify-out/graph.html
+# Graphify : seul le rapport est versionné ; le reste se régénère avec `bun run graphe`.
+graphify-out/*
+!graphify-out/GRAPH_REPORT.md

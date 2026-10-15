@@ -1,0 +1,19 @@
+id: mcp-lighthouse
+titre: Les connecteurs MCP
+version: 1
+resume: MCP est une prise standard pour brancher des outils extérieurs. Tu refais l'audit de Tilleul, cette fois par un connecteur.
+requiert: [audit.lighthouse, ia.agir.avec.accord]
+prete: [mcp]
+debloque: [mcp]
+preuves:
+  - type: outil.appel
+    outil: chrome-devtools_lighthouse_audit
+  - type: question
+    id: difference
+questions:
+  - id: difference
+    enonce: Quelle est la différence entre l'audit de la mission précédente et celui-ci ?
+    choix: ["Aucune : c'est le même outil", "Le premier est un outil intégré au harnais ; le second vient d'un programme extérieur, branché par la prise MCP", "Le second est fait par une autre IA"]
+    bonne: 1
+    explication: Le résultat se ressemble, mais le chemin change. Un connecteur MCP est un programme à part, que n'importe quel harnais compatible peut brancher. C'est ce qui rend les outils réutilisables d'un harnais à l'autre.
+indice: Le connecteur chrome-devtools est déjà installé. Demande « Avec le connecteur chrome-devtools, lance un audit Lighthouse de missions/navigateur/fichiers/tilleul/index.html ». Accepte ses demandes.

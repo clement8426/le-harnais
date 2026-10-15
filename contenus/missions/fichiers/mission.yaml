@@ -1,0 +1,15 @@
+id: fichiers
+titre: Les fichiers
+version: 1
+resume: Tu crées un fichier, puis ton IA le lit. C'est son premier accès à ton ordinateur.
+requiert: [terminal.eleve]
+prete: [fichiers.eleve, fichiers.ia.lire]
+debloque: [fichiers.eleve, fichiers.ia.lire]
+preuves:
+  - type: fichier.existe
+    chemin: notes.md
+  - type: outil.appel
+    outil: read
+    arguments:
+      path: notes.md
+indice: Crée notes.md à la racine de ton dossier LeLabo (bouton « Nouveau fichier » de l'arborescence), écris une phrase, enregistre. Puis demande à ton IA « Lis notes.md et résume-le ».

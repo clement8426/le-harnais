@@ -1,0 +1,15 @@
+id: skills
+titre: Les skills
+version: 1
+resume: Une skill est une recette écrite en texte. Ton IA la charge d'elle-même quand le sujet se présente.
+requiert: [fichiers.ia.lire, ia.agir.avec.accord]
+prete: [skills]
+debloque: [skills]
+preuves:
+  - type: fichier.existe
+    chemin: .opencode/skills/compte-rendu/SKILL.md
+  - type: outil.appel
+    outil: skill
+    arguments:
+      id: compte-rendu
+indice: Le modèle de skill est dans missions/skills/fichiers/SKILL.md. Copie-le dans .opencode/skills/compte-rendu/SKILL.md, puis demande « Fais le compte rendu de missions/ecouter/fichiers/compte-rendu.txt ».

@@ -20,6 +20,8 @@ export interface Capacite {
 
 /** Règles de permission appliquées en dernier, quelles que soient les capacités : elles gagnent toujours. */
 export interface Catalogue {
+  /** Extensions d'OpenCode éteintes tant qu'aucune capacité active ne les allume. Les autres ne sont pas touchées. */
+  extensionsGerees: string[]
   capacites: Capacite[]
   toujours: Effet[]
 }
@@ -27,7 +29,8 @@ export interface Catalogue {
 export type Systeme = "windows" | "macos" | "linux"
 
 export type Preuve =
-  | { type: "ia.reponse" }
+  /** Une réponse de l'IA ; si `fournisseurs` est donné, seulement de l'un d'eux (ids OpenCode : infomaniak, ollama…). */
+  | { type: "ia.reponse"; fournisseurs?: string[] }
   | { type: "outil.appel"; outil: string; arguments?: Record<string, string> }
   | { type: "outil.resultat"; outil: string; contient: string[] }
   | { type: "permission.demandee"; outil?: string; acceptee?: boolean }
@@ -53,6 +56,8 @@ export interface Mission {
   version: number
   resume: string
   requiert: string[]
+  /** Capacités prêtées le temps de la mission, pour pouvoir s'en servir avant de les avoir gagnées. */
+  prete: string[]
   debloque: string[]
   preuves: Preuve[]
   questions: Question[]
@@ -85,7 +90,7 @@ export interface Contenus {
 
 /** Une ligne du journal. Chaque source (terminal, navigateur, plugin) écrit dans ce format. */
 export type Evenement = { quand: string } & (
-  | { type: "ia.reponse" }
+  | { type: "ia.reponse"; fournisseur?: string; modele?: string }
   | { type: "outil.appel"; outil: string; arguments: Record<string, unknown>; resultat?: string; erreur?: string }
   | { type: "permission"; outil: string; acceptee: boolean }
   /** Une commande lue dans la sortie du terminal, avec ce qu'elle a affiché ensuite. */

@@ -1,0 +1,31 @@
+# Le parcours débutant. Il ne fait qu'ordonner des missions par leur nom.
+# Déplacer une ligne déplace la mission ; les numéros se recalculent. `bun run verifier` contrôle l'ordre.
+
+id: debutant
+titre: Construis ton harnais
+socle: [chat]
+
+chapitres:
+  - id: demarrer
+    titre: Démarrer
+    missions: [brancher-ia, harnais-c-est-quoi]
+
+  - id: poste-de-travail
+    titre: Le poste de travail
+    missions: [terminal, fichiers, ia-et-terminal]
+
+  - id: les-sens
+    titre: Les sens, sur ton ordinateur
+    missions: [dicter, ecouter, lire-scan, voir-image]
+
+  - id: le-web
+    titre: Le web
+    missions: [navigateur, audit-lighthouse]
+
+  - id: etendre
+    titre: Étendre ton harnais
+    missions: [skills, mcp-lighthouse, plugins-graphify]
+
+  - id: final
+    titre: Le défi final
+    missions: [defi-dossier-exemple]

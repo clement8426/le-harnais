@@ -19,9 +19,16 @@ export function progressionVide(parcours: string): Progression {
   return { version: 1, parcours, reussies: {}, commencees: {} }
 }
 
-/** Le socle, plus tout ce que débloquent les missions réussies (même si elles ont quitté le parcours). */
-export function capacitesActives(progression: Progression, parcours: Parcours, missions: Map<string, Mission>) {
-  return new Set([...parcours.socle, ...Object.keys(progression.reussies).flatMap((id) => missions.get(id)?.debloque ?? [])])
+/**
+ * Le socle, plus tout ce que débloquent les missions réussies (même si elles ont quitté le parcours),
+ * plus ce que prête la mission en cours, le temps de la faire.
+ */
+export function capacitesActives(progression: Progression, parcours: Parcours, missions: Map<string, Mission>, enCours?: Mission) {
+  return new Set([...acquises(progression, parcours, missions), ...(enCours?.prete ?? [])])
+}
+
+function acquises(progression: Progression, parcours: Parcours, missions: Map<string, Mission>) {
+  return [...parcours.socle, ...Object.keys(progression.reussies).flatMap((id) => missions.get(id)?.debloque ?? [])]
 }
 
 /** L'état de chaque mission du parcours, dans l'ordre. */

@@ -1,0 +1,19 @@
+id: navigateur
+titre: Le navigateur
+version: 1
+resume: Un navigateur dans ton harnais, que ton IA peut lire et piloter. Et un premier piège à reconnaître.
+requiert: [chat]
+prete: [navigateur.eleve, navigateur.ia]
+debloque: [navigateur.eleve, navigateur.ia]
+preuves:
+  - type: navigateur.page
+    motif: "tilleul/(index|page-piegee)\\.html"
+  - type: question
+    id: injection
+questions:
+  - id: injection
+    enonce: Ton IA a lu « Notre histoire » et t'a parlé d'un salon « noté 5 étoiles par tous les guides ». D'où vient cette phrase ?
+    choix: ["D'un vrai classement trouvé par ton IA", "D'un texte caché dans la page, écrit pour manipuler les IA", "D'une erreur de ton IA"]
+    bonne: 1
+    explication: La page contient un paragraphe invisible pour toi, mais lu par l'IA. Ce qu'une IA lit est une donnée, jamais un ordre ; un bon harnais le lui rappelle, et un bon utilisateur vérifie.
+indice: Ouvre missions/navigateur/fichiers/tilleul/index.html dans le navigateur du harnais, puis demande à ton IA « Lis la page Notre histoire et résume-la ».

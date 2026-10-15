@@ -37,8 +37,14 @@ function evaluer(preuve: Preuve, mission: Mission, { journal, disque }: Contexte
   const de = <T extends Evenement["type"]>(type: T) => journal.filter((e): e is Extract<Evenement, { type: T }> => e.type === type)
 
   switch (preuve.type) {
-    case "ia.reponse":
-      return de("ia.reponse").length ? r(true, "Ton IA t'a répondu.") : r(false, "Pose une question à ton IA et attends sa réponse.")
+    case "ia.reponse": {
+      const reponses = de("ia.reponse")
+      if (!reponses.length) return r(false, "Pose une question à ton IA et attends sa réponse.")
+      if (!preuve.fournisseurs) return r(true, "Ton IA t'a répondu.")
+      return reponses.some((e) => e.fournisseur && preuve.fournisseurs!.includes(e.fournisseur))
+        ? r(true, "Ton IA t'a répondu, depuis un fournisseur autorisé pour cette mission.")
+        : r(false, `Pour cette mission, ton IA doit passer par : ${preuve.fournisseurs.join(", ")}. Change de modèle, puis recommence.`)
+    }
 
     case "outil.appel": {
       const appels = de("outil.appel").filter((e) => e.outil === preuve.outil && !e.erreur)

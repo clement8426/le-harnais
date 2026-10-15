@@ -29,6 +29,19 @@ describe("progression", () => {
     expect([...capacitesActives(progression, contenus.parcours.get("p")!, contenus.missions)].sort()).toEqual(["chat", "terminal.eleve"])
   })
 
+  test("une mission prête ses capacités le temps de la faire, sans les donner", () => {
+    const pret = chargerContenus(
+      fabriquer({
+        missions: { terminal: { requiert: ["chat"], prete: ["terminal.eleve"], debloque: ["terminal.eleve"] } },
+        parcours: { p: { socle: ["chat"], chapitres: { x: ["terminal"] } } },
+      }),
+    )
+    const parcours = pret.parcours.get("p")!
+    const terminal = pret.missions.get("terminal")!
+    expect(capacitesActives(progressionVide("p"), parcours, pret.missions).has("terminal.eleve")).toBe(false)
+    expect(capacitesActives(progressionVide("p"), parcours, pret.missions, terminal).has("terminal.eleve")).toBe(true)
+  })
+
   test("insérer une mission avant celles déjà réussies : elle est « nouvelle », rien n'est reverrouillé", () => {
     const apres = chargerContenus(fabriquer({ missions, parcours: { p: { socle: ["chat"], chapitres: { x: ["a", "nouvelle", "b", "c"] } } } }))
     const { etats: e } = etatsPour(apres, ["a", "b"])

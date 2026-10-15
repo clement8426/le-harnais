@@ -8,7 +8,7 @@ import { stringify } from "yaml"
 export interface Jeu {
   capacites?: { id: string; effets?: unknown[] }[]
   toujours?: unknown[]
-  missions: Record<string, Partial<{ requiert: string[]; debloque: string[]; preuves: unknown[]; questions: unknown[]; version: number; os: string[] }>>
+  missions: Record<string, Partial<{ requiert: string[]; prete: string[]; debloque: string[]; preuves: unknown[]; questions: unknown[]; version: number; os: string[] }>>
   parcours: Record<string, { socle?: string[]; chapitres: Record<string, string[]> }>
 }
 
@@ -16,7 +16,7 @@ export function fabriquer(jeu: Jeu) {
   const racine = mkdtempSync(path.join(tmpdir(), "harnais-"))
   const capacites: { id: string; effets?: unknown[] }[] = jeu.capacites ?? [
     ...new Set([
-      ...Object.values(jeu.missions).flatMap((m) => [...(m.requiert ?? []), ...(m.debloque ?? [])]),
+      ...Object.values(jeu.missions).flatMap((m) => [...(m.requiert ?? []), ...(m.prete ?? []), ...(m.debloque ?? [])]),
       ...Object.values(jeu.parcours).flatMap((p) => p.socle ?? []),
     ]),
   ].map((id) => ({ id }))
@@ -38,6 +38,7 @@ export function fabriquer(jeu: Jeu) {
         version: m.version ?? 1,
         resume: `Résumé de ${id}`,
         requiert: m.requiert ?? [],
+        prete: m.prete ?? [],
         debloque: m.debloque ?? [],
         preuves: m.preuves ?? [{ type: "ia.reponse" }],
         questions: m.questions ?? [],

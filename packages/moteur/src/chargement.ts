@@ -34,7 +34,8 @@ export function chargerCatalogue(fichier: string): Catalogue {
   const brut = lireYaml(fichier)
   const capacites = tableau(fichier, brut, "capacites").map((c, i) => capacite(`${fichier} (capacité ${i + 1})`, c))
   const toujours = tableau(fichier, brut, "toujours", true).map((e) => effet(fichier, e))
-  return { capacites, toujours }
+  const extensionsGerees = brut.extensions_gerees === undefined ? [] : listeTextes(fichier, brut, "extensions_gerees")
+  return { extensionsGerees, capacites, toujours }
 }
 
 export function chargerMission(dossier: string): Mission {
@@ -50,6 +51,7 @@ export function chargerMission(dossier: string): Mission {
     version: entier(fichier, brut, "version"),
     resume: texte(fichier, brut, "resume"),
     requiert: listeTextes(fichier, brut, "requiert"),
+    prete: brut.prete === undefined ? [] : listeTextes(fichier, brut, "prete"),
     debloque: listeTextes(fichier, brut, "debloque"),
     preuves: tableau(fichier, brut, "preuves").map((p) => preuve(fichier, p)),
     questions: tableau(fichier, brut, "questions", true).map((q) => question(fichier, q)),
@@ -103,7 +105,7 @@ function preuve(fichier: string, valeur: unknown): Preuve {
   const type = texte(fichier, o, "type")
   switch (type) {
     case "ia.reponse":
-      return { type }
+      return { type, ...(o.fournisseurs === undefined ? {} : { fournisseurs: listeTextes(fichier, o, "fournisseurs") }) }
     case "outil.appel": {
       const args = o.arguments === undefined ? undefined : dictionnaire(fichier, o.arguments)
       return { type, outil: texte(fichier, o, "outil"), ...(args ? { arguments: args } : {}) }

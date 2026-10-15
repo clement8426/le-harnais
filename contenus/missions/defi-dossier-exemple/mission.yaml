@@ -1,0 +1,23 @@
+id: defi-dossier-exemple
+titre: Le défi final
+version: 1
+resume: Le dossier Exemple de bout en bout, avec tous tes outils. Ton IA doit être hébergée en Suisse ou sur ton ordinateur.
+requiert: [voix.dicter, voix.ecouter, ocr, ia.agir.avec.accord, skills]
+debloque: [harnais.complet]
+preuves:
+  - type: ia.reponse
+    fournisseurs: [infomaniak, ollama, lmstudio, local]
+  - type: outil.appel
+    outil: ocr
+    arguments:
+      fichier: rapport-scan.pdf
+  - type: outil.appel
+    outil: transcrire
+    arguments:
+      fichier: note-vocale.wav
+  - type: fichier.contient
+    chemin: missions/defi-dossier-exemple/compte-rendu.md
+    contient: ["Exemple", "poignet gauche", "12.08.2026", "Paul Fictif", "24 octobre"]
+  - type: outil.appel
+    outil: lire_a_voix_haute
+indice: Commence par changer de modèle (Infomaniak ou un modèle local). Puis dicte ou écris la consigne du cours, accepte les demandes de ton IA, relis le compte rendu avec le scan sous les yeux, et fais-toi lire le résumé.

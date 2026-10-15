@@ -21,7 +21,7 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 - [x] Progression rangée par nom, états des missions (ouverte, nouvelle, réussie, mise à jour)
 - [x] Preuves (10 types) et droits de l'IA (traduction en permissions OpenCode)
 - [x] Lecture des commandes dans l'affichage du terminal
-- [ ] Contenus du parcours débutant (15 missions)
+- [x] Contenus du parcours débutant (15 missions, 6 chapitres), vérifiés par les tests
 - [ ] Panneau des missions dans l'application
 - [ ] Journal alimenté par le plugin et l'extension
 - [ ] Agent « prof »

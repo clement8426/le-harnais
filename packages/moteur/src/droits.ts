@@ -1,6 +1,6 @@
 // Traduit les capacités actives en droits concrets : extensions à allumer, outils et connecteurs à fournir,
-// règles de permission pour l'IA. Le format des règles est celui d'OpenCode (la dernière règle qui correspond gagne),
-// mais le moteur ne dépend pas d'OpenCode : c'est un simple objet.
+// règles de permission pour l'IA. Les règles suivent la même logique qu'OpenCode (la dernière qui correspond gagne),
+// mais restent de simples objets : l'adaptateur du plugin les convertit au format d'OpenCode.
 
 import type { Action, Catalogue, Effet } from "./types"
 
@@ -34,32 +34,6 @@ export function droits(actives: Set<string>, catalogue: Catalogue): Droits {
     outils: ids("outil"),
     mcp: ids("mcp"),
     regles: effets.flatMap((e) => (e.type === "permission" ? [{ outil: e.outil, motif: e.motif ?? "*", action: e.action }] : [])),
-  }
-}
-
-export type PermissionOpenCode = Record<string, Action | Record<string, Action>>
-
-/**
- * Le bloc `permission` d'opencode.json. Une règle redéfinie plus tard est déplacée en fin de liste,
- * pour que « la dernière qui correspond gagne » reste vrai.
- */
-export function versPermissionOpenCode(regles: Regle[]): PermissionOpenCode {
-  const parOutil = new Map<string, Map<string, Action>>()
-  regles.forEach(({ outil, motif, action }) => {
-    const motifs = parOutil.get(outil) ?? new Map<string, Action>()
-    motifs.delete(motif)
-    motifs.set(motif, action)
-    parOutil.delete(outil)
-    parOutil.set(outil, motifs)
-  })
-  // L'entrée globale « * » en premier : les règles par outil, plus précises, viennent après.
-  const global = parOutil.get("*")
-  parOutil.delete("*")
-  return {
-    ...(global ? { "*": global.get("*") ?? "deny" } : {}),
-    ...Object.fromEntries(
-      [...parOutil].map(([outil, motifs]) => [outil, motifs.size === 1 && motifs.has("*") ? motifs.get("*")! : Object.fromEntries(motifs)]),
-    ),
   }
 }
 

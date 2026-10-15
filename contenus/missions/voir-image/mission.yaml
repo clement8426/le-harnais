@@ -1,0 +1,19 @@
+id: voir-image
+titre: Voir une image
+version: 1
+resume: Les objets d'une image sont reconnus sur ton ordinateur. Seule leur liste part vers ton IA, jamais l'image.
+requiert: [fichiers.ia.lire]
+prete: [vision]
+debloque: [vision]
+preuves:
+  - type: outil.appel
+    outil: detecter_objets
+  - type: question
+    id: seuil
+questions:
+  - id: seuil
+    enonce: Que se passe-t-il quand tu baisses le seuil de confiance de 0,9 à 0,3 ?
+    choix: ["Le modèle trouve moins d'objets", "Le modèle trouve plus d'objets, dont certains inventés", "Rien ne change"]
+    bonne: 1
+    explication: Un seuil bas laisse passer des détections peu sûres. On gagne des objets, et des erreurs.
+indice: Copie une photo de ton bureau (ou n'importe quelle photo à toi) dans missions/voir-image/fichiers, puis demande « Détecte les objets de cette photo, avec un seuil de 0,9, puis de 0,3 ».

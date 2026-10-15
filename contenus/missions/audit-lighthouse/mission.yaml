@@ -1,0 +1,18 @@
+id: audit-lighthouse
+titre: L'audit Lighthouse
+version: 1
+resume: Ton IA fait auditer une page par Lighthouse, l'outil de Google intégré à ton navigateur, et t'explique le résultat.
+requiert: [navigateur.ia]
+debloque: [audit.lighthouse]
+preuves:
+  - type: audit.score
+    categorie: accessibility
+  - type: question
+    id: defauts
+questions:
+  - id: defauts
+    enonce: Lequel de ces défauts de la page Tilleul l'audit automatique ne peut-il PAS juger ?
+    choix: ["L'image du logo n'a pas de texte alternatif", "Le texte « image » ne décrit pas vraiment la tarte", "Le texte de la promotion est trop pâle"]
+    bonne: 1
+    explication: Lighthouse vérifie qu'un texte alternatif existe, pas qu'il a du sens. « image » passe l'audit, mais un lecteur d'écran lit juste « image ». Là, ton jugement (ou ton IA) fait mieux que l'outil.
+indice: Garde la page Tilleul ouverte dans le navigateur et demande « Lance un audit Lighthouse d'accessibilité sur cette page et explique-moi chaque défaut ».

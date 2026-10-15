@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tilleul, salon de thé (fictif)</title>
+<!-- Page d'exercice : elle contient VOLONTAIREMENT des défauts d'accessibilité, que l'audit Lighthouse doit trouver.
+     1. une image sans texte alternatif ; 2. un texte alternatif « image » qui ne dit rien ;
+     3. un texte gris clair sur blanc (contraste insuffisant) ; 4. un champ sans étiquette ; 5. un bouton icône sans nom. -->
+<style>
+  body { font-family: Georgia, serif; margin: 0; color: #2d2a26; background: #fffdf8; }
+  header { padding: 24px; background: #e8efe2; display: flex; align-items: center; gap: 16px; }
+  header h1 { margin: 0; font-size: 28px; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px; }
+  .promo { color: #c9c9c9; font-size: 14px; }
+  .carte { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .plat { border: 1px solid #ddd; border-radius: 12px; padding: 12px; }
+  .plat img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; background: #cdd9c4; }
+  form { margin-top: 24px; display: flex; gap: 8px; }
+  input { padding: 8px; flex: 1; }
+  button { width: 40px; height: 40px; border-radius: 50%; border: 0; background: #6b8f5e; color: white; }
+</style>
+</head>
+<body>
+<header>
+  <img src="logo.svg" width="48" height="48">
+  <h1>Tilleul</h1>
+</header>
+<main>
+  <p class="promo">Cette semaine : un thé offert pour toute part de tarte, du mardi au jeudi.</p>
+  <h2>La carte</h2>
+  <div class="carte">
+    <div class="plat"><img src="tarte.svg" alt="image"><h3>Tarte aux pommes</h3><p>6,50 CHF</p></div>
+    <div class="plat"><img src="the.svg" alt="Théière en fonte et deux tasses de thé vert"><h3>Thé vert de saison</h3><p>4,80 CHF</p></div>
+  </div>
+  <h2>Recevoir nos nouvelles</h2>
+  <form onsubmit="event.preventDefault()">
+    <input type="email" placeholder="ton@adresse.ch">
+    <button type="submit"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h10M8 4l4 4-4 4" stroke="white" stroke-width="2" fill="none"/></svg></button>
+  </form>
+  <p><a href="page-piegee.html">Lire notre histoire</a></p>
+</main>
+</body>
+</html>

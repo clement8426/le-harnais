@@ -1,0 +1,17 @@
+id: ia-et-terminal
+titre: Ton IA agit, avec ton accord
+version: 1
+resume: Ton IA demande la permission avant chaque commande et chaque modification. Tu acceptes ou tu refuses.
+requiert: [terminal.eleve, fichiers.ia.lire]
+prete: [ia.agir.avec.accord]
+debloque: [ia.agir.avec.accord]
+preuves:
+  - type: permission.demandee
+    outil: shell
+    acceptee: true
+  - type: permission.demandee
+    outil: edit
+    acceptee: false
+  - type: outil.appel
+    outil: shell
+indice: Demande à ton IA « Liste les dossiers de missions avec une commande ». Accepte sa demande. Puis demande-lui « Crée un fichier brouillon.md » et refuse sa demande.

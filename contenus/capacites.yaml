@@ -1,0 +1,129 @@
+# Le catalogue des capacités : ce que chaque capacité allume concrètement.
+# Une mission débloque des capacités par leur id ; elle ne sait rien d'OpenCode.
+#
+# Effets possibles :
+#   extension   allume une extension de l'application (les autres extensions gérées restent éteintes)
+#   permission  règle pour l'IA : outil (action OpenCode), motif (ressource), action allow | ask | deny
+#   outil       un outil fourni par notre plugin (voix, OCR, image…)
+#   mcp         un connecteur MCP déclaré dans contenus/mcp.yaml
+#
+# Ordre d'application des règles : tout refusé, puis les capacités actives dans l'ordre de ce fichier,
+# puis « toujours ». Comme dans OpenCode, la dernière règle qui correspond gagne.
+# Noms d'actions OpenCode V2 : shell (et non plus bash), read, glob, grep, edit, skill, webfetch, websearch,
+# subagent, question, browser, external_directory, doom_loop.
+
+extensions_gerees: [terminal, file, review, browser, ssh, wsl, pairing, debug, microsoft-office]
+
+capacites:
+  - id: chat
+    titre: Discuter avec ton IA
+    description: Ton IA te répond et peut te poser des questions. Elle n'a accès à rien d'autre.
+    effets:
+      - { type: permission, outil: question, action: allow }
+
+  - id: terminal.eleve
+    titre: Le terminal
+    description: Tu ouvres le vrai terminal de ton ordinateur dans le harnais.
+    effets:
+      - { type: extension, id: terminal }
+
+  - id: fichiers.eleve
+    titre: Les fichiers
+    description: Tu vois l'arborescence de ton dossier et les changements apportés aux fichiers.
+    effets:
+      - { type: extension, id: file }
+      - { type: extension, id: review }
+
+  - id: fichiers.ia.lire
+    titre: Ton IA lit tes fichiers
+    description: Ton IA peut lire et chercher dans les fichiers de ton dossier, sans rien modifier.
+    effets:
+      - { type: permission, outil: read, action: allow }
+      - { type: permission, outil: glob, action: allow }
+      - { type: permission, outil: grep, action: allow }
+
+  - id: ia.agir.avec.accord
+    titre: Ton IA agit, avec ton accord
+    description: Ton IA peut proposer des commandes et des modifications de fichiers. Tu acceptes ou tu refuses chacune.
+    effets:
+      - { type: permission, outil: shell, action: ask }
+      - { type: permission, outil: edit, action: ask }
+
+  - id: voix.dicter
+    titre: Dicter
+    description: Ta voix devient du texte, sur ton ordinateur.
+    effets:
+      - { type: outil, id: transcrire }
+
+  - id: voix.ecouter
+    titre: Écouter
+    description: Ton harnais lit ses réponses à voix haute.
+    effets:
+      - { type: outil, id: lire_a_voix_haute }
+
+  - id: ocr
+    titre: Lire un document
+    description: Le texte d'un scan est extrait sur ton ordinateur, puis relu par toi.
+    effets:
+      - { type: outil, id: ocr }
+
+  - id: vision
+    titre: Voir une image
+    description: Les objets d'une image sont reconnus sur ton ordinateur ; seule leur liste part vers ton IA.
+    effets:
+      - { type: outil, id: detecter_objets }
+
+  - id: navigateur.eleve
+    titre: Le navigateur
+    description: Tu navigues sur le web dans le harnais.
+    effets:
+      - { type: extension, id: browser }
+
+  - id: navigateur.ia
+    titre: Ton IA lit et pilote les pages
+    description: Ton IA peut lire la page ouverte, cliquer, faire des captures et lancer un audit.
+    effets:
+      - { type: permission, outil: browser, action: allow }
+
+  - id: audit.lighthouse
+    titre: L'audit Lighthouse
+    description: Tu sais faire auditer une page (accessibilité, SEO, bonnes pratiques) et lire le résultat.
+    effets: []
+
+  - id: skills
+    titre: Les skills
+    description: Ton IA charge tes recettes (des fichiers SKILL.md) quand le sujet se présente.
+    effets:
+      - { type: permission, outil: skill, action: allow }
+
+  - id: mcp
+    titre: Les connecteurs MCP
+    description: Des outils extérieurs se branchent sur ton harnais par une prise standard.
+    effets:
+      - { type: mcp, id: chrome-devtools }
+      - { type: permission, outil: "chrome-devtools_*", action: ask }
+
+  - id: memoire.graphe
+    titre: La mémoire des liens entre fichiers
+    description: Graphify cartographie ton dossier ; ton IA peut interroger cette carte.
+    effets:
+      - { type: permission, outil: shell, motif: "graphify *", action: allow }
+
+  - id: harnais.complet
+    titre: Le harnais complet
+    description: Tous tes outils, enchaînés par ton IA.
+    effets: []
+
+# Ces règles s'appliquent toujours, en dernier : elles gagnent sur toutes les capacités.
+toujours:
+  - { type: permission, outil: external_directory, action: deny }
+  - { type: permission, outil: read, motif: "*.env", action: deny }
+  - { type: permission, outil: read, motif: "*.env.*", action: deny }
+  - { type: permission, outil: read, motif: "*.env.example", action: allow }
+  - { type: permission, outil: edit, motif: "*.labo/*", action: deny }
+  - { type: permission, outil: shell, motif: "rm *", action: deny }
+  - { type: permission, outil: shell, motif: "del *", action: deny }
+  - { type: permission, outil: shell, motif: "rmdir *", action: deny }
+  - { type: permission, outil: shell, motif: "Remove-Item *", action: deny }
+  - { type: permission, outil: shell, motif: "format *", action: deny }
+  - { type: permission, outil: doom_loop, action: ask }

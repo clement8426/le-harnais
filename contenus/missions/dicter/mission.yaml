@@ -1,0 +1,16 @@
+id: dicter
+titre: Dicter
+version: 1
+resume: Ta voix devient du texte, sur ton ordinateur. Ta voix ne part nulle part.
+requiert: [chat]
+prete: [voix.dicter]
+debloque: [voix.dicter]
+preuves:
+  - type: outil.appel
+    outil: transcrire
+    arguments:
+      fichier: note-vocale.wav
+  - type: outil.resultat
+    outil: transcrire
+    contient: ["poignet gauche", "12 août"]
+indice: Le fichier est dans missions/dicter/fichiers. Demande à ton IA « Transcris missions/dicter/fichiers/note-vocale.wav ». La première fois, le modèle Whisper se télécharge (quelques minutes).

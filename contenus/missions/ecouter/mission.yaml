@@ -1,0 +1,19 @@
+id: ecouter
+titre: Écouter
+version: 1
+resume: Ton harnais lit à voix haute, sur ton ordinateur. Avec ton IA, il te fait des résumés audio.
+requiert: [chat]
+prete: [voix.ecouter]
+debloque: [voix.ecouter]
+preuves:
+  - type: outil.appel
+    outil: lire_a_voix_haute
+  - type: question
+    id: resume
+questions:
+  - id: resume
+    enonce: Pourquoi demander à ton IA de résumer avant de lire à voix haute ?
+    choix: ["Parce que la voix ne sait lire que des textes courts", "Parce que personne n'écoute trois minutes de compte rendu", "Pour envoyer moins de données"]
+    bonne: 1
+    explication: Un bon résumé audio dure moins d'une minute. La voix pourrait tout lire, mais l'écoute, elle, a ses limites.
+indice: Demande à ton IA « Résume missions/ecouter/fichiers/compte-rendu.txt en 80 mots, puis lis-le-moi à voix haute ».

@@ -1,0 +1,16 @@
+id: lire-scan
+titre: Lire un document
+version: 1
+resume: Le texte d'un scan est extrait sur ton ordinateur. La machine se trompe parfois ; tu relis avant d'envoyer.
+requiert: [fichiers.ia.lire]
+prete: [ocr, ia.agir.avec.accord]
+debloque: [ocr]
+preuves:
+  - type: outil.appel
+    outil: ocr
+    arguments:
+      fichier: rapport-scan.pdf
+  - type: fichier.contient
+    chemin: missions/lire-scan/rapport-corrige.md
+    contient: ["03.04.1981", "Le Locle", "frontalier", "ANS-2026-048213", "poignet gauche"]
+indice: Le tampon « COPIE » cache une partie du texte. Compare le texte extrait avec le scan (ouvre-le dans l'arborescence), corrige dans rapport-corrige.md, et enregistre.

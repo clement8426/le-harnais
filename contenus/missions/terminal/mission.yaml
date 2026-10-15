@@ -1,0 +1,16 @@
+id: terminal
+titre: Le terminal
+version: 1
+resume: Le vrai terminal de ton ordinateur, dans ton harnais. Trois commandes suffisent pour commencer.
+requiert: [chat]
+prete: [terminal.eleve]
+debloque: [terminal.eleve]
+preuves:
+  - type: terminal.commande
+    motif: "^node (--version|-v)$"
+    sortie: "v\\d+\\.\\d+"
+  - type: terminal.commande
+    motif: "^(cd|Set-Location|sl|chdir)\\s+.*missions"
+  - type: terminal.commande
+    motif: "^(ls|dir|Get-ChildItem|gci)(\\s|$)"
+indice: Ouvre le terminal avec le bouton en bas de la fenêtre (ou Ctrl+`). Tape chaque commande puis appuie sur Entrée. Si « node » n'est pas reconnu, demande de l'aide à ton IA.

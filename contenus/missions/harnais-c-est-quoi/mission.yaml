@@ -1,0 +1,23 @@
+id: harnais-c-est-quoi
+titre: Qu'est-ce qu'un harnais ?
+version: 1
+resume: Une IA qui « sait tout faire », c'est un cerveau entouré d'outils. Le harnais fait le lien.
+requiert: [chat]
+debloque: []
+preuves:
+  - type: question
+    id: cerveau
+  - type: question
+    id: pdf
+questions:
+  - id: cerveau
+    enonce: Dans Claude, que sont « Opus » ou « Sonnet » ?
+    choix: ["Le cerveau : le modèle", "Un outil", "Le harnais"]
+    bonne: 0
+    explication: Opus et Sonnet sont des modèles, c'est-à-dire le cerveau. Il réfléchit et écrit, mais n'agit pas seul.
+  - id: pdf
+    enonce: Qui lit un PDF scanné que tu donnes à une IA ?
+    choix: ["Le cerveau, directement", "Un outil branché sur le cerveau"]
+    bonne: 1
+    explication: C'est un outil de lecture (OCR, ou une analyse d'image) qui lit le document ; le cerveau ne reçoit que ce que l'outil lui transmet.
+indice: Relis le schéma du cours. Le cerveau réfléchit, les outils agissent, le harnais fait le lien.

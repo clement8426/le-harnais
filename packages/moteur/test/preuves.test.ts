@@ -5,7 +5,7 @@ const disqueVide = { existe: () => false, lire: () => undefined }
 const disque = (fichiers: Record<string, string>) => ({ existe: (c: string) => c in fichiers, lire: (c: string) => fichiers[c] })
 
 function mission(preuves: Mission["preuves"], questions: Mission["questions"] = []): Mission {
-  return { id: "m", titre: "M", version: 1, resume: "", requiert: [], debloque: [], preuves, questions, indice: "", dossier: "" }
+  return { id: "m", titre: "M", version: 1, resume: "", requiert: [], prete: [], debloque: [], preuves, questions, indice: "", dossier: "" }
 }
 
 const t = (minute: number) => `2026-10-15T10:${String(minute).padStart(2, "0")}:00Z`
@@ -67,6 +67,13 @@ describe("preuves", () => {
     const refus: Evenement[] = [{ quand: t(1), type: "permission", outil: "bash", acceptee: false }]
     expect(evaluerMission(m, { journal: refus, disque: disqueVide })[0]!.detail).toContain("accepte")
     expect(evaluerMission(m, { journal: [...refus, { quand: t(2), type: "permission", outil: "bash", acceptee: true }], disque: disqueVide })[0]!.ok).toBe(true)
+  })
+
+  test("ia.reponse peut exiger un fournisseur précis", () => {
+    const m = mission([{ type: "ia.reponse", fournisseurs: ["infomaniak", "ollama"] }])
+    const americaine: Evenement[] = [{ quand: t(1), type: "ia.reponse", fournisseur: "openrouter" }]
+    expect(evaluerMission(m, { journal: americaine, disque: disqueVide })[0]!.detail).toContain("infomaniak, ollama")
+    expect(evaluerMission(m, { journal: [...americaine, { quand: t(2), type: "ia.reponse", fournisseur: "ollama" }], disque: disqueVide })[0]!.ok).toBe(true)
   })
 
   test("une mission sans preuve n'est jamais validée", () => {

@@ -1,0 +1,19 @@
+id: plugins-graphify
+titre: Les plugins
+version: 1
+resume: Un plugin ajoute d'un coup des outils, des recettes et des règles. Graphify donne à ton IA la carte des liens entre tes fichiers.
+requiert: [ia.agir.avec.accord]
+prete: [memoire.graphe]
+debloque: [memoire.graphe]
+preuves:
+  - type: fichier.existe
+    chemin: missions/plugins-graphify/fichiers/projet/graphify-out/GRAPH_REPORT.md
+  - type: question
+    id: memoire
+questions:
+  - id: memoire
+    enonce: Que garde Graphify en mémoire ?
+    choix: ["Le contenu complet de tous tes fichiers", "Les liens entre tes fichiers : qui appelle qui, qui importe quoi", "Tes conversations avec ton IA"]
+    bonne: 1
+    explication: Graphify construit un graphe des relations entre fichiers, sans IA et sur ton ordinateur. Ton IA y cherche d'abord où regarder, au lieu de tout relire.
+indice: Demande à ton IA « Lance graphify update sur missions/plugins-graphify/fichiers/projet, puis dis-moi quel fichier est le plus central ».
