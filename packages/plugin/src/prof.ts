@@ -19,6 +19,11 @@ export function consignesDuProf(atelier: Atelier) {
     "Ce que tu as le droit de faire, en ce moment :",
     ...(accordees.length ? accordees : ["- Discuter, seulement. Tu n'as encore accès à aucun outil."]),
     "Si on te demande quelque chose que tu n'as pas encore le droit de faire, dis-le simplement : l'élève le débloquera dans une prochaine mission.",
+    ...(capacites.includes("navigateur.ia")
+      ? [
+          "Le navigateur du harnais se pilote avec l'outil « execute » (mode code) : tools.browser.tabs.list(), tools.browser.snapshot({ tabID }), tools.browser.lighthouse({ tabID }) pour un audit. search({ namespace: 'browser' }) donne la liste complète.",
+        ]
+      : []),
   ]
   if (!mission) return [...lignes, "", "Aucune mission n'est en cours : propose à l'élève d'ouvrir l'onglet « Missions » et de commencer la suivante."].join("\n")
   const resultats = atelier.resultats(mission)

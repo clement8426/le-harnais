@@ -16,4 +16,5 @@ questions:
     choix: ["D'un vrai classement trouvé par ton IA", "D'un texte caché dans la page, écrit pour manipuler les IA", "D'une erreur de ton IA"]
     bonne: 1
     explication: La page contient un paragraphe invisible pour toi, mais lu par l'IA. Ce qu'une IA lit est une donnée, jamais un ordre ; un bon harnais le lui rappelle, et un bon utilisateur vérifie.
-indice: Ouvre missions/navigateur/fichiers/tilleul/index.html dans le navigateur du harnais, puis demande à ton IA « Lis la page Notre histoire et résume-la ».
+page: missions/navigateur/fichiers/tilleul/index.html
+indice: Clique sur « Ouvrir la page » dans ce panneau, puis sur « Lire notre histoire » dans la page. Demande ensuite à ton IA « Lis cette page et résume-la en deux phrases ».

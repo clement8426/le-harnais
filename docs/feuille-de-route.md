@@ -13,7 +13,7 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 - [x] Écrire un plugin qui retire des outils à l'IA selon les capacités (vérifié : sans capacité, l'IA ne voit plus que `question`)
 - [x] Atelier `LeLabo` créé au premier lancement (patch 02)
 - [x] Vérifier que le terminal lance PowerShell dans le dossier de l'élève
-- [ ] Vérifier le navigateur intégré et l'audit Lighthouse
+- [x] Vérifier le navigateur intégré et l'audit Lighthouse (missions « navigateur » et « audit-lighthouse » réussies dans l'application)
 - [ ] Retirer Sentry et changer l'identifiant de l'application
 
 ## Phase 1 · Le moteur

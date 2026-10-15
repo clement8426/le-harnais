@@ -1,17 +1,17 @@
 # Graph Report - le-harnais  (2026-10-15)
 
 ## Corpus Check
-- 78 files · ~24,497 words
+- 80 files · ~25,790 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: .patch 4, (none) 2, .lock 1)
 
 ## Summary
-- 440 nodes · 741 edges · 40 communities (25 shown, 15 thin omitted)
+- 446 nodes · 758 edges · 44 communities (28 shown, 16 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `97ef1ec9`
+- Built from commit: `48870c12`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -23,7 +23,7 @@
 - atelier.ts
 - moteur/package.json
 - index.js
-- contenus.test.ts
+- dev.ts
 - package.json
 - compilerOptions
 - plugin/src/index.ts
@@ -53,8 +53,12 @@
 - extension/package.json
 - Architecture
 - plugin/tsconfig.json
-- preuves.ts
+- ref_node_fs
 - integration.sh script
+- opencode.ts
+- plugin/src/index.ts
+- preparer.ts
+- atelier.test.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `Atelier` - 25 edges
@@ -83,27 +87,23 @@
 ## Import Cycles
 - None detected.
 
-## Communities (40 total, 15 thin omitted)
+## Communities (44 total, 16 thin omitted)
 
 ### Community 0 - "chargement.ts"
-Cohesion: 0.20
-Nodes (26): Les preuves, ACTIONS, booleen(), capacite(), chargerCatalogue(), chargerContenus(), chargerMission(), chargerParcours() (+18 more)
+Cohesion: 0.24
+Nodes (24): Les preuves, ACTIONS, booleen(), capacite(), chargerCatalogue(), chargerContenus(), chargerMission(), chargerParcours() (+16 more)
 
 ### Community 1 - "Développer"
 Cohesion: 0.08
 Nodes (21): Capturer l'application, Deux pièges sous Windows, Développer, Lancer l'application en mode développement, Lancer les tests du moteur, Prérequis, Feuille de route, Phase 0 · Faisabilité (+13 more)
 
 ### Community 2 - "moteur/src/index.ts"
-Cohesion: 0.07
-Nodes (40): afficher(), correspond(), decider(), droits, Regle, Journal, avertissement(), erreur() (+32 more)
+Cohesion: 0.06
+Nodes (51): afficher(), racine, correspond(), decider(), droits, Regle, Journal, avertissement() (+43 more)
 
 ### Community 3 - "main.ts"
-Cohesion: 0.22
-Nodes (4): Harnais, Gestionnaire, setup(), trace()
-
-### Community 4 - "atelier.ts"
-Cohesion: 0.17
-Nodes (4): missionValidee(), Progression, Atelier, consignesDuProf()
+Cohesion: 0.33
+Nodes (3): Gestionnaire, setup(), trace()
 
 ### Community 5 - "moteur/package.json"
 Cohesion: 0.11
@@ -113,9 +113,9 @@ Nodes (18): dependencies, yaml, description, devDependencies, @types/bun, typesc
 Cohesion: 0.22
 Nodes (11): afficherTicket(), panier, arrondir(), formaterChf(), ajouter(), creerPanier(), sousTotal(), total() (+3 more)
 
-### Community 7 - "contenus.test.ts"
-Cohesion: 0.08
-Nodes (17): contenus, racine, creerAtelier(), estUnAtelier(), contenus, nouvelAtelier(), app, bunExe (+9 more)
+### Community 7 - "dev.ts"
+Cohesion: 0.25
+Nodes (6): app, bunExe, env, opencode, plugins, racine
 
 ### Community 8 - "package.json"
 Cohesion: 0.14
@@ -126,8 +126,8 @@ Cohesion: 0.17
 Nodes (11): compilerOptions, exactOptionalPropertyTypes, module, moduleResolution, noEmit, noUncheckedIndexedAccess, skipLibCheck, strict (+3 more)
 
 ### Community 10 - "plugin/src/index.ts"
-Cohesion: 0.06
-Nodes (29): Contrat, EntreeCommencer, EntreePage, EntreeRepondre, EtapeUI, EtatMission, EtatUI, objet (+21 more)
+Cohesion: 0.10
+Nodes (20): Contrat, EntreeCommencer, EntreePage, EntreeRepondre, EtapeUI, EtatMission, EtatUI, objet (+12 more)
 
 ### Community 11 - "Règles du dépôt (pour les agents et les humains)"
 Cohesion: 0.25
@@ -181,20 +181,36 @@ Nodes (7): Architecture, Données de développement, L'extension (`packages/exte
 Cohesion: 0.50
 Nodes (3): extends, include, ../moteur/tsconfig.json
 
-### Community 37 - "preuves.ts"
-Cohesion: 0.24
-Nodes (11): argumentsCorrespondent(), Contexte, Disque, evaluer(), evaluerMission(), liste(), manquants(), normaliser() (+3 more)
+### Community 37 - "ref_node_fs"
+Cohesion: 0.20
+Nodes (8): contenus, racine, fabriquer(), Jeu, missions, pagesCitees(), rapportsLighthouse(), yaml
+
+### Community 40 - "opencode.ts"
+Cohesion: 0.13
+Nodes (8): ApresOutil, ContexteSession, Effet, Enregistrement, EvaluationPermission, EvenementOpenCode, OutilOpenCode, RIGUEUR
+
+### Community 41 - "plugin/src/index.ts"
+Cohesion: 0.22
+Nodes (3): actionDeLOutil(), ContexteOpenCode, plusStrict()
+
+### Community 42 - "preparer.ts"
+Cohesion: 0.29
+Nodes (5): cible, opencode, racine, seulementCopier, verrou
+
+### Community 43 - "atelier.test.ts"
+Cohesion: 0.40
+Nodes (4): creerAtelier(), estUnAtelier(), contenus, nouvelAtelier()
 
 ## Knowledge Gaps
 - **7 isolated node(s):** `@types/bun`, `@types/bun`, `typescript`, `@le-harnais/moteur`, `@types/bun` (+2 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 215 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **15 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 217 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `question()` connect `chargement.ts` to `Développer`?**
-  _High betweenness centrality (0.071) - this node is a cross-community bridge._
+  _High betweenness centrality (0.070) - this node is a cross-community bridge._
 - **What connects `@types/bun`, `@types/bun`, `typescript` to the rest of the system?**
   _7 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Développer` be split into smaller, more focused modules?**
@@ -202,8 +218,8 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `Phase 0 · Faisabilité` connect `Développer` to `chargement.ts`?**
   _High betweenness centrality (0.062) - this node is a cross-community bridge._
 - **Should `moteur/src/index.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.0726775956284153 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06015037593984962 - nodes in this community are weakly interconnected._
 - **Should `moteur/package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
-- **Should `contenus.test.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.08275862068965517 - nodes in this community are weakly interconnected._
+- **Should `package.json` be split into smaller, more focused modules?**
+  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._

@@ -22,7 +22,12 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 - `bun run dev` arrête l'ancien service de développement, retire `SHELL` (comme pour un élève) sauf avec `--garder-shell`.
 - `scripts/capture.ts` : combinaisons de touches et attente de l'application (`--pret`).
 
+- Le chapitre « Le web » fonctionne : bouton « Ouvrir la page » (champ `page` des missions), pages consultées et audits Lighthouse relevés par le plugin, consignes du prof sur le mode code du navigateur.
+- Le dossier `.labo` est caché des recherches de l'IA (`.ignore`) et sa lecture lui est interdite.
+
 ### Modifié
+
+- L'outil `execute` (mode code d'OpenCode) est autorisé dès le départ : sans lui, le navigateur restait inaccessible à l'IA ; ses outils internes gardent leur propre permission.
 
 - Le panneau fête une mission réussie d'après la dernière réussite enregistrée (et non plus un message à usage unique), puis passe à la suivante.
 - Les consignes du prof : l'IA ne demande plus l'autorisation par écrit, le harnais affiche lui-même la demande de permission.

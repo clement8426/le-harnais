@@ -20,6 +20,7 @@ export const STYLE = `
 .lh-resume { margin: 0 0 10px; opacity: .85; }
 .lh-bouton { border: 0; border-radius: 10px; padding: 9px 16px; background: #2B44E8; color: #fff; font-weight: 600; cursor: pointer; }
 .lh-bouton:hover { filter: brightness(1.1); }
+.lh-second { background: transparent; color: inherit; border: 1.5px solid rgba(127, 127, 127, .45); margin-bottom: 4px; }
 .lh-lien { border: 0; background: none; padding: 0; margin-top: 10px; color: inherit; text-decoration: underline; opacity: .8; cursor: pointer; }
 .lh-reussie { color: #4fc08d; font-weight: 600; margin: 4px 0 0; }
 .lh-preuves { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }

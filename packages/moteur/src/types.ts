@@ -62,6 +62,8 @@ export interface Mission {
   preuves: Preuve[]
   questions: Question[]
   indice: string
+  /** Une page du dossier de l'élève à ouvrir dans le navigateur du harnais (bouton du panneau). */
+  page?: string
   os?: Systeme[]
   /** Contenu de cours.md, si le fichier existe. */
   cours?: string

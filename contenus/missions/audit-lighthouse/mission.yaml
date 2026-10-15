@@ -15,4 +15,5 @@ questions:
     choix: ["L'image du logo n'a pas de texte alternatif", "Le texte « image » ne décrit pas vraiment la tarte", "Le texte de la promotion est trop pâle"]
     bonne: 1
     explication: Lighthouse vérifie qu'un texte alternatif existe, pas qu'il a du sens. « image » passe l'audit, mais un lecteur d'écran lit juste « image ». Là, ton jugement (ou ton IA) fait mieux que l'outil.
+page: missions/navigateur/fichiers/tilleul/index.html
 indice: Garde la page Tilleul ouverte dans le navigateur et demande « Lance un audit Lighthouse d'accessibilité sur cette page et explique-moi chaque défaut ».

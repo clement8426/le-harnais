@@ -27,7 +27,10 @@ if (process.argv[2] === "--pret") {
 }
 
 const cibles = (await (await fetch(`http://127.0.0.1:${port}/json/list`)).json()) as { type: string; url: string; webSocketDebuggerUrl: string }[]
-const page = cibles.find((c) => c.type === "page" && /index\.html|localhost:5173/.test(c.url)) ?? cibles.find((c) => c.type === "page")
+// La fenêtre de l'application (serveur Vite en développement), pas une page ouverte dans son navigateur intégré.
+const page =
+  cibles.find((c) => c.type === "page" && c.url.startsWith("http://localhost:5173")) ??
+  cibles.find((c) => c.type === "page" && !c.url.startsWith("file:"))
 if (!page) throw new Error(`Aucune fenêtre trouvée sur le port ${port}.`)
 
 const ws = new WebSocket(page.webSocketDebuggerUrl)

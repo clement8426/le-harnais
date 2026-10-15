@@ -18,7 +18,7 @@ const setup: Setup<typeof definition> = (ctx) => {
     list: () => [{ id: "missions", title: ctx.t("title"), pinned: true, closable: false, fallback: true }],
     render: (props) => (
       <Suspense fallback={<p>{ctx.t("loading")}</p>}>
-        <Missions session={props.session} />
+        <Missions session={props.session} navigateur={ctx.uses.browser} />
       </Suspense>
     ),
   })

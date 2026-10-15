@@ -58,6 +58,9 @@ export class Atelier {
     this.contenus = chargerContenus(racineContenus)
     // Le dossier des missions existe dès le départ : la mission « terminal » demande d'y entrer.
     mkdirSync(path.join(dossier, "missions"), { recursive: true })
+    // Les recherches de l'IA (grep, glob) respectent .ignore : le dossier .labo n'encombre pas ses résultats.
+    const ignore = path.join(dossier, ".ignore")
+    if (!existsSync(ignore)) writeFileSync(ignore, ".labo/\n")
   }
 
   private chemin(nom: string) {
@@ -210,6 +213,7 @@ export class Atelier {
         etat: encours ? "en-cours" : (etatsMissions.get(m.id) ?? "verrouillee"),
         ...(m.cours ? { cours: m.cours } : {}),
         indice: m.indice,
+        ...(m.page ? { page: m.page } : {}),
         questions: m.questions.map((q) => ({ id: q.id, enonce: q.enonce, choix: q.choix })),
         ...(encours ? { preuves: this.resultats(m).map((r) => ({ ok: r.ok, detail: r.detail })) } : {}),
       }

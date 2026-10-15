@@ -20,6 +20,9 @@ capacites:
     description: Ton IA te répond et peut te poser des questions. Elle n'a accès à rien d'autre.
     effets:
       - { type: permission, outil: question, action: allow }
+      # « execute » est le mode code d'OpenCode : il appelle d'autres outils (navigateur, connecteurs MCP),
+      # qui gardent chacun leur propre permission. L'autoriser n'ouvre donc rien par lui-même.
+      - { type: permission, outil: execute, action: allow }
 
   - id: terminal.eleve
     titre: Le terminal
@@ -119,7 +122,8 @@ toujours:
   - { type: permission, outil: external_directory, action: deny }
   - { type: permission, outil: read, motif: "*.env", action: deny }
   - { type: permission, outil: read, motif: "*.env.*", action: deny }
-  - { type: permission, outil: edit, motif: "*.labo/*", action: deny }
+  - { type: permission, outil: edit, motif: "*.labo*", action: deny }
+  - { type: permission, outil: read, motif: "*.labo*", action: deny }
   - { type: permission, outil: shell, motif: "rm *", action: deny }
   - { type: permission, outil: shell, motif: "del *", action: deny }
   - { type: permission, outil: shell, motif: "rmdir *", action: deny }

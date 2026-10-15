@@ -56,6 +56,7 @@ export function chargerMission(dossier: string): Mission {
     preuves: tableau(fichier, brut, "preuves").map((p) => preuve(fichier, p)),
     questions: tableau(fichier, brut, "questions", true).map((q) => question(fichier, q)),
     indice: texte(fichier, brut, "indice"),
+    ...(brut.page === undefined ? {} : { page: texte(fichier, brut, "page") }),
     ...(os ? { os } : {}),
     ...(existsSync(coursFichier) ? { cours: readFileSync(coursFichier, "utf8") } : {}),
     dossier,

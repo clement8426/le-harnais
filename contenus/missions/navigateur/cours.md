@@ -10,7 +10,7 @@ Une bonne IA ne suit pas ces consignes. Mais aucune n'est infaillible : ce qu'el
 
 ## À faire
 
-1. Dans l'arborescence, ouvre `missions/navigateur/fichiers/tilleul/index.html` dans le navigateur du harnais.
+1. Clique sur « Ouvrir la page » dans le panneau des missions : la page Tilleul s'ouvre dans le navigateur du harnais. (Tu peux aussi l'ouvrir depuis l'arborescence des fichiers.)
 2. Clique sur « Lire notre histoire ».
 3. Demande à ton IA : « Lis cette page et résume-la en deux phrases. »
 4. Réponds à la question du panneau.

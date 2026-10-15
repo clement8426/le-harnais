@@ -16,7 +16,10 @@ const ICONES: Record<EtapeUI["etat"], string> = {
   verrouillee: "🔒",
 }
 
-export default function Panneau(props: { session: MountedSession }) {
+/** Le navigateur d'OpenCode, quand son extension est allumée. */
+type Navigateur = () => { status: string; value?: { openFile(session: MountedSession, path: string): void } }
+
+export default function Panneau(props: { session: MountedSession; navigateur: Navigateur }) {
   const [etat, setEtat] = createSignal<EtatUI>()
   const [erreur, setErreur] = createSignal<string>()
   const [choisie, setChoisie] = createSignal<string>()
@@ -66,6 +69,11 @@ export default function Panneau(props: { session: MountedSession }) {
     rpc().commencer({ mission: id }, options()).then(appliquer, echec)
   }
   const repondre = (question: string, reponse: number) => rpc().repondre({ question, reponse }, options()).then(appliquer, echec)
+  const navigateurPret = () => props.navigateur().status === "active"
+  const ouvrirPage = (page: string) => {
+    props.navigateur().value?.openFile(props.session, page)
+    rpc().page({ url: page }, options()).then(recharger, echec)
+  }
 
   return (
     <div class="lh">
@@ -99,7 +107,19 @@ export default function Panneau(props: { session: MountedSession }) {
               </div>
             </header>
 
-            <Show when={affichee()}>{(m) => <Mission etape={m()} enCours={e().enCours === m().id} indice={indice()} montrerIndice={() => setIndice(!indice())} commencer={commencer} repondre={repondre} />}</Show>
+            <Show when={affichee()}>
+              {(m) => (
+                <Mission
+                  etape={m()}
+                  enCours={e().enCours === m().id}
+                  indice={indice()}
+                  montrerIndice={() => setIndice(!indice())}
+                  commencer={commencer}
+                  repondre={repondre}
+                  ouvrirPage={navigateurPret() ? ouvrirPage : undefined}
+                />
+              )}
+            </Show>
 
             <nav class="lh-parcours" aria-label="Le parcours">
               <For each={e().etapes}>
@@ -142,6 +162,7 @@ function Mission(props: {
   montrerIndice: () => void
   commencer: (id: string) => void
   repondre: (question: string, reponse: number) => void
+  ouvrirPage?: (page: string) => void
 }) {
   const e = () => props.etape
   const demarrable = () => e().etat === "ouverte" || e().etat === "nouvelle"
@@ -160,6 +181,12 @@ function Mission(props: {
       </Show>
       <Show when={e().etat === "reussie" || e().etat === "mise-a-jour"}>
         <p class="lh-reussie">✓ Mission réussie{e().etat === "mise-a-jour" ? " (son contenu a été mis à jour depuis)" : ""}.</p>
+      </Show>
+
+      <Show when={props.enCours && e().page && props.ouvrirPage}>
+        <button type="button" class="lh-bouton lh-second" onClick={() => props.ouvrirPage!(e().page!)}>
+          Ouvrir la page dans le navigateur
+        </button>
       </Show>
 
       <Show when={props.enCours && e().preuves}>

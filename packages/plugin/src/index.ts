@@ -12,6 +12,8 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import { Contrat, type EntreeCommencer, type EntreePage, type EntreeRepondre } from "../../extension/src/contrat"
 import { Atelier, estUnAtelier } from "./atelier"
+import { pagesCitees, rapportsLighthouse } from "./detection"
+import { tmpdir } from "node:os"
 import { actionDeLOutil, plusStrict, type ContexteOpenCode } from "./opencode"
 import { consignesDuProf } from "./prof"
 
@@ -99,9 +101,13 @@ export default {
         const toujoursRefuse = decider(regles, action, "*") === "deny" && !regles.some((r) => r.outil === action && r.action !== "deny")
         if (toujoursRefuse) delete e.tools[outil]
       }
+      trace(`outils gardés : ${Object.keys(e.tools).join(",")}`)
       e.system.push({ type: "text", text: consignesDuProf(atelier) })
     })
 
+    // Les rapports Lighthouse plus anciens que le démarrage du plugin, ou déjà lus, sont ignorés.
+    const debut = Date.now()
+    const rapportsLus = new Set<string>()
     await ctx.tool.hook("execute.after", async (e) => {
       const resultat = e.status === "completed" ? texte(e.result?.content ?? e.result?.output) : undefined
       const arguments_ = e.input && typeof e.input === "object" ? (e.input as Record<string, unknown>) : {}
@@ -113,6 +119,13 @@ export default {
         ...(resultat !== undefined ? { resultat: resultat.slice(0, 20_000) } : {}),
         ...(e.status === "error" ? { erreur: e.error?.message ?? "erreur" } : {}),
       })
+      // Le navigateur d'OpenCode répond dans le texte de l'outil (pages consultées), et enregistre ses rapports
+      // Lighthouse sur le disque : on lit les deux, pour ne pas dépendre de ce que l'IA garde du résultat.
+      if (resultat) pagesCitees(resultat).forEach((url) => atelier.enregistrer({ quand: maintenant(), type: "navigateur.page", url }))
+      if (e.tool === "execute" && JSON.stringify(e.input).includes("lighthouse"))
+        rapportsLighthouse(tmpdir(), debut, rapportsLus).forEach((a) =>
+          atelier.enregistrer({ quand: maintenant(), type: "audit", categorie: a.categorie, score: a.score }),
+        )
       await changement()
     })
 

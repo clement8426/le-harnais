@@ -6,7 +6,7 @@ La page Tilleul contient cinq défauts volontaires : une image sans texte altern
 
 ## À faire
 
-1. Ouvre `missions/navigateur/fichiers/tilleul/index.html` dans le navigateur.
+1. Clique sur « Ouvrir la page » dans le panneau : la page Tilleul s'ouvre dans le navigateur.
 2. Demande : « Lance un audit Lighthouse d'accessibilité sur cette page et explique-moi chaque défaut, simplement. »
 3. Compare la liste de ton IA aux cinq défauts ci-dessus. Lequel manque ?
 4. Réponds à la question du panneau.

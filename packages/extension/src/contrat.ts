@@ -33,6 +33,8 @@ export interface EtapeUI {
   etat: EtatMission
   cours?: string
   indice: string
+  /** Une page du dossier de l'élève à ouvrir dans le navigateur, chemin relatif à l'atelier. */
+  page?: string
   /** Les questions, sans la bonne réponse. */
   questions: { id: string; enonce: string; choix: string[] }[]
   /** Pour la mission en cours seulement : chaque preuve, verte ou rouge. */

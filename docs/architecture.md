@@ -31,6 +31,8 @@ Chargé par le serveur d'OpenCode (API de plugins « Promise » de la V2) depuis
 
 Seul `src/opencode.ts` décrit l'API d'OpenCode : si elle change, c'est là qu'on adapte.
 
+Le navigateur d'OpenCode se pilote par l'outil `execute` (le mode code : `tools.browser.*`). Ses outils internes gardent leur propre permission (`browser`), si bien qu'autoriser `execute` n'ouvre rien par lui-même. Après chaque appel, `src/detection.ts` relève les pages citées dans le résultat, et lit les rapports Lighthouse que le navigateur enregistre dans le dossier temporaire du serveur (`opencode-browser-*/…/lighthouse.json`) : la preuve de l'audit ne dépend pas de ce que l'IA garde du résultat.
+
 L'atelier (`src/atelier.ts`) range tout dans `LeLabo/.labo/` : `harnais.json` (le parcours suivi), `progression.json`, `en-cours.json`, `journal.jsonl`. Après chaque événement, il réévalue les preuves de la mission en cours et la valide si tout est vert.
 
 ## L'extension (`packages/extension`)
