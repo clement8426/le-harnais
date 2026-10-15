@@ -24,6 +24,11 @@ export function consignesDuProf(atelier: Atelier) {
           "Le navigateur du harnais se pilote avec l'outil « execute » (mode code) : tools.browser.tabs.list(), tools.browser.snapshot({ tabID }), tools.browser.lighthouse({ tabID }) pour un audit. search({ namespace: 'browser' }) donne la liste complète.",
         ]
       : []),
+    ...(capacites.includes("memoire.graphe")
+      ? [
+          "Graphify est installé sur l'ordinateur de l'élève : utilise-le avec l'outil « shell », par exemple « graphify update <dossier> » (analyse locale, sans IA), puis lis <dossier>/graphify-out/GRAPH_REPORT.md avant de répondre à une question d'architecture.",
+        ]
+      : []),
   ]
   if (!mission) return [...lignes, "", "Aucune mission n'est en cours : propose à l'élève d'ouvrir l'onglet « Missions » et de commencer la suivante."].join("\n")
   const resultats = atelier.resultats(mission)

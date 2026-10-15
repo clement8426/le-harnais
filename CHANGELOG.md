@@ -35,4 +35,4 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 
 ### Vérifié dans l'application
 
-Missions jouées de bout en bout dans OpenCode Desktop, sous Windows, avec le modèle gratuit par défaut : brancher-ia, harnais-c-est-quoi, terminal (PowerShell), fichiers, ia-et-terminal, navigateur, audit-lighthouse, skills, mcp-lighthouse.
+Missions jouées de bout en bout dans OpenCode Desktop, sous Windows, avec le modèle gratuit par défaut : brancher-ia, harnais-c-est-quoi, terminal (PowerShell), fichiers, ia-et-terminal, navigateur, audit-lighthouse, skills, mcp-lighthouse, plugins-graphify.
