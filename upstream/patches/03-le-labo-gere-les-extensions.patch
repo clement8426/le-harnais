@@ -1,0 +1,29 @@
+diff --git a/packages/desktop/src/main/extension/host.ts b/packages/desktop/src/main/extension/host.ts
+index 8317dfd..671ffa2 100644
+--- a/packages/desktop/src/main/extension/host.ts
++++ b/packages/desktop/src/main/extension/host.ts
+@@ -499,6 +499,24 @@ export function createHost(input: {
+       get cli() {
+         return input.cli
+       },
++      // Le Harnais : seule l'extension « le-labo » peut allumer et éteindre les autres, selon les missions réussies.
++      ...(id === "le-labo"
++        ? {
++            leHarnais: {
++              enabled: (other: string) => manager.enabled(other),
++              enable: async (other: string) => {
++                manager.setEnabled(other, true)
++                changed()
++                await lifecycle.activate(other)
++              },
++              disable: async (other: string) => {
++                manager.setEnabled(other, false)
++                await lifecycle.deactivate(other)
++                changed()
++              },
++            },
++          }
++        : {}),
+       add,
+       list,
+       provide,

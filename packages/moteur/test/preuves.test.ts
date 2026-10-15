@@ -11,13 +11,13 @@ function mission(preuves: Mission["preuves"], questions: Mission["questions"] = 
 const t = (minute: number) => `2026-10-15T10:${String(minute).padStart(2, "0")}:00Z`
 
 describe("preuves", () => {
-  test("terminal.commande : il faut la commande ET la sortie attendue", () => {
-    const m = mission([{ type: "terminal.commande", motif: "^node --version$", sortie: "v\\d+\\." }])
-    const rate: Evenement[] = [{ quand: t(1), type: "terminal.commande", commande: "node --versoin", sortie: "" }]
-    const echoue: Evenement[] = [{ quand: t(1), type: "terminal.commande", commande: "node --version", sortie: "node : Le terme « node » n'est pas reconnu" }]
-    const reussi: Evenement[] = [{ quand: t(2), type: "terminal.commande", commande: " node --version ", sortie: "v24.15.0" }]
-    expect(evaluerMission(m, { journal: rate, disque: disqueVide })[0]!.ok).toBe(false)
-    expect(evaluerMission(m, { journal: echoue, disque: disqueVide })[0]!.detail).toContain("n'a pas affiché le résultat attendu")
+  test("terminal.commande : il faut la bonne commande, et qu'elle ait réussi", () => {
+    const m = mission([{ type: "terminal.commande", motif: "^node (--version|-v)$" }])
+    const rate: Evenement[] = [{ quand: t(1), type: "terminal.commande", commande: "node --versoin", ok: false }]
+    const echoue: Evenement[] = [{ quand: t(1), type: "terminal.commande", commande: "node --version", ok: false }]
+    const reussi: Evenement[] = [{ quand: t(2), type: "terminal.commande", commande: " node -v ", ok: true }]
+    expect(evaluerMission(m, { journal: rate, disque: disqueVide })[0]!.detail).toContain("pas encore été lancée")
+    expect(evaluerMission(m, { journal: echoue, disque: disqueVide })[0]!.detail).toContain("elle a échoué")
     expect(missionValidee(evaluerMission(m, { journal: reussi, disque: disqueVide }))).toBe(true)
   })
 

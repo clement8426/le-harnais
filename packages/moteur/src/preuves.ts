@@ -95,12 +95,9 @@ function evaluer(preuve: Preuve, mission: Mission, { journal, disque }: Contexte
     case "terminal.commande": {
       const motif = new RegExp(preuve.motif, "i")
       const lancees = de("terminal.commande").filter((e) => motif.test(e.commande.trim()))
-      if (!lancees.length) return r(false, "La commande n'a pas encore été lancée dans le terminal.")
-      if (!preuve.sortie) return r(true, "La commande a été lancée.")
-      const sortie = new RegExp(preuve.sortie, "i")
-      return lancees.some((e) => sortie.test(e.sortie))
-        ? r(true, "La commande a été lancée et a affiché le résultat attendu.")
-        : r(false, "La commande a été lancée, mais n'a pas affiché le résultat attendu. Lis le message dans le terminal.")
+      if (lancees.some((e) => e.ok)) return r(true, "La commande a été lancée et a réussi.")
+      if (lancees.length) return r(false, "La commande a été lancée, mais elle a échoué. Lis le message d'erreur dans le terminal.")
+      return r(false, "La commande n'a pas encore été lancée dans le terminal.")
     }
 
     case "navigateur.page": {

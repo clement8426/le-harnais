@@ -51,7 +51,7 @@ Les capacités sont définies dans `contenus/capacites.yaml`, avec ce qu'elles a
 | `fichier.contient` | Un fichier contient des mots (sans accents ni casse) | `chemin`, `contient` |
 | `audit.score` | Un audit Lighthouse a été produit | `categorie` |
 | `question` | L'élève a bien répondu à une question | `id` (défini dans `questions`) |
-| `terminal.commande` | L'élève a tapé une commande, qui a affiché le résultat attendu | `motif`, `sortie` (expressions régulières) |
+| `terminal.commande` | L'élève a tapé une commande dans son terminal, et elle a réussi | `motif` (expression régulière) |
 | `navigateur.page` | L'élève a ouvert une page | `motif` |
 
 Seuls les événements survenus depuis le début de la mission comptent. Les chemins sont relatifs au dossier `LeLabo` de l'élève.

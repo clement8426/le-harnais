@@ -35,7 +35,19 @@ L'atelier (`src/atelier.ts`) range tout dans `LeLabo/.labo/` : `harnais.json` (l
 
 ## L'extension (`packages/extension`)
 
-Une extension d'interface d'OpenCode, copiée dans `packages/gui-extensions/src/le-labo` par `scripts/preparer.ts`, et enregistrée parmi les extensions intégrées par le patch 01 (les extensions installées à part, au format `.ocdx`, sont encore refusées par les versions publiées d'OpenCode). Elle ajoute l'onglet « Missions » dans la zone latérale de chaque session et appelle le plugin par RPC.
+Une extension d'interface d'OpenCode, copiée dans `packages/gui-extensions/src/le-labo` par `scripts/preparer.ts`, et enregistrée parmi les extensions intégrées par le patch 01 (les extensions installées à part, au format `.ocdx`, sont encore refusées par les versions publiées d'OpenCode).
+
+- **Entrée « fenêtre »** (`renderer.tsx`) : l'onglet « Missions » (`panneau.tsx`), et la synchronisation des extensions (`synchro.ts`). Dès qu'une session d'atelier est ouverte, et à chaque changement d'état, elle demande au plugin les extensions débloquées.
+- **Entrée « processus principal »** (`main.ts`) : allume les extensions débloquées (ou prêtées par la mission en cours) et éteint les autres parmi les extensions gérées (`extensions_gerees` dans `capacites.yaml`). Elle passe par `ctx.leHarnais`, que le patch 03 ajoute au contexte de cette seule extension.
+
+## Le terminal de l'élève
+
+Le terminal ouvre le vrai shell de la machine, dans l'atelier. Pour savoir ce que l'élève y tape, le patch 04 charge une petite intégration au démarrage du shell :
+
+- **PowerShell** (`packages/plugin/shell/integration.ps1`, variable `LE_HARNAIS_POWERSHELL_INIT`) : la fonction `prompt` note chaque commande et sa réussite (`$?`) ;
+- **bash** (`packages/plugin/shell/integration.sh`, variable `LE_HARNAIS_BASH_INIT`) : même chose via `PROMPT_COMMAND`.
+
+Les deux écrivent une ligne JSON par commande dans `.labo/terminal.jsonl`, sans rien envoyer ailleurs. Le plugin relit ce fichier chaque seconde et l'ajoute au journal. OpenCode choisit le shell d'après la variable `SHELL` (Git Bash la définit), sinon PowerShell sous Windows.
 
 ## Les patchs d'OpenCode
 
@@ -43,6 +55,8 @@ Une extension d'interface d'OpenCode, copiée dans `packages/gui-extensions/src/
 | --- | --- | --- |
 | `01-enregistrer-extension-le-labo` | 2 listes d'extensions intégrées (7 lignes) | Charger notre extension |
 | `02-atelier-lelabo-par-defaut` | Le projet créé au premier lancement | C'est l'atelier `Documents/LeLabo`, marqué `.labo/harnais.json` |
+| `03-le-labo-gere-les-extensions` | Le contexte « processus principal » de l'extension `le-labo` | Lui permettre d'allumer et d'éteindre les autres extensions |
+| `04-integration-shell` | La création des terminaux (`core/src/pty.ts`) | Charger l'intégration PowerShell ou bash qui note les commandes |
 
 ## Données de développement
 

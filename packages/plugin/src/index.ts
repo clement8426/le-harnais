@@ -10,7 +10,7 @@ import { decider } from "@le-harnais/moteur"
 import { appendFileSync, existsSync } from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
-import { Contrat, type EntreeCommencer, type EntreePage, type EntreeRepondre, type EntreeTerminal } from "../../extension/src/contrat"
+import { Contrat, type EntreeCommencer, type EntreePage, type EntreeRepondre } from "../../extension/src/contrat"
 import { Atelier, estUnAtelier } from "./atelier"
 import { actionDeLOutil, plusStrict, type ContexteOpenCode } from "./opencode"
 import { consignesDuProf } from "./prof"
@@ -61,11 +61,6 @@ export default {
         atelier.enregistrer({ quand: maintenant(), type: "question", id: entree.question, reponse: entree.reponse })
         await changement()
         return atelier.etat(dernier)
-      },
-      terminal: async (entree: EntreeTerminal) => {
-        atelier.enregistrer({ quand: maintenant(), type: "terminal.commande", commande: entree.commande, sortie: entree.sortie })
-        await changement()
-        return {}
       },
       page: async (entree: EntreePage) => {
         atelier.enregistrer({ quand: maintenant(), type: "navigateur.page", url: entree.url })
@@ -120,6 +115,14 @@ export default {
       })
       await changement()
     })
+
+    // Les commandes de l'élève, notées par l'intégration du shell dans .labo/terminal.jsonl : relues chaque seconde.
+    // Au démarrage, on saute ce qui est déjà dans le fichier : c'était déjà importé dans le journal.
+    atelier.sauterTerminal()
+    const releve = setInterval(() => {
+      if (atelier.importerTerminal() > 0) void changement()
+    }, 1000)
+    releve.unref?.()
 
     // Les événements du serveur : permissions demandées et répondues, fin des réponses de l'IA.
     const demandes = new Map<string, string>()

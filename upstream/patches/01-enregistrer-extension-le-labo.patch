@@ -1,5 +1,5 @@
 diff --git a/packages/gui-extensions/src/main.ts b/packages/gui-extensions/src/main.ts
-index 8b5267d..554d503 100644
+index 8b5267d..1f59ceb 100644
 --- a/packages/gui-extensions/src/main.ts
 +++ b/packages/gui-extensions/src/main.ts
 @@ -12,6 +12,8 @@ import updater from "./updater"
@@ -15,7 +15,7 @@ index 8b5267d..554d503 100644
    { ...ssh, main: () => import("./ssh/main") },
    { ...wsl, main: () => import("./wsl/main") },
    microsoftOffice,
-+  leLabo,
++  { ...leLabo, main: () => import("./le-labo/main") },
  )
 diff --git a/packages/gui-extensions/src/renderer.ts b/packages/gui-extensions/src/renderer.ts
 index f5f1754..06e1145 100644

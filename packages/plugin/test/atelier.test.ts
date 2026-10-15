@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test"
-import { existsSync, mkdtempSync, writeFileSync } from "node:fs"
+import { appendFileSync, existsSync, mkdtempSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import path from "node:path"
 import { decider } from "@le-harnais/moteur"
@@ -45,9 +45,17 @@ describe("atelier", () => {
     expect(etat.enCours).toBe("terminal")
     expect(etat.etapes.find((e) => e.id === "terminal")!.preuves!.every((p) => !p.ok)).toBe(true)
 
-    a.enregistrer({ quand: new Date().toISOString(), type: "terminal.commande", commande: "node --version", sortie: "v24.15.0" })
-    a.enregistrer({ quand: new Date().toISOString(), type: "terminal.commande", commande: "cd missions", sortie: "" })
-    expect(a.enregistrer({ quand: new Date().toISOString(), type: "terminal.commande", commande: "ls", sortie: "terminal" })).toBe(true)
+    // Comme l'intégration PowerShell : une ligne JSON par commande, dans .labo/terminal.jsonl.
+    const terminal = path.join(a.dossier, ".labo/terminal.jsonl")
+    const ligne = (commande: string, ok: boolean) => JSON.stringify({ quand: new Date().toISOString(), commande, ok }) + "\n"
+    writeFileSync(terminal, ligne("node --versoin", false) + ligne("node --version", true))
+    expect(a.importerTerminal()).toBe(2)
+    expect(a.importerTerminal()).toBe(0) // rien de neuf
+    appendFileSync(terminal, ligne("cd missions", true) + '{"quand":"x","commande":"ls","ok":tr') // la dernière ligne est en cours d'écriture
+    expect(a.importerTerminal()).toBe(1)
+    appendFileSync(terminal, 'ue}\n')
+    expect(a.importerTerminal()).toBe(1)
+    expect(a.validerSiPret()).toBe(false) // déjà validée lors de l'import de « ls »
 
     const apres = a.etat()
     expect(apres.annonce).toBe("Mission réussie : Le terminal.")

@@ -1,17 +1,17 @@
 # Graph Report - le-harnais  (2026-10-15)
 
 ## Corpus Check
-- 75 files · ~23,174 words
+- 78 files · ~24,497 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 5 file(s) not represented in the graph (top: (none) 2, .patch 2, .lock 1)
+- Unclassified: 7 file(s) not represented in the graph (top: .patch 4, (none) 2, .lock 1)
 
 ## Summary
-- 423 nodes · 712 edges · 37 communities (24 shown, 13 thin omitted)
+- 440 nodes · 741 edges · 40 communities (25 shown, 15 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `28309f36`
+- Built from commit: `97ef1ec9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,7 +19,7 @@
 - chargement.ts
 - Développer
 - moteur/src/index.ts
-- types.ts
+- main.ts
 - atelier.ts
 - moteur/package.json
 - index.js
@@ -53,9 +53,11 @@
 - extension/package.json
 - Architecture
 - plugin/tsconfig.json
+- preuves.ts
+- integration.sh script
 
 ## God Nodes (most connected - your core abstractions)
-1. `Atelier` - 23 edges
+1. `Atelier` - 25 edges
 2. `ErreurContenu` - 18 edges
 3. `chargerContenus()` - 13 edges
 4. `chargerMission()` - 12 edges
@@ -73,35 +75,35 @@
   docs/ecrire-une-mission.md → packages/moteur/src/chargement.ts
 - `Les preuves` --references--> `motif()`  [INFERRED]
   docs/ecrire-une-mission.md → packages/moteur/src/chargement.ts
-- `etatsPour()` --calls--> `numeroter()`  [EXTRACTED]
-  packages/moteur/test/progression.test.ts → packages/moteur/src/parcours.ts
+- `Atelier` --references--> `Contenus`  [EXTRACTED]
+  packages/plugin/src/atelier.ts → packages/moteur/src/types.ts
 - `nouvelAtelier()` --calls--> `Atelier`  [EXTRACTED]
   packages/plugin/test/atelier.test.ts → packages/plugin/src/atelier.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (37 total, 13 thin omitted)
+## Communities (40 total, 15 thin omitted)
 
 ### Community 0 - "chargement.ts"
-Cohesion: 0.22
-Nodes (25): Les preuves, ACTIONS, booleen(), capacite(), chargerCatalogue(), chargerContenus(), chargerMission(), chargerParcours() (+17 more)
+Cohesion: 0.20
+Nodes (26): Les preuves, ACTIONS, booleen(), capacite(), chargerCatalogue(), chargerContenus(), chargerMission(), chargerParcours() (+18 more)
 
 ### Community 1 - "Développer"
 Cohesion: 0.08
 Nodes (21): Capturer l'application, Deux pièges sous Windows, Développer, Lancer l'application en mode développement, Lancer les tests du moteur, Prérequis, Feuille de route, Phase 0 · Faisabilité (+13 more)
 
 ### Community 2 - "moteur/src/index.ts"
-Cohesion: 0.08
-Nodes (30): correspond(), decider(), droits, Regle, argumentsCorrespondent(), Contexte, Disque, evaluer() (+22 more)
+Cohesion: 0.07
+Nodes (40): afficher(), correspond(), decider(), droits, Regle, Journal, avertissement(), erreur() (+32 more)
 
-### Community 3 - "types.ts"
-Cohesion: 0.29
-Nodes (10): afficher(), racine, avertissement(), erreur(), EtapeNumerotee, expliquerManque(), numeroter(), verifier() (+2 more)
+### Community 3 - "main.ts"
+Cohesion: 0.22
+Nodes (4): Harnais, Gestionnaire, setup(), trace()
 
 ### Community 4 - "atelier.ts"
-Cohesion: 0.11
-Nodes (16): Journal, acquises(), capacitesActives(), commencer(), Etat, etats(), prochaine(), progressionVide() (+8 more)
+Cohesion: 0.17
+Nodes (4): missionValidee(), Progression, Atelier, consignesDuProf()
 
 ### Community 5 - "moteur/package.json"
 Cohesion: 0.11
@@ -112,8 +114,8 @@ Cohesion: 0.22
 Nodes (11): afficherTicket(), panier, arrondir(), formaterChf(), ajouter(), creerPanier(), sousTotal(), total() (+3 more)
 
 ### Community 7 - "contenus.test.ts"
-Cohesion: 0.07
-Nodes (21): contenus, racine, fabriquer(), Jeu, missions, creerAtelier(), estUnAtelier(), contenus (+13 more)
+Cohesion: 0.08
+Nodes (17): contenus, racine, creerAtelier(), estUnAtelier(), contenus, nouvelAtelier(), app, bunExe (+9 more)
 
 ### Community 8 - "package.json"
 Cohesion: 0.14
@@ -125,7 +127,7 @@ Nodes (11): compilerOptions, exactOptionalPropertyTypes, module, moduleResolutio
 
 ### Community 10 - "plugin/src/index.ts"
 Cohesion: 0.06
-Nodes (28): Contrat, EntreeCommencer, EntreePage, EntreeRepondre, EntreeTerminal, EtapeUI, EtatMission, EtatUI (+20 more)
+Nodes (29): Contrat, EntreeCommencer, EntreePage, EntreeRepondre, EtapeUI, EtatMission, EtatUI, objet (+21 more)
 
 ### Community 11 - "Règles du dépôt (pour les agents et les humains)"
 Cohesion: 0.25
@@ -140,12 +142,12 @@ Cohesion: 0.40
 Nodes (4): Brancher ton IA, Le réflexe à prendre, Trois façons de le brancher, À faire
 
 ### Community 14 - "capture.ts"
-Cohesion: 0.33
-Nodes (4): args, cibles, TOUCHES, ws
+Cohesion: 0.29
+Nodes (5): args, cibles, MODIFICATEURS, TOUCHES, ws
 
 ### Community 15 - "Journal des modifications"
-Cohesion: 0.50
-Nodes (3): Ajouté, Journal des modifications, Non publié
+Cohesion: 0.40
+Nodes (4): Ajouté, Journal des modifications, Modifié, Non publié
 
 ### Community 16 - "Le défi final"
 Cohesion: 0.50
@@ -172,32 +174,36 @@ Cohesion: 0.18
 Nodes (10): description, devDependencies, @types/bun, @types/bun, name, private, scripts, test (+2 more)
 
 ### Community 35 - "Architecture"
-Cohesion: 0.29
-Nodes (6): Architecture, Données de développement, L'extension (`packages/extension`), Le moteur (`packages/moteur`), Le plugin serveur (`packages/plugin`), Les patchs d'OpenCode
+Cohesion: 0.25
+Nodes (7): Architecture, Données de développement, L'extension (`packages/extension`), Le moteur (`packages/moteur`), Le plugin serveur (`packages/plugin`), Le terminal de l'élève, Les patchs d'OpenCode
 
 ### Community 36 - "plugin/tsconfig.json"
 Cohesion: 0.50
 Nodes (3): extends, include, ../moteur/tsconfig.json
 
+### Community 37 - "preuves.ts"
+Cohesion: 0.24
+Nodes (11): argumentsCorrespondent(), Contexte, Disque, evaluer(), evaluerMission(), liste(), manquants(), normaliser() (+3 more)
+
 ## Knowledge Gaps
 - **7 isolated node(s):** `@types/bun`, `@types/bun`, `typescript`, `@le-harnais/moteur`, `@types/bun` (+2 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 205 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **13 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 215 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **15 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `question()` connect `chargement.ts` to `Développer`?**
-  _High betweenness centrality (0.073) - this node is a cross-community bridge._
+  _High betweenness centrality (0.071) - this node is a cross-community bridge._
 - **What connects `@types/bun`, `@types/bun`, `typescript` to the rest of the system?**
   _7 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Développer` be split into smaller, more focused modules?**
   _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
 - **Why does `Phase 0 · Faisabilité` connect `Développer` to `chargement.ts`?**
-  _High betweenness centrality (0.064) - this node is a cross-community bridge._
+  _High betweenness centrality (0.062) - this node is a cross-community bridge._
 - **Should `moteur/src/index.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.08309178743961353 - nodes in this community are weakly interconnected._
-- **Should `atelier.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.1106612685560054 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0726775956284153 - nodes in this community are weakly interconnected._
 - **Should `moteur/package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
+- **Should `contenus.test.ts` be split into smaller, more focused modules?**
+  _Cohesion score 0.08275862068965517 - nodes in this community are weakly interconnected._

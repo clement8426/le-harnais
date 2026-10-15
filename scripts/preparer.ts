@@ -2,7 +2,7 @@
 // Prépare la copie de travail d'OpenCode dans .upstream/opencode :
 //   1. la récupère à la version figée dans upstream/opencode.lock.json (si absente) ;
 //   2. remet ses fichiers suivis à l'état d'origine, puis applique nos patchs (upstream/patches/*.patch) ;
-//   3. copie notre extension dans gui-extensions/src/le-labo, avec les modules purs du moteur.
+//   3. copie notre extension dans gui-extensions/src/le-labo.
 // Relancer ce script est sans risque : il repart toujours de l'état d'origine.
 //
 //   bun scripts/preparer.ts            prépare tout
@@ -46,10 +46,8 @@ if (!seulementCopier) {
   }
 }
 
-// L'extension, plus les modules du moteur utilisables dans une fenêtre (sans accès disque).
+// L'extension : elle ne dépend que du SDK d'OpenCode et de son contrat avec le plugin.
 const cible = path.join(opencode, "packages/gui-extensions/src/le-labo")
 rmSync(cible, { recursive: true, force: true })
 cpSync(path.join(racine, "packages/extension/src"), cible, { recursive: true })
-for (const module of ["types", "parcours", "progression", "preuves", "droits", "terminal"])
-  cpSync(path.join(racine, `packages/moteur/src/${module}.ts`), path.join(cible, `moteur/${module}.ts`))
 console.log(`✓ extension copiée dans ${path.relative(racine, cible)}`)

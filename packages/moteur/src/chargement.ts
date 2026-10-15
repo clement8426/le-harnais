@@ -127,7 +127,7 @@ function preuve(fichier: string, valeur: unknown): Preuve {
     case "question":
       return { type, id: texte(fichier, o, "id") }
     case "terminal.commande":
-      return { type, motif: motif(fichier, texte(fichier, o, "motif")), ...(o.sortie === undefined ? {} : { sortie: motif(fichier, texte(fichier, o, "sortie")) }) }
+      return { type, motif: motif(fichier, texte(fichier, o, "motif")) }
     case "navigateur.page":
       return { type, motif: motif(fichier, texte(fichier, o, "motif")) }
     default:

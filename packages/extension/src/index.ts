@@ -3,9 +3,11 @@
 
 import { Extension } from "../sdk"
 import en from "./i18n/en"
+import { Harnais } from "./ipc"
 
 export default Extension.define({
   id: "le-labo",
+  provides: { harnais: Harnais },
   i18n: {
     en,
     fr: () => import("./i18n/fr"),

@@ -8,7 +8,6 @@ debloque: [terminal.eleve]
 preuves:
   - type: terminal.commande
     motif: "^node (--version|-v)$"
-    sortie: "v\\d+\\.\\d+"
   - type: terminal.commande
     motif: "^(cd|Set-Location|sl|chdir)\\s+.*missions"
   - type: terminal.commande

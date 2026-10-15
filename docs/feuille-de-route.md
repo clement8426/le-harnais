@@ -12,7 +12,7 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 - [x] Ajouter une extension « le-labo » aux extensions intégrées (patch de 7 lignes, `scripts/preparer.ts`) : l'onglet « Missions » s'affiche
 - [x] Écrire un plugin qui retire des outils à l'IA selon les capacités (vérifié : sans capacité, l'IA ne voit plus que `question`)
 - [x] Atelier `LeLabo` créé au premier lancement (patch 02)
-- [ ] Vérifier que le terminal lance PowerShell dans le dossier de l'élève
+- [x] Vérifier que le terminal lance PowerShell dans le dossier de l'élève
 - [ ] Vérifier le navigateur intégré et l'audit Lighthouse
 - [ ] Retirer Sentry et changer l'identifiant de l'application
 
@@ -22,14 +22,13 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 - [x] Vérificateur de parcours (`bun run verifier`)
 - [x] Progression rangée par nom, états des missions (ouverte, nouvelle, réussie, mise à jour)
 - [x] Preuves (10 types) et droits de l'IA (traduction en permissions OpenCode)
-- [x] Lecture des commandes dans l'affichage du terminal
 - [x] Contenus du parcours débutant (15 missions, 6 chapitres), vérifiés par les tests
 - [x] Panneau des missions dans l'application : parcours, mission, cours, preuves, questions, indice
 - [x] Plugin serveur : droits de l'IA, journal, validation automatique, RPC avec le panneau
 - [x] Agent « prof » : consignes ajoutées au prompt système (mission en cours, preuves, droits)
-- [x] Mission 1 jouée de bout en bout dans l'application : validée dès la réponse de l'IA
-- [ ] Allumer et éteindre les extensions (terminal, fichiers, revue, navigateur) selon les capacités
-- [ ] Preuves du terminal : intégration PowerShell (patch 03)
+- [x] Missions 1 à 3 jouées de bout en bout dans l'application (IA, questions, terminal PowerShell)
+- [x] Allumer et éteindre les extensions selon les capacités (patch 03) : le terminal s'allume quand la mission le prête
+- [x] Preuves du terminal : intégrations PowerShell et bash (patch 04)
 
 ## Phases suivantes
 

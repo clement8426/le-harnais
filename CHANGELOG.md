@@ -6,7 +6,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 
 ### Ajouté
 
-- Le moteur (`packages/moteur`) : capacités, missions, parcours, vérificateur, progression, preuves, droits de l'IA, lecture des commandes du terminal. 37 tests, dont la vérification des vrais contenus.
+- Le moteur (`packages/moteur`) : capacités, missions, parcours, vérificateur, progression, preuves, droits de l'IA. Ses tests vérifient aussi les vrais contenus.
 - Le parcours débutant : 15 missions en 6 chapitres (`contenus/`), avec cours, questions, fichiers fictifs (scan, note vocale, page Tilleul à défauts volontaires, page piégée, petit projet pour Graphify) et le catalogue des capacités.
 - Les missions peuvent prêter des capacités le temps de la mission (`prete`), et exiger un fournisseur d'IA précis (`ia.reponse` + `fournisseurs`).
 - Le guide `docs/ecrire-une-mission.md`.
@@ -17,6 +17,14 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 - Le patch 02 : au premier lancement, le projet par défaut est l'atelier `Documents/LeLabo`.
 - `bun run dev` (`scripts/dev.ts`) : lance l'application isolée dans `~/.le-harnais-dev`, plugin installé.
 - `docs/architecture.md`.
+- Les extensions d'OpenCode (terminal, fichiers, revue, navigateur…) s'allument et s'éteignent selon les capacités (patch 03, `synchro.ts`, `main.ts`).
+- Les commandes de l'élève sont notées par une intégration PowerShell ou bash chargée au démarrage du terminal (patch 04), puis importées dans le journal.
+- `bun run dev` arrête l'ancien service de développement, retire `SHELL` (comme pour un élève) sauf avec `--garder-shell`.
+- `scripts/capture.ts` : combinaisons de touches et attente de l'application (`--pret`).
+
+### Modifié
+
+- La preuve `terminal.commande` vérifie la commande et sa réussite (et non plus sa sortie) : la lecture de l'écran du terminal est remplacée par l'intégration au shell, plus fiable.
 - Le script `scripts/preparer.ts` et le premier patch d'OpenCode (`upstream/patches/01-enregistrer-extension-le-labo.patch`, 7 lignes). Sous Windows, il remplace aussi les liens symboliques du dépôt d'OpenCode par des copies.
 - La documentation de départ : README, règles du dépôt, feuille de route, guide de développement, questions ouvertes, licences.
 - OpenCode figé sur v2.0.29 (`upstream/opencode.lock.json`).

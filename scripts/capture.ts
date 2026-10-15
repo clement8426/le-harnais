@@ -6,8 +6,26 @@
 //   bun scripts/capture.ts image.png                       capture de la fenêtre principale
 //   bun scripts/capture.ts --eval "document.title"         évalue du JavaScript dans la fenêtre
 //   bun scripts/capture.ts --clic 800 495 --taper "Bonjour" --touche Enter --attendre 3000 image.png
+//   bun scripts/capture.ts --pret image.png                attend que l'application soit prête (en premier seulement)
+// --touche accepte les combinaisons : « ctrl+` », « ctrl+shift+p ».
 
 const port = process.env.OPENCODE_DESKTOP_REMOTE_DEBUGGING_PORT ?? "9333"
+
+// --pret : attend (jusqu'à 5 minutes) que la fenêtre réponde et que l'interface soit montée.
+if (process.argv[2] === "--pret") {
+  const fin = Date.now() + 300_000
+  while (Date.now() < fin) {
+    const pret = await fetch(`http://127.0.0.1:${port}/json/list`)
+      .then((r) => r.json() as Promise<{ type: string }[]>)
+      .then((l) => l.some((c) => c.type === "page"))
+      .catch(() => false)
+    if (pret) break
+    await Bun.sleep(2000)
+  }
+  process.argv.splice(2, 1)
+  await Bun.sleep(15000) // le temps que la fenêtre se monte et rejoigne le serveur
+}
+
 const cibles = (await (await fetch(`http://127.0.0.1:${port}/json/list`)).json()) as { type: string; url: string; webSocketDebuggerUrl: string }[]
 const page = cibles.find((c) => c.type === "page" && /index\.html|localhost:5173/.test(c.url)) ?? cibles.find((c) => c.type === "page")
 if (!page) throw new Error(`Aucune fenêtre trouvée sur le port ${port}.`)
@@ -32,7 +50,9 @@ const TOUCHES: Record<string, { code: string; keyCode: number }> = {
   Enter: { code: "Enter", keyCode: 13 },
   Escape: { code: "Escape", keyCode: 27 },
   Tab: { code: "Tab", keyCode: 9 },
+  "`": { code: "Backquote", keyCode: 192 },
 }
+const MODIFICATEURS: Record<string, number> = { alt: 1, ctrl: 2, meta: 4, shift: 8 }
 
 const args = process.argv.slice(2)
 for (let i = 0; i < args.length; i++) {
@@ -46,9 +66,12 @@ for (let i = 0; i < args.length; i++) {
   } else if (a === "--taper") {
     await appeler("Input.insertText", { text: args[++i] })
   } else if (a === "--touche") {
-    const nom = args[++i]!
-    const t = TOUCHES[nom] ?? { code: nom, keyCode: 0 }
-    for (const type of ["keyDown", "keyUp"]) await appeler("Input.dispatchKeyEvent", { type, key: nom, code: t.code, windowsVirtualKeyCode: t.keyCode })
+    // « Enter », « ctrl+` », « ctrl+shift+p »… : la dernière partie est la touche, les autres des modificateurs.
+    const parties = args[++i]!.split("+")
+    const nom = parties.pop()!
+    const modifiers = parties.reduce((m, p) => m | (MODIFICATEURS[p.toLowerCase()] ?? 0), 0)
+    const t = TOUCHES[nom] ?? { code: nom.length === 1 ? `Key${nom.toUpperCase()}` : nom, keyCode: nom.length === 1 ? nom.toUpperCase().charCodeAt(0) : 0 }
+    for (const type of ["keyDown", "keyUp"]) await appeler("Input.dispatchKeyEvent", { type, key: nom, code: t.code, windowsVirtualKeyCode: t.keyCode, modifiers })
   } else if (a === "--attendre") {
     await Bun.sleep(Number(args[++i]))
   } else {

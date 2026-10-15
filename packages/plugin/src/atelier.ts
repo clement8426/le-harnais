@@ -6,10 +6,11 @@
 // │   ├── harnais.json       marque le dossier comme atelier, et dit quel parcours suivre
 // │   ├── progression.json   missions commencées et réussies, rangées par nom
 // │   ├── en-cours.json      la mission en cours
-// │   └── journal.jsonl      tout ce qui s'est passé, une ligne par événement
+// │   ├── journal.jsonl      tout ce qui s'est passé, une ligne par événement
+// │   └── terminal.jsonl     les commandes de l'élève, notées par l'intégration du shell (shell/integration.ps1)
 // └── missions/<nom>/fichiers/   copiés au début de chaque mission
 
-import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import { cpSync, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs"
 import path from "node:path"
 import {
   capacitesActives,
@@ -56,6 +57,8 @@ export class Atelier {
     private readonly systeme?: Systeme,
   ) {
     this.contenus = chargerContenus(racineContenus)
+    // Le dossier des missions existe dès le départ : la mission « terminal » demande d'y entrer.
+    mkdirSync(path.join(dossier, "missions"), { recursive: true })
   }
 
   private chemin(nom: string) {
@@ -122,6 +125,43 @@ export class Atelier {
     this.ecrireJson("en-cours.json", { mission: id })
   }
 
+  private lus = 0
+
+  /** Marque tout le contenu actuel de .labo/terminal.jsonl comme déjà importé. */
+  sauterTerminal() {
+    const fichier = this.chemin("terminal.jsonl")
+    this.lus = existsSync(fichier) ? statSync(fichier).size : 0
+  }
+
+  /**
+   * Importe dans le journal les commandes que l'intégration du shell a notées depuis la dernière lecture
+   * (.labo/terminal.jsonl, une ligne par commande). Renvoie le nombre de commandes importées.
+   */
+  importerTerminal() {
+    const fichier = this.chemin("terminal.jsonl")
+    if (!existsSync(fichier)) return 0
+    const contenu = readFileSync(fichier)
+    if (contenu.length <= this.lus) return 0
+    const nouveau = contenu.subarray(this.lus).toString("utf8")
+    // Une ligne pas encore terminée (écriture en cours) attend la prochaine lecture.
+    const fin = nouveau.lastIndexOf("\n")
+    if (fin < 0) return 0
+    this.lus += Buffer.byteLength(nouveau.slice(0, fin + 1), "utf8")
+    const commandes = nouveau
+      .slice(0, fin)
+      .split("\n")
+      .flatMap((ligne) => {
+        try {
+          const c = JSON.parse(ligne.replace(/^﻿/, ""))
+          return typeof c.commande === "string" ? [{ quand: String(c.quand ?? new Date().toISOString()), commande: c.commande, ok: c.ok === true }] : []
+        } catch {
+          return []
+        }
+      })
+    commandes.forEach((c) => this.enregistrer({ quand: c.quand, type: "terminal.commande", commande: c.commande, ok: c.ok }))
+    return commandes.length
+  }
+
   /** Ajoute un événement au journal, puis valide la mission en cours si toutes ses preuves sont vertes. */
   enregistrer(evenement: Evenement) {
     Journal.ajouter(this.chemin("journal.jsonl"), evenement)
@@ -134,7 +174,7 @@ export class Atelier {
     if (!mission || !missionValidee(this.resultats(mission))) return false
     this.ecrireJson("progression.json", reussir(this.progression, mission))
     this.ecrireJson("en-cours.json", {})
-    this.annonce = `Mission réussie : ${mission.titre}.`
+    this.annonce = `Mission réussie : ${mission.titre}${/[.?!]$/.test(mission.titre) ? "" : "."}`
     return true
   }
 
@@ -187,6 +227,7 @@ export class Atelier {
       ...(enCours ? { enCours: enCours.id } : {}),
       ...(suivante ? { prochaine: suivante } : {}),
       capacites: [...this.capacites()].sort(),
+      extensions: { allumees: this.droits().extensions, gerees: this.contenus.catalogue.extensionsGerees },
       ...(fournisseur ? { fournisseur } : {}),
       ...(annonce ? { annonce } : {}),
     }

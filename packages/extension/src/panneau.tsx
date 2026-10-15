@@ -31,6 +31,8 @@ export default function Panneau(props: { session: MountedSession }) {
     setEtat(e)
     setErreur(undefined)
     if (e.annonce) {
+      // Une mission vient d'être réussie : on montre la suivante.
+      setChoisie(undefined)
       setAnnonce(e.annonce)
       setTimeout(() => setAnnonce(undefined), 6000)
     }

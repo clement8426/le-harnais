@@ -1,0 +1,21 @@
+diff --git a/packages/core/src/pty.ts b/packages/core/src/pty.ts
+index c5d7015..a14d703 100644
+--- a/packages/core/src/pty.ts
++++ b/packages/core/src/pty.ts
+@@ -167,9 +167,16 @@ const layer = Layer.effect(
+       const id = ID.ascending()
+       const command = input.command || (yield* shell.resolve({ priority: "config" }))
+       const args = ShellSelect.login(command) ? [...(input.args ?? []), "-l"] : [...(input.args ?? [])]
++      // Le Harnais : PowerShell et bash chargent l'intégration qui note les commandes de l'élève dans son atelier.
++      const integration = process.env.LE_HARNAIS_POWERSHELL_INIT
++      if (integration && !input.args?.length && /(^|[\\/])(powershell|pwsh)(\.exe)?$/i.test(command))
++        args.push("-NoLogo", "-NoExit", "-ExecutionPolicy", "Bypass", "-File", integration)
++      const integrationBash = process.env.LE_HARNAIS_BASH_INIT
++      const bash = integrationBash && /(^|[\\/])bash(\.exe)?$/i.test(command) ? { PROMPT_COMMAND: `. "${integrationBash}"` } : {}
+       const cwd = input.cwd || location.directory
+       const env = {
+         ...process.env,
++        ...bash,
+         ...input.env,
+         TERM: "xterm-256color",
+         OPENCODE_TERMINAL: "1",

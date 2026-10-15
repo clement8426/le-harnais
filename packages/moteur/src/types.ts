@@ -38,8 +38,8 @@ export type Preuve =
   | { type: "fichier.contient"; chemin: string; contient: string[] }
   | { type: "audit.score"; categorie: string }
   | { type: "question"; id: string }
-  /** Une commande tapée par l'élève (motif), puis, si précisé, ce qu'elle doit afficher (sortie). */
-  | { type: "terminal.commande"; motif: string; sortie?: string }
+  /** Une commande tapée par l'élève dans son terminal (motif), qui a réussi. */
+  | { type: "terminal.commande"; motif: string }
   | { type: "navigateur.page"; motif: string }
 
 export interface Question {
@@ -93,8 +93,8 @@ export type Evenement = { quand: string } & (
   | { type: "ia.reponse"; fournisseur?: string; modele?: string }
   | { type: "outil.appel"; outil: string; arguments: Record<string, unknown>; resultat?: string; erreur?: string }
   | { type: "permission"; outil: string; acceptee: boolean }
-  /** Une commande lue dans la sortie du terminal, avec ce qu'elle a affiché ensuite. */
-  | { type: "terminal.commande"; commande: string; sortie: string }
+  /** Une commande de l'élève, notée par l'intégration du shell, et si elle a réussi. */
+  | { type: "terminal.commande"; commande: string; ok: boolean }
   | { type: "navigateur.page"; url: string }
   | { type: "question"; id: string; reponse: number }
   | { type: "audit"; categorie: string; score: number }

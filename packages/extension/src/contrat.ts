@@ -13,8 +13,6 @@ export const Contrat = {
     commencer: { input: objet, output: objet },
     /** Réponse à une question de mission. */
     repondre: { input: objet, output: objet },
-    /** Une commande lue dans le terminal de l'élève. */
-    terminal: { input: objet, output: objet },
     /** Une page ouverte dans le navigateur du harnais. */
     page: { input: objet, output: objet },
   },
@@ -50,6 +48,8 @@ export interface EtatUI {
   enCours?: string
   prochaine?: string
   capacites: string[]
+  /** Les extensions d'OpenCode à allumer, et celles que le Harnais gère (les autres de cette liste sont éteintes). */
+  extensions: { allumees: string[]; gerees: string[] }
   fournisseur?: { id: string; modele: string }
   /** Message à montrer une fois (mission réussie, erreur de contenu…). */
   annonce?: string
@@ -61,10 +61,6 @@ export interface EntreeCommencer {
 export interface EntreeRepondre {
   question: string
   reponse: number
-}
-export interface EntreeTerminal {
-  commande: string
-  sortie: string
 }
 export interface EntreePage {
   url: string
