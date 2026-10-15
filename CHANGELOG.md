@@ -30,9 +30,12 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 - `bun run dev` (`scripts/dev.ts`) : lance l'application isolée dans `~/.le-harnais-dev`, plugin installé, ancien service arrêté, `SHELL` retiré comme pour un élève (sauf `--garder-shell`).
 - `scripts/capture.ts` : pilote l'application lancée en mode développement (capture, clic, frappe, combinaisons de touches, évaluation, attente).
 - La documentation : README, règles du dépôt, architecture, feuille de route, guide de développement, questions ouvertes, licences.
-- OpenCode figé sur v2.0.29 (`upstream/opencode.lock.json`).
+- OpenCode figé sur v2.0.30 (`upstream/opencode.lock.json`).
+- La routine de mise à jour d'OpenCode : `bun scripts/monter-opencode.ts <étiquette>` essaie nos patchs sur une autre version, et déplace le verrou avec `--appliquer` ; procédure dans `docs/mettre-a-jour-opencode.md`.
 
 ### Modifié
+
+- OpenCode passe de v2.0.29 à v2.0.30 : les 7 patchs passent tels quels, missions et outils des sens vérifiés dans l'application.
 
 - La preuve `terminal.commande` vérifie la commande et sa réussite (et non plus sa sortie) : la lecture de l'écran du terminal est remplacée par l'intégration au shell, plus fiable.
 - L'outil `execute` (mode code d'OpenCode) est autorisé dès le départ : sans lui, le navigateur restait inaccessible à l'IA ; ses outils internes gardent leur propre permission.

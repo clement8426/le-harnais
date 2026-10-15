@@ -12,7 +12,7 @@ L'IA est branchée dès la première minute et sert de prof. Elle ne modifie jam
 
 ## Construit sur OpenCode
 
-L'application est [OpenCode Desktop](https://github.com/anomalyco/opencode) (licence MIT), figé sur une version, avec notre surcouche. On garde son cœur intact pour suivre ses mises à jour.
+L'application est [OpenCode Desktop](https://github.com/anomalyco/opencode) (licence MIT), figé sur une version, avec notre surcouche. On garde son cœur intact pour suivre ses mises à jour. La procédure : [docs/mettre-a-jour-opencode.md](docs/mettre-a-jour-opencode.md).
 
 | Dossier | Contenu |
 | --- | --- |

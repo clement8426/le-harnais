@@ -52,7 +52,7 @@ Pour essayer l'application construite sans l'installer, et sans écrire dans tes
 LE_HARNAIS_ATELIER="$TEMP/essai/LeLabo" ".upstream/opencode/packages/desktop/dist/win-unpacked/Le Harnais.exe" --remote-debugging-port=9334
 ```
 
-Elle range ses données dans `%APPDATA%\app.leharnais.desktop`. `scripts/capture.ts` la pilote avec `OPENCODE_DESKTOP_REMOTE_DEBUGGING_PORT=9334`.
+Elle range ses données dans `%APPDATA%\app.leharnais.desktop`. Si Windows répond « Une stratégie de contrôle d'application a bloqué ce fichier », c'est le contrôle intelligent des applications de Windows 11 : il bloque les programmes non signés (voir la question 4). `scripts/capture.ts` la pilote avec `OPENCODE_DESKTOP_REMOTE_DEBUGGING_PORT=9334`.
 
 ## Deux pièges sous Windows
 
