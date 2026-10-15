@@ -2,7 +2,7 @@
 // avec les repères du Labo : la bande des six couleurs, le safran pour ce qui est gagné, le vert pour ce qui est validé.
 
 export const STYLE = `
-.lh { padding: 16px 18px 32px; display: grid; gap: 18px; font-size: 14px; line-height: 1.55; }
+.lh { padding: 16px 18px 32px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; font-size: 14px; line-height: 1.55; }
 .lh h2 { margin: 6px 0 0; font-size: 20px; letter-spacing: -.01em; }
 .lh h3 { margin: 2px 0 4px; font-size: 22px; letter-spacing: -.02em; line-height: 1.15; }
 .lh h4 { margin: 14px 0 6px; font-size: 13px; text-transform: none; opacity: .8; }

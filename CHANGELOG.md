@@ -35,9 +35,10 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 - Le cours « Ton IA agit, avec ton accord » : un refus arrête l'IA (« Interrompu »).
 - Un outil fourni par une capacité (`effet: outil`) est aussi autorisé : la règle de base « tout refuser » le retirait de la vue de l'IA.
 - La mission « Dicter » ne demande plus « poignet gauche » mot pour mot : Whisper base entend parfois « poignage ». Le cours invite à repérer l'erreur.
+- Le panneau des missions ne déborde plus quand le cours contient un bloc de code large : le bloc défile.
 - La lecture à voix haute attend que les voix du système soient chargées (la voix française n'était pas trouvée au premier appel).
 - Le cours « Les skills » demande d'ouvrir une nouvelle conversation : sinon l'IA a déjà la recette en tête et ne la charge pas.
 
 ### Vérifié dans l'application
 
-Missions jouées de bout en bout dans OpenCode Desktop, sous Windows, avec le modèle gratuit par défaut : brancher-ia, harnais-c-est-quoi, terminal (PowerShell), fichiers, ia-et-terminal, navigateur, audit-lighthouse, skills, mcp-lighthouse, plugins-graphify, dicter, ecouter.
+Missions jouées de bout en bout dans OpenCode Desktop, sous Windows, avec le modèle gratuit par défaut : brancher-ia, harnais-c-est-quoi, terminal (PowerShell), fichiers, ia-et-terminal, navigateur, audit-lighthouse, skills, mcp-lighthouse, plugins-graphify, dicter, ecouter, lire-scan (correction du fichier à la main), voir-image.
