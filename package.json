@@ -1,0 +1,17 @@
+{
+  "name": "le-harnais",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Le Harnais : un harnais agent de bureau pour apprendre l'IA en débloquant ses outils un par un. Construit sur OpenCode Desktop.",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "bun run --filter '*' test",
+    "verifier": "bun run --cwd packages/moteur verifier",
+    "typecheck": "bun run --filter '*' typecheck",
+    "preparer": "bun ./scripts/preparer.ts",
+    "graphe": "graphify update ."
+  }
+}

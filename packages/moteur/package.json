@@ -1,0 +1,23 @@
+{
+  "name": "@le-harnais/moteur",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Capacités, missions, parcours, preuves et droits : le cœur modulaire du Harnais, sans dépendance à OpenCode.",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "bun test",
+    "verifier": "bun ./src/cli.ts",
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "yaml": "2.8.1"
+  },
+  "devDependencies": {
+    "@types/bun": "1.3.0",
+    "typescript": "5.9.3"
+  }
+}

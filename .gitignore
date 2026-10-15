@@ -1,0 +1,13 @@
+# OpenCode récupéré et préparé par scripts/preparer.ts : jamais versionné ici.
+.upstream/
+
+node_modules/
+dist/
+out/
+*.log
+.DS_Store
+Thumbs.db
+
+# Graphify : le graphe se régénère avec `bun run graphe`.
+graphify-out/cache/
+graphify-out/graph.html

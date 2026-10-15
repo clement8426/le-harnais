@@ -1,0 +1,13 @@
+# Questions pour Clément
+
+Décisions qui te reviennent. En attendant ta réponse, j'avance avec le choix par défaut indiqué : il est facile à changer.
+
+| # | Question | Choix par défaut en attendant |
+| --- | --- | --- |
+| 1 | Le nom du produit : « Le Harnais », « Le Labo », autre ? | « Le Harnais » |
+| 2 | Les ordinateurs des élèves : Windows ou Mac, anciens ou récents, droits d'administrateur ? | Windows 10/11 récent, sans droits d'administrateur |
+| 3 | Le fournisseur d'IA par défaut : clé de cours fournie, ou chacun crée la sienne ? | Chacun branche la sienne ; le modèle gratuit d'OpenCode sert à démarrer |
+| 4 | Qui signe l'application (particulier ou entreprise, quel pays) ? | Non signée pendant la bêta |
+| 5 | Le modèle : gratuit et libre, inclus dans une formation, payant ? | Libre (MIT pour le code, CC BY-NC pour les contenus) |
+| 6 | Le formateur doit-il voir la progression des élèves ? | Non ; un export volontaire pourra venir plus tard |
+| 7 | Le dépôt public dès maintenant, ou privé jusqu'à la bêta ? | Local seulement, pas encore poussé sur GitHub |
