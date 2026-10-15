@@ -16,7 +16,7 @@ export async function executer(demande: DemandeSens): Promise<string> {
     case "ocr":
       return ocr(depuisBase64(demande.donnees ?? ""), demande.nom ?? "", demande.langue ?? "fr")
     case "transcrire":
-      return transcrire(depuisBase64(demande.donnees ?? ""), demande.langue ?? "fr")
+      return (await transcrire(depuisBase64(demande.donnees ?? ""), demande.langue ?? "fr")) || "[aucune parole entendue]"
     case "lire_a_voix_haute":
       return lireAVoixHaute(demande.texte ?? "")
     case "detecter_objets":
@@ -71,11 +71,13 @@ async function enImages(octets: Octets, nom: string): Promise<HTMLCanvasElement[
 
 let transcripteur: Promise<(son: Float32Array, options: Record<string, unknown>) => Promise<{ text: string } | { text: string }[]>> | undefined
 
-async function transcrire(octets: Octets, langue: string) {
+export async function transcrire(octets: Octets, langue: string) {
   transcripteur ??= import("@huggingface/transformers").then(
     ({ pipeline }) => pipeline("automatic-speech-recognition", "Xenova/whisper-base", { dtype: "q8", device: "wasm" }) as never,
   )
   const son = await en16kHzMono(octets)
+  // Sur un silence, Whisper invente des phrases (« Merci d'avoir regardé… ») : on ne lui donne que de la voix.
+  if (silencieux(son)) return ""
   const resultat = await (await transcripteur)(son, {
     language: LANGUES_WHISPER[langue] ?? "french",
     task: "transcribe",
@@ -83,6 +85,12 @@ async function transcrire(octets: Octets, langue: string) {
     stride_length_s: 5,
   })
   return (Array.isArray(resultat) ? resultat.map((r) => r.text).join(" ") : resultat.text).trim()
+}
+
+/** Vrai si le son n'est que du bruit de fond : énergie moyenne (RMS) sous 0,005, soit environ -46 dB. */
+function silencieux(son: Float32Array) {
+  const energie = son.reduce((somme, x) => somme + x * x, 0) / Math.max(1, son.length)
+  return Math.sqrt(energie) < 0.005
 }
 
 async function en16kHzMono(octets: Octets) {

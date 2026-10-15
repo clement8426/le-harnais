@@ -11,3 +11,5 @@ Décisions qui te reviennent. En attendant ta réponse, j'avance avec le choix p
 | 5 | Le modèle : gratuit et libre, inclus dans une formation, payant ? | Libre (MIT pour le code, CC BY-NC pour les contenus) |
 | 6 | Le formateur doit-il voir la progression des élèves ? | Non ; un export volontaire pourra venir plus tard |
 | 7 | Le dépôt public dès maintenant, ou privé jusqu'à la bêta ? | Local seulement, pas encore poussé sur GitHub |
+| 8 | Le défi final exige une IA en Suisse (Infomaniak) ou sur l'ordinateur (LM Studio, Ollama). Aucune n'est installée sur ton poste : je n'ai pas pu valider sa première preuve en vrai. Une clé Infomaniak de test, ou j'installe LM Studio ? | Rien d'installé ; les autres preuves du défi sont vérifiées, celle du fournisseur l'est par les tests |
+| 9 | Mission « Voir une image » : fournir une photo de démonstration (libre de droits), ou garder « apporte ta propre photo » ? | L'élève apporte sa photo (consigne actuelle) |

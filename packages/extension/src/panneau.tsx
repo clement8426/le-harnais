@@ -5,6 +5,7 @@ import { createMemo, createSignal, For, onCleanup, Show } from "solid-js"
 import type { MountedSession } from "../sdk"
 import { Contrat, type EtapeUI, type EtatUI } from "./contrat"
 import { versHtml } from "./markdown"
+import { copier, enregistrer, transcrireSon } from "./micro"
 import { STYLE } from "./style"
 
 const ICONES: Record<EtapeUI["etat"], string> = {
@@ -112,6 +113,10 @@ export default function Panneau(props: { session: MountedSession; navigateur: Na
               </div>
             </header>
 
+            <Show when={e().capacites.includes("voix.dicter")}>
+              <Dictee />
+            </Show>
+
             <Show when={affichee()}>
               {(m) => (
                 <Mission
@@ -155,6 +160,72 @@ export default function Panneau(props: { session: MountedSession; navigateur: Na
             </nav>
           </>
         )}
+      </Show>
+    </div>
+  )
+}
+
+const LIBELLES_DICTEE = {
+  repos: "🎙 Dicter un message",
+  ouverture: "Ouverture du micro…",
+  ecoute: "■ Arrêter et transcrire",
+  calcul: "Transcription sur ton ordinateur…",
+}
+
+/** Dicter un message : le micro, Whisper sur l'ordinateur, puis le presse-papiers. L'élève colle et envoie lui-même. */
+function Dictee() {
+  const [phase, setPhase] = createSignal<"repos" | "ouverture" | "ecoute" | "calcul">("repos")
+  const [texte, setTexte] = createSignal<string>()
+  const [message, setMessage] = createSignal<string>()
+  let arreter: (() => Promise<Uint8Array<ArrayBuffer>>) | undefined
+  const rate = (quoi: string) => (e: unknown) => {
+    setPhase("repos")
+    setMessage(`${quoi} (${e instanceof Error ? e.message.replace(/\.$/, "") : String(e)}).`)
+    return undefined
+  }
+  const copierTexte = async () => {
+    const t = texte()
+    if (!t) return
+    setMessage(
+      (await copier(t))
+        ? "Copié. Colle-le dans la zone de saisie (Ctrl+V), relis, puis envoie."
+        : "Sélectionne le texte et copie-le (Ctrl+C), puis colle-le dans la zone de saisie.",
+    )
+  }
+  const basculer = async () => {
+    if (phase() === "repos") {
+      setMessage(undefined)
+      setTexte(undefined)
+      // Certains micros mettent plusieurs secondes à s'ouvrir : le bouton le dit, pour que l'élève ne reclique pas.
+      setPhase("ouverture")
+      arreter = await enregistrer().catch(rate("Le micro ne s'ouvre pas : vérifie qu'il est branché et autorisé"))
+      if (arreter) setPhase("ecoute")
+      return
+    }
+    if (phase() !== "ecoute" || !arreter) return
+    setPhase("calcul")
+    const resultat = await transcrireSon(await arreter()).catch(rate("La transcription a échoué"))
+    if (resultat === undefined) return
+    setPhase("repos")
+    if (!resultat) return setMessage("Je n'ai rien entendu. Rapproche-toi du micro et recommence.")
+    setTexte(resultat)
+    await copierTexte()
+  }
+  return (
+    <div class="lh-dictee">
+      <button type="button" class="lh-bouton lh-second" aria-pressed={phase() === "ecoute"} disabled={phase() === "ouverture" || phase() === "calcul"} onClick={() => void basculer()}>
+        {LIBELLES_DICTEE[phase()]}
+      </button>
+      <Show when={texte()}>
+        <textarea class="lh-texte-dicte" readonly rows={3} aria-label="Le texte dicté" value={texte()} />
+        <button type="button" class="lh-bouton lh-second" onClick={() => void copierTexte()}>
+          Copier
+        </button>
+      </Show>
+      <Show when={message()}>
+        <p class="lh-discret" role="status">
+          {message()}
+        </p>
       </Show>
     </div>
   )

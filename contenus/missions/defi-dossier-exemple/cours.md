@@ -4,9 +4,18 @@ Ton harnais est complet. Ce défi les enchaîne tous, sur un vrai cas (fictif) :
 
 Les documents sont médicaux : pour ce défi, ton IA doit être **hébergée en Suisse (Infomaniak) ou tourner sur ton ordinateur**. Avec un fournisseur américain, la première preuve reste rouge.
 
+## Changer de modèle
+
+Clique sur le nom du modèle, sous la zone de saisie, et connecte l'un de ces fournisseurs :
+
+- **Infomaniak** (hébergé en Suisse) : il te faut une clé d'API, à créer dans ton compte Infomaniak (AI Tools) ;
+- **LM Studio** (sur ton ordinateur) : installe LM Studio, télécharge un modèle, puis démarre son serveur local.
+
+Choisis ensuite un modèle de ce fournisseur pour la suite du défi.
+
 ## La consigne à donner à ton IA
 
-Dicte-la avec le micro, ou écris-la :
+Dicte-la avec le bouton « Dicter un message » du panneau, ou écris-la :
 
 ```text
 Traite le dossier de missions/defi-dossier-exemple/fichiers :

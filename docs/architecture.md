@@ -60,6 +60,8 @@ IA ──appel──▶ plugin (src/sens.ts)            lit le fichier dans l'at
 
 Les bibliothèques (tesseract.js 7, pdfjs-dist 6, @huggingface/transformers 4) sont ajoutées aux dépendances des extensions d'OpenCode par le patch 05, et chargées au premier usage seulement. Les modèles se téléchargent une fois (Whisper base, DETR), puis restent dans le cache de la fenêtre. Le panneau affiche ce que fait le moteur pendant le calcul.
 
+La dictée de l'élève (`extension/src/micro.ts`, bouton « Dicter un message » quand `voix.dicter` est active) passe par le même Whisper : le micro enregistre dans la fenêtre (patch 06, audio seul), le texte s'affiche dans le panneau et va dans le presse-papiers. Un son trop faible (bruit de fond) n'est pas transcrit, car Whisper invente des phrases sur un silence. L'API des extensions ne permet pas d'écrire dans la zone de saisie : l'élève colle, relit et envoie lui-même.
+
 ## Le terminal de l'élève
 
 Le terminal ouvre le vrai shell de la machine, dans l'atelier. Pour savoir ce que l'élève y tape, le patch 04 charge une petite intégration au démarrage du shell :
@@ -78,6 +80,7 @@ Les deux écrivent une ligne JSON par commande dans `.labo/terminal.jsonl`, sans
 | `03-le-labo-gere-les-extensions` | Le contexte « processus principal » de l'extension `le-labo` | Lui permettre d'allumer et d'éteindre les autres extensions |
 | `04-integration-shell` | La création des terminaux (`core/src/pty.ts`) | Charger l'intégration PowerShell ou bash qui note les commandes |
 | `05-dependances-des-sens` | Les dépendances de `gui-extensions` (3 lignes) | Tesseract, pdf.js et transformers.js pour les sens, dans la fenêtre |
+| `06-micro-pour-la-dictee` | Les permissions de la fenêtre (`desktop/src/main/windows/security.ts`) | Autoriser le micro, audio seul, pour la dictée de l'élève |
 
 ## Données de développement
 

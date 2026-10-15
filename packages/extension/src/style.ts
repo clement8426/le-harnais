@@ -32,6 +32,9 @@ export const STYLE = `
 .lh-question legend { font-weight: 600; padding: 0 4px; }
 .lh-question label { display: flex; gap: 8px; align-items: baseline; cursor: pointer; }
 .lh-indice { margin: 6px 0 0; padding: 10px 12px; border-radius: 10px; background: rgba(255, 194, 61, .14); }
+.lh-dictee { display: grid; gap: 6px; justify-items: start; }
+.lh-dictee p { margin: 0; }
+.lh-texte-dicte { width: 100%; box-sizing: border-box; padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(127, 127, 127, .35); background: rgba(127, 127, 127, .08); color: inherit; font: inherit; resize: vertical; }
 .lh-cours { margin-top: 14px; }
 .lh-cours summary { cursor: pointer; font-weight: 600; }
 .lh-cours h2, .lh-cours h3 { font-size: 15px; margin: 14px 0 6px; }

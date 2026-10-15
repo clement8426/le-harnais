@@ -36,4 +36,6 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 - [ ] Phase 3 · Les sens et les extensions
   - [x] Outils des sens fournis par le plugin, calculés dans la fenêtre (patch 05)
   - [x] Missions « Dicter », « Écouter », « Lire un document » et « Voir une image » jouées dans l'application
+  - [x] Dictée de l'élève au micro (patch 06), vérifiée avec un vrai micro
+  - [x] Défi final joué avec le modèle gratuit : toutes les preuves vertes sauf le fournisseur (attendu ; voir docs/questions.md)
 - [ ] Phase 4 · Ouverture (macOS, contenus séparés, autres parcours)

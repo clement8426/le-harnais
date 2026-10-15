@@ -17,6 +17,9 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 - Le chapitre « Le web » : pages consultées et audits Lighthouse relevés par le plugin (rapports lus sur le disque), consignes du prof sur le mode code du navigateur.
 - Les connecteurs MCP : déclarés dans `contenus/mcp.yaml` (chrome-devtools-mcp 1.10.1, version figée), branchés par le plugin quand une capacité les active (`ctx.mcp.transform`), vérifiés par `bun run verifier`.
 - Les sens, sur l'ordinateur de l'élève : outils `transcrire` (Whisper), `lire_a_voix_haute` (voix du système), `ocr` (Tesseract et pdf.js) et `detecter_objets` (DETR). Le plugin les fournit à l'IA quand leur capacité est active, la fenêtre fait le calcul (patch 05 pour les dépendances), le panneau affiche ce que fait le moteur.
+- La dictée de l'élève : bouton « Dicter un message » dans le panneau, micro autorisé en audio seul (patch 06), transcription par Whisper sur l'ordinateur, texte affiché et copié pour être collé dans la zone de saisie.
+- Un silence n'est plus transcrit : Whisper y inventait des phrases. La dictée répond « Je n'ai rien entendu », l'outil `transcrire` « [aucune parole entendue] ».
+- Le défi final explique comment brancher Infomaniak ou LM Studio.
 - Les preuves sur un fichier (`fichier.existe`, `fichier.contient`) sont réévaluées chaque seconde : un fichier corrigé à la main par l'élève valide la mission.
 - Le dossier `.labo` est caché des recherches de l'IA (`.ignore`) et sa lecture lui est interdite.
 - Le patch 02 : au premier lancement, le projet par défaut est l'atelier `Documents/LeLabo`.

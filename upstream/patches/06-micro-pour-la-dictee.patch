@@ -1,0 +1,30 @@
+diff --git a/packages/desktop/src/main/windows/security.ts b/packages/desktop/src/main/windows/security.ts
+index 100ff0e..74090fa 100644
+--- a/packages/desktop/src/main/windows/security.ts
++++ b/packages/desktop/src/main/windows/security.ts
+@@ -4,16 +4,23 @@ import { addRendererHeaders, hasHeader, upsertHeader } from "./headers"
+ import { isRendererUrl } from "./scheme"
+ 
+ const rendererPermissions = new Set(["clipboard-sanitized-write", "notifications"])
++// Le Harnais : le micro (audio seul, jamais la caméra) pour la dictée, transcrite sur l'ordinateur.
++const audioSeul = (permission: string, details: object) => {
++  const media = details as { mediaTypes?: string[]; mediaType?: string }
++  return permission === "media" && (media.mediaTypes ?? [media.mediaType]).every((type) => type === "audio")
++}
+ 
+ export function allowRendererPermissions(win: BrowserWindow) {
+   const webContentsId = win.webContents.id
+   win.webContents.session.setPermissionRequestHandler((webContents, permission, callback, details) => {
+     callback(
+-      rendererPermissions.has(permission) && isRendererUrl(details.requestingUrl) && webContents.id === webContentsId,
++      (rendererPermissions.has(permission) || audioSeul(permission, details)) &&
++        isRendererUrl(details.requestingUrl) &&
++        webContents.id === webContentsId,
+     )
+   })
+   win.webContents.session.setPermissionCheckHandler((webContents, permission, requestingOrigin, details) => {
+-    if (!rendererPermissions.has(permission)) return false
++    if (!rendererPermissions.has(permission) && !audioSeul(permission, details)) return false
+ 
+     if (webContents && webContents.id !== webContentsId) return false
+ 
