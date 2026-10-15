@@ -11,6 +11,8 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 - Les missions peuvent prêter des capacités le temps de la mission (`prete`), et exiger un fournisseur d'IA précis (`ia.reponse` + `fournisseurs`).
 - Le guide `docs/ecrire-une-mission.md`.
 - La commande `bun run verifier`, qui affiche le parcours numéroté et bloque si une mission est mal placée.
-- Le script `scripts/capture.ts`, qui capture l'application lancée en mode développement.
+- Le script `scripts/capture.ts`, qui pilote l'application lancée en mode développement (capture, clic, frappe, évaluation).
+- L'extension « le-labo » (`packages/extension`) : un onglet « Missions » dans la zone latérale des sessions.
+- Le script `scripts/preparer.ts` et le premier patch d'OpenCode (`upstream/patches/01-enregistrer-extension-le-labo.patch`, 7 lignes).
 - La documentation de départ : README, règles du dépôt, feuille de route, guide de développement, questions ouvertes, licences.
 - OpenCode figé sur v2.0.29 (`upstream/opencode.lock.json`).

@@ -1,0 +1,39 @@
+diff --git a/packages/gui-extensions/src/main.ts b/packages/gui-extensions/src/main.ts
+index 8b5267d..554d503 100644
+--- a/packages/gui-extensions/src/main.ts
++++ b/packages/gui-extensions/src/main.ts
+@@ -12,6 +12,8 @@ import updater from "./updater"
+ import ssh from "./ssh"
+ import wsl from "./wsl"
+ import microsoftOffice from "./microsoft-office"
++// Le Harnais : notre extension, copiée ici par scripts/preparer.ts.
++import leLabo from "./le-labo"
+ 
+ /**
+  * Built-in extensions with their main entries. Lists every built-in so their ids stay reserved. `builtins.typecheck.ts`
+@@ -31,4 +33,5 @@ export const builtins = Extension.compose(
+   { ...ssh, main: () => import("./ssh/main") },
+   { ...wsl, main: () => import("./wsl/main") },
+   microsoftOffice,
++  leLabo,
+ )
+diff --git a/packages/gui-extensions/src/renderer.ts b/packages/gui-extensions/src/renderer.ts
+index f5f1754..06e1145 100644
+--- a/packages/gui-extensions/src/renderer.ts
++++ b/packages/gui-extensions/src/renderer.ts
+@@ -25,6 +25,9 @@ import wsl from "./wsl"
+ import wslRenderer from "./wsl/renderer"
+ import microsoftOffice from "./microsoft-office"
+ import microsoftOfficeRenderer from "./microsoft-office/renderer"
++// Le Harnais : notre extension, copiée ici par scripts/preparer.ts.
++import leLabo from "./le-labo"
++import leLaboRenderer from "./le-labo/renderer"
+ 
+ // The window renders once every built-in is active, so the small renderer entries load with the app, like the
+ // features they replaced. Heavy UI stays behind `lazy()` inside them.
+@@ -49,4 +52,5 @@ export const builtins = Extension.compose(
+   { ...ssh, renderer: eager(sshRenderer) },
+   { ...wsl, renderer: eager(wslRenderer) },
+   { ...microsoftOffice, renderer: eager(microsoftOfficeRenderer) },
++  { ...leLabo, renderer: eager(leLaboRenderer) },
+ )

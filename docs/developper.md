@@ -13,15 +13,18 @@ bun run test
 bun run verifier
 ```
 
-## Lancer l'application OpenCode en mode développement
+## Lancer l'application en mode développement
 
 ```bash
+bun scripts/preparer.ts
 cd .upstream/opencode
 bun install
 bun run dev:desktop
 ```
 
-La première fois, la compilation prend environ deux minutes.
+`preparer.ts` récupère OpenCode à la version figée, applique nos patchs (`upstream/patches/`) et copie notre extension dans `packages/gui-extensions/src/le-labo`. Après une modification de l'extension, `bun scripts/preparer.ts --copier` suffit ; Vite recharge la fenêtre.
+
+La première compilation prend environ deux minutes. L'onglet « Missions » apparaît dans la zone latérale d'une session (bouton « Basculer la revue »).
 
 ## Deux pièges sous Windows
 
@@ -46,4 +49,7 @@ Avec l'application lancée en mode développement :
 ```bash
 bun scripts/capture.ts capture.png
 bun scripts/capture.ts --eval "document.title"
+bun scripts/capture.ts --clic 800 495 --taper "Bonjour" --touche Enter --attendre 3000 capture.png
 ```
+
+Les coordonnées de `--clic` sont en pixels CSS : divise celles d'une capture par le facteur d'échelle de l'écran (`devicePixelRatio`, 1,25 sur le poste de développement).

@@ -8,9 +8,10 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 - [x] Lancer l'application de bureau en mode développement sous Windows (interface déjà en français)
 - [x] Trouver deux pièges Windows et leur parade (voir [docs/developper.md](developper.md))
 - [x] Choisir comment voir les commandes de l'élève : lire la sortie du terminal, sans modifier OpenCode
+- [x] Parler à une IA dans l'application : le modèle gratuit par défaut répond
+- [x] Ajouter une extension « le-labo » aux extensions intégrées (patch de 7 lignes, `scripts/preparer.ts`) : l'onglet « Missions » s'affiche
 - [ ] Vérifier que le terminal lance PowerShell dans le dossier de l'élève
 - [ ] Vérifier le navigateur intégré et l'audit Lighthouse
-- [ ] Ajouter une extension « le-labo » aux extensions intégrées (premier patch)
 - [ ] Écrire un plugin qui retire un outil à l'IA, puis le lui rend
 - [ ] Retirer Sentry et changer l'identifiant de l'application
 
