@@ -81,6 +81,22 @@ Les deux écrivent une ligne JSON par commande dans `.labo/terminal.jsonl`, sans
 | `04-integration-shell` | La création des terminaux (`core/src/pty.ts`) | Charger l'intégration PowerShell ou bash qui note les commandes |
 | `05-dependances-des-sens` | Les dépendances de `gui-extensions` (3 lignes) | Tesseract, pdf.js et transformers.js pour les sens, dans la fenêtre |
 | `06-micro-pour-la-dictee` | Les permissions de la fenêtre (`desktop/src/main/windows/security.ts`) | Autoriser le micro, audio seul, pour la dictée de l'élève |
+| `07-le-harnais-en-production` | Le nom, l'identifiant, le titre de la fenêtre, le protocole ; un nouveau fichier `lifecycle/le-harnais.ts` | Une application publiée isolée de tout OpenCode installé (voir ci-dessous) |
+
+## L'application publiée
+
+`scripts/empaqueter.ts` construit l'installeur. Ce qu'il fait, et pourquoi :
+
+- **Le serveur est construit depuis notre copie patchée**, pas téléchargé : le patch 04 le modifie. Sur x64, c'est la variante « baseline », qui tourne aussi sur les processeurs sans AVX2.
+- **Nos ressources** vont dans `resources/le-harnais` : le plugin construit, les contenus, l'intégration du shell.
+- **Au démarrage** (patch 07, `lifecycle/le-harnais.ts`), l'application range toutes ses données dans `%APPDATA%\app.leharnais.desktop` (dossiers XDG compris : configuration, données, état du service), réinstalle le plugin, et indique au serveur où sont les contenus et l'intégration du shell. Rien n'est partagé avec un OpenCode installé : ni son service d'arrière-plan, ni sa configuration, ni ses liens `opencode://`.
+- **Pas de mise à jour automatique** (canal « dev » d'OpenCode, aucun serveur de publication) : celle d'OpenCode remplacerait Le Harnais par OpenCode. **Pas de Sentry** : il ne s'active qu'avec `VITE_SENTRY_DSN`, que nous ne fournissons pas.
+- **La configuration d'empaquetage** (`upstream/electron-builder.le-harnais.ts`) reprend celle d'OpenCode avec notre nom, notre identifiant (`app.leharnais.desktop`), notre icône (`marque/`) et nos ressources.
+
+Deux limites, propres à l'application publiée :
+
+- **Le modèle gratuit d'OpenCode n'y répond pas.** Le service d'OpenCode réserve son offre gratuite à ses propres versions, qu'il reconnaît à l'en-tête `User-Agent` du serveur. L'élève branche son fournisseur (le cours « Brancher ton IA » le guide). En développement, le serveur se présente comme une version locale et l'offre gratuite répond.
+- **La connexion d'un compte OpenCode Console** passe par un lien `opencode://`, que Le Harnais ne prend pas.
 
 ## Données de développement
 

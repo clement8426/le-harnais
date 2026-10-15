@@ -14,7 +14,7 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 - [x] Atelier `LeLabo` créé au premier lancement (patch 02)
 - [x] Vérifier que le terminal lance PowerShell dans le dossier de l'élève
 - [x] Vérifier le navigateur intégré et l'audit Lighthouse (missions « navigateur » et « audit-lighthouse » réussies dans l'application)
-- [ ] Retirer Sentry et changer l'identifiant de l'application
+- [x] Retirer Sentry et changer l'identifiant de l'application
 
 ## Phase 1 · Le moteur
 
@@ -39,3 +39,13 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
   - [x] Dictée de l'élève au micro (patch 06), vérifiée avec un vrai micro
   - [x] Défi final joué avec le modèle gratuit : toutes les preuves vertes sauf le fournisseur (attendu ; voir docs/questions.md)
 - [ ] Phase 4 · Ouverture (macOS, contenus séparés, autres parcours)
+
+## L'application publiée
+
+- [x] Installeur Windows (`bun scripts/empaqueter.ts`), nom, identifiant, icône
+- [x] Isolation d'un OpenCode installé : données, service d'arrière-plan, protocole (vérifié : le fichier d'état d'OpenCode n'est plus touché)
+- [x] Application construite vérifiée : atelier créé, plugin chargé, panneau des missions
+- [ ] Installeur vérifié sur un poste neuf (installation, désinstallation)
+- [ ] Signature de l'installeur (question 4)
+- [ ] Mises à jour du Harnais (aucun mécanisme pour l'instant)
+- [ ] macOS (intégration zsh, construction et signature)

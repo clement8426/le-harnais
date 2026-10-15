@@ -19,6 +19,9 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 - Les sens, sur l'ordinateur de l'élève : outils `transcrire` (Whisper), `lire_a_voix_haute` (voix du système), `ocr` (Tesseract et pdf.js) et `detecter_objets` (DETR). Le plugin les fournit à l'IA quand leur capacité est active, la fenêtre fait le calcul (patch 05 pour les dépendances), le panneau affiche ce que fait le moteur.
 - La dictée de l'élève : bouton « Dicter un message » dans le panneau, micro autorisé en audio seul (patch 06), transcription par Whisper sur l'ordinateur, texte affiché et copié pour être collé dans la zone de saisie.
 - Un silence n'est plus transcrit : Whisper y inventait des phrases. La dictée répond « Je n'ai rien entendu », l'outil `transcrire` « [aucune parole entendue] ».
+- L'installeur Windows (`bun scripts/empaqueter.ts`) : serveur construit depuis notre copie patchée, plugin, contenus et intégration du shell embarqués, nom « Le Harnais », identifiant `app.leharnais.desktop`, icône (sangle aux six couleurs des chapitres, `marque/`), sans mise à jour automatique ni Sentry.
+- Le patch 07 : en production, Le Harnais range toutes ses données à part (y compris l'état de son service d'arrière-plan, qu'OpenCode effaçait sous Windows), réinstalle son plugin à chaque démarrage, et prend le protocole `leharnais://` au lieu de `opencode://`.
+- `scripts/preparer.ts` retire les fichiers créés par un patch avant de le réappliquer.
 - Le défi final explique comment brancher Infomaniak ou LM Studio.
 - Les preuves sur un fichier (`fichier.existe`, `fichier.contient`) sont réévaluées chaque seconde : un fichier corrigé à la main par l'élève valide la mission.
 - Le dossier `.labo` est caché des recherches de l'IA (`.ignore`) et sa lecture lui est interdite.
@@ -38,6 +41,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 - Le cours « Ton IA agit, avec ton accord » : un refus arrête l'IA (« Interrompu »).
 - Un outil fourni par une capacité (`effet: outil`) est aussi autorisé : la règle de base « tout refuser » le retirait de la vue de l'IA.
 - La mission « Dicter » ne demande plus « poignet gauche » mot pour mot : Whisper base entend parfois « poignage ». Le cours invite à repérer l'erreur.
+- Le cours « Brancher ton IA » : le modèle gratuit d'OpenCode ne répond pas dans l'application publiée ; il oriente vers OpenRouter (modèles gratuits) ou un modèle local.
 - Le panneau des missions ne déborde plus quand le cours contient un bloc de code large : le bloc défile.
 - La lecture à voix haute attend que les voix du système soient chargées (la voix française n'était pas trouvée au premier appel).
 - Le cours « Les skills » demande d'ouvrir une nouvelle conversation : sinon l'IA a déjà la recette en tête et ne la charge pas.

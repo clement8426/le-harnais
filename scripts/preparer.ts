@@ -40,6 +40,12 @@ if (!seulementCopier) {
   }
 
   const patchs = readdirSync(path.join(racine, "upstream/patches")).filter((f) => f.endsWith(".patch")).sort()
+  // Les fichiers qu'un patch crée ne sont pas suivis par Git : checkout ne les retire pas, et git apply refuserait
+  // de les recréer. On les efface avant d'appliquer.
+  for (const patch of patchs) {
+    const texte = readFileSync(path.join(racine, "upstream/patches", patch), "utf8")
+    for (const [, fichier] of texte.matchAll(/^--- \/dev\/null\r?\n\+\+\+ b\/(.+)$/gm)) rmSync(path.join(opencode, fichier!.trim()), { force: true })
+  }
   for (const patch of patchs) {
     await $`git -C ${opencode} apply --whitespace=nowarn ${path.join(racine, "upstream/patches", patch)}`
     console.log(`✓ patch ${patch}`)

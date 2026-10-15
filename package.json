@@ -13,6 +13,7 @@
     "typecheck": "bun run --cwd packages/moteur typecheck && bun run --cwd packages/plugin typecheck",
     "preparer": "bun ./scripts/preparer.ts",
     "dev": "bun ./scripts/dev.ts",
+    "empaqueter": "bun ./scripts/empaqueter.ts",
     "graphe": "graphify update ."
   }
 }

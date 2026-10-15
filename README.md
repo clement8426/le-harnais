@@ -17,9 +17,12 @@ L'application est [OpenCode Desktop](https://github.com/anomalyco/opencode) (lic
 | Dossier | Contenu |
 | --- | --- |
 | `packages/moteur` | Le cœur modulaire : capacités, missions, parcours, preuves, droits. Sans dépendance à OpenCode. |
+| `packages/plugin` | Le plugin du serveur d'OpenCode : droits de l'IA, journal, outils des sens, consignes du prof. |
+| `packages/extension` | L'extension de la fenêtre : l'onglet « Missions », la dictée, les moteurs des sens. |
 | `contenus/` | Les missions et les parcours, en YAML et Markdown. |
-| `upstream/` | La version figée d'OpenCode et nos rares modifications. |
-| `scripts/` | Préparer OpenCode, capturer l'application. |
+| `upstream/` | La version figée d'OpenCode, nos rares modifications (`patches/`) et la configuration d'empaquetage. |
+| `marque/` | L'icône et son script de dessin. |
+| `scripts/` | Préparer OpenCode, lancer en développement, empaqueter, capturer l'application. |
 | `docs/` | Feuille de route, développement, questions ouvertes. |
 
 ## Modulaire par construction

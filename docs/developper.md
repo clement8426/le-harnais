@@ -38,6 +38,22 @@ Pendant que l'application tourne :
 
 La première compilation prend environ deux minutes. L'onglet « Missions » apparaît dans la zone latérale d'une session (bouton « Basculer la revue »).
 
+## Construire l'installeur
+
+```bash
+bun scripts/empaqueter.ts
+```
+
+Prépare OpenCode, construit le plugin, le serveur (depuis notre copie patchée) et l'application, puis l'installeur : `.upstream/opencode/packages/desktop/dist/le-harnais-<version>-win-x64.exe` sous Windows. Compter une dizaine de minutes la première fois (electron-builder télécharge Electron et NSIS). L'installeur n'est pas signé.
+
+Pour essayer l'application construite sans l'installer, et sans écrire dans tes Documents :
+
+```bash
+LE_HARNAIS_ATELIER="$TEMP/essai/LeLabo" ".upstream/opencode/packages/desktop/dist/win-unpacked/Le Harnais.exe" --remote-debugging-port=9334
+```
+
+Elle range ses données dans `%APPDATA%\app.leharnais.desktop`. `scripts/capture.ts` la pilote avec `OPENCODE_DESKTOP_REMOTE_DEBUGGING_PORT=9334`.
+
 ## Deux pièges sous Windows
 
 **Bun installé par npm.** `npm install -g bun` ne pose qu'un raccourci `bun.cmd`. L'application lance le serveur avec `spawn("bun")` sans shell, qui ne sait pas exécuter un `.cmd` : le serveur ne démarre pas (« spawn bun ENOENT »). Parade : mettre le vrai `bun.exe` en tête du PATH.
@@ -63,5 +79,7 @@ bun scripts/capture.ts capture.png
 bun scripts/capture.ts --eval "document.title"
 bun scripts/capture.ts --clic 800 495 --taper "Bonjour" --touche Enter --attendre 3000 capture.png
 ```
+
+`--attendre` compte en millisecondes. Tous les `--eval` s'exécutent dans la même page, comme dans une console : une déclaration `const` au premier niveau ne peut pas être répétée d'un appel à l'autre, enveloppe-la dans une fonction (`(() => { … })()`).
 
 Les coordonnées de `--clic` sont en pixels CSS : divise celles d'une capture par le facteur d'échelle de l'écran (`devicePixelRatio`, 1,25 sur le poste de développement).
