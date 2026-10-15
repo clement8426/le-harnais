@@ -12,4 +12,4 @@ preuves:
     outil: skill
     arguments:
       id: compte-rendu
-indice: Le modèle de skill est dans missions/skills/fichiers/SKILL.md. Copie-le dans .opencode/skills/compte-rendu/SKILL.md, puis demande « Fais le compte rendu de missions/ecouter/fichiers/compte-rendu.txt ».
+indice: Le modèle de skill est dans missions/skills/fichiers/SKILL.md. Copie-le dans .opencode/skills/compte-rendu/SKILL.md. Ouvre ensuite une nouvelle conversation (bouton +) et demande « Fais le compte rendu de missions/ecouter/fichiers/compte-rendu.txt ».

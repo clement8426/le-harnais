@@ -1,5 +1,5 @@
 export * from "./types"
-export { chargerContenus, chargerCatalogue, chargerMission, chargerParcours, ErreurContenu } from "./chargement"
+export { chargerContenus, chargerCatalogue, chargerConnecteurs, chargerMission, chargerParcours, ErreurContenu } from "./chargement"
 export { numeroter, verifier, type EtapeNumerotee } from "./parcours"
 export { progressionVide, capacitesActives, etats, prochaine, commencer, reussir, type Etat } from "./progression"
 export { evaluerMission, missionValidee, normaliser, type Contexte, type Disque, type Resultat } from "./preuves"

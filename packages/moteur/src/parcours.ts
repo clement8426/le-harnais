@@ -50,6 +50,14 @@ export function verifier(contenus: Contenus, parcoursId: string): Diagnostic[] {
       ),
   )
 
+  contenus.catalogue.capacites.forEach((c) =>
+    c.effets
+      .filter((e) => e.type === "mcp" && !contenus.connecteurs.has(e.id))
+      .forEach((e) =>
+        diagnostics.push(erreur("connecteur-inconnu", `La capacité « ${c.id} » branche le connecteur « ${e.type === "mcp" ? e.id : ""} », absent de mcp.yaml.`)),
+      ),
+  )
+
   parcours.chapitres
     .filter((c) => c.missions.length === 0)
     .forEach((c) => diagnostics.push(avertissement("chapitre-vide", `Le chapitre « ${c.id} » ne contient aucune mission.`)))

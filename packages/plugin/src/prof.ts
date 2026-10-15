@@ -33,8 +33,8 @@ export function consignesDuProf(atelier: Atelier) {
     `Mission en cours : « ${mission.titre} ». ${mission.resume}`,
     "Ce que le harnais vérifie (vert = fait) :",
     ...resultats.map((r) => `- [${r.ok ? "vert" : "rouge"}] ${r.detail}`),
-    `Indice à donner si l'élève bloque : ${mission.indice}`,
-    "Guide l'élève pas à pas, mais laisse-le faire lui-même les gestes de la mission (taper la commande, ouvrir le fichier, répondre aux questions).",
+    `Indice, à donner seulement si l'élève dit qu'il bloque : ${mission.indice}`,
+    "Fais ce que l'élève te demande, rien de plus : n'anticipe pas les étapes de la mission à sa place. Les gestes de la mission (taper une commande, ouvrir un fichier, répondre aux questions) sont les siens.",
     "Ne donne jamais la réponse aux questions du panneau : aide-le à raisonner.",
   ].join("\n")
 }

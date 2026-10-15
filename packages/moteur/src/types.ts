@@ -84,8 +84,17 @@ export interface Parcours {
   chapitres: Chapitre[]
 }
 
+/** Un connecteur MCP local que le Harnais sait brancher (contenus/mcp.yaml). */
+export interface Connecteur {
+  id: string
+  titre: string
+  commande: string[]
+  codemode: boolean
+}
+
 export interface Contenus {
   catalogue: Catalogue
+  connecteurs: Map<string, Connecteur>
   missions: Map<string, Mission>
   parcours: Map<string, Parcours>
 }

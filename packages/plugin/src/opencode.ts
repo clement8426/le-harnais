@@ -55,6 +55,15 @@ export interface ContexteOpenCode {
     reload(): Promise<void>
   }
   readonly session: { hook(nom: "context", rappel: (e: ContexteSession) => void | Promise<void>): Promise<Enregistrement> }
+  readonly mcp: {
+    transform(
+      rappel: (editeur: {
+        set(nom: string, config: { type: "local"; command: string[]; codemode?: boolean }): void
+        remove(nom: string): void
+      }) => void,
+    ): Promise<Enregistrement>
+    reload(): Promise<void>
+  }
   readonly event: { subscribe(options?: { signal?: AbortSignal }): AsyncIterable<EvenementOpenCode> }
   readonly rpc: {
     register(

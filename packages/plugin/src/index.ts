@@ -71,9 +71,24 @@ export default {
       },
     })
 
-    // Un changement d'état peut ouvrir ou fermer des outils : on recharge la liste, puis on prévient le panneau.
+    // Les connecteurs MCP des capacités actives sont branchés ; les autres connecteurs connus du Harnais, débranchés.
+    let mcpActifs = atelier.droits().mcp.join(",")
+    await ctx.mcp.transform((editeur) => {
+      const actifs = atelier.droits().mcp
+      for (const connecteur of atelier.contenus.connecteurs.values()) {
+        if (!actifs.includes(connecteur.id)) editeur.remove(connecteur.id)
+        else editeur.set(connecteur.id, { type: "local", command: connecteur.commande, codemode: connecteur.codemode })
+      }
+    })
+
+    // Un changement d'état peut ouvrir ou fermer des outils et des connecteurs : on recharge, puis on prévient le panneau.
     const changement = async () => {
       await ctx.tool.reload().catch(() => undefined)
+      const mcp = atelier.droits().mcp.join(",")
+      if (mcp !== mcpActifs) {
+        mcpActifs = mcp
+        await ctx.mcp.reload().catch((e) => trace(`mcp : rechargement impossible ${String(e)}`))
+      }
       await rpc.events.emit("change", {}).catch(() => undefined)
     }
 

@@ -14,7 +14,8 @@ C'est le même format que dans Claude Code : une skill écrite ici fonctionne l�
 
 1. Ouvre le modèle `missions/skills/fichiers/SKILL.md` et lis-le.
 2. Demande à ton IA : « Copie ce fichier dans .opencode/skills/compte-rendu/SKILL.md. » Accepte.
-3. Demande : « Fais le compte rendu de missions/ecouter/fichiers/compte-rendu.txt. »
-4. Dans le fil, repère l'appel de l'outil `skill` : ton IA a chargé ta recette d'elle-même.
+3. Ouvre une **nouvelle conversation** (le bouton + en haut) : dans celle-ci, ton IA ne connaît pas encore la recette.
+4. Demande : « Fais le compte rendu de missions/ecouter/fichiers/compte-rendu.txt. »
+5. Dans le fil, repère l'appel de l'outil `skill` : ton IA a trouvé ta recette et l'a chargée d'elle-même.
 
 > **À retenir** : une skill, c'est du texte. Pas de code : n'importe qui peut en écrire une.

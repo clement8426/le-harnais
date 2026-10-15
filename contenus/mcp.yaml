@@ -1,0 +1,12 @@
+# Les connecteurs MCP que le Harnais sait brancher. Une capacité les allume avec l'effet { type: mcp, id: … }.
+# Chaque connecteur est un programme local, lancé par OpenCode. Versions figées : on ne suit pas « latest ».
+#
+# codemode: false → les outils du connecteur sont visibles directement par l'IA (chrome-devtools_lighthouse_audit…),
+# ce qui rend leur appel lisible dans le fil, et vérifiable par les preuves.
+
+connecteurs:
+  - id: chrome-devtools
+    titre: Chrome DevTools (MCP)
+    # https://github.com/ChromeDevTools/chrome-devtools-mcp, licence Apache-2.0. Pilote son propre Chrome, sans écran.
+    commande: [npx, -y, chrome-devtools-mcp@1.10.1, --headless, --isolated]
+    codemode: false

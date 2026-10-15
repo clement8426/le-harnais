@@ -1,17 +1,17 @@
 # Graph Report - le-harnais  (2026-10-15)
 
 ## Corpus Check
-- 80 files · ~25,790 words
+- 80 files · ~26,267 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 7 file(s) not represented in the graph (top: .patch 4, (none) 2, .lock 1)
 
 ## Summary
-- 446 nodes · 758 edges · 44 communities (28 shown, 16 thin omitted)
+- 449 nodes · 770 edges · 43 communities (27 shown, 16 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `48870c12`
+- Built from commit: `26ddae3f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,7 +19,7 @@
 - chargement.ts
 - Développer
 - moteur/src/index.ts
-- main.ts
+- contenus.test.ts
 - atelier.ts
 - moteur/package.json
 - index.js
@@ -58,19 +58,18 @@
 - opencode.ts
 - plugin/src/index.ts
 - preparer.ts
-- atelier.test.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `Atelier` - 25 edges
 2. `ErreurContenu` - 18 edges
-3. `chargerContenus()` - 13 edges
+3. `chargerContenus()` - 14 edges
 4. `chargerMission()` - 12 edges
-5. `numeroter()` - 10 edges
-6. `Mission` - 10 edges
-7. `compilerOptions` - 10 edges
-8. `preuve()` - 9 edges
-9. `question()` - 9 edges
-10. `objet()` - 9 edges
+5. `objet()` - 10 edges
+6. `numeroter()` - 10 edges
+7. `Mission` - 10 edges
+8. `compilerOptions` - 10 edges
+9. `chargerConnecteurs()` - 9 edges
+10. `preuve()` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Phase 0 · Faisabilité` --references--> `question()`  [INFERRED]
@@ -81,17 +80,17 @@
   docs/ecrire-une-mission.md → packages/moteur/src/chargement.ts
 - `Atelier` --references--> `Contenus`  [EXTRACTED]
   packages/plugin/src/atelier.ts → packages/moteur/src/types.ts
-- `nouvelAtelier()` --calls--> `Atelier`  [EXTRACTED]
-  packages/plugin/test/atelier.test.ts → packages/plugin/src/atelier.ts
+- `afficherTicket()` --calls--> `formaterChf()`  [EXTRACTED]
+  contenus/missions/plugins-graphify/fichiers/projet/src/affichage.js → contenus/missions/plugins-graphify/fichiers/projet/src/outils.js
 
 ## Import Cycles
 - None detected.
 
-## Communities (44 total, 16 thin omitted)
+## Communities (43 total, 16 thin omitted)
 
 ### Community 0 - "chargement.ts"
-Cohesion: 0.24
-Nodes (24): Les preuves, ACTIONS, booleen(), capacite(), chargerCatalogue(), chargerContenus(), chargerMission(), chargerParcours() (+16 more)
+Cohesion: 0.23
+Nodes (26): Les preuves, ACTIONS, booleen(), capacite(), chargerCatalogue(), chargerConnecteurs(), chargerContenus(), chargerMission() (+18 more)
 
 ### Community 1 - "Développer"
 Cohesion: 0.08
@@ -99,11 +98,11 @@ Nodes (21): Capturer l'application, Deux pièges sous Windows, Développer, Lanc
 
 ### Community 2 - "moteur/src/index.ts"
 Cohesion: 0.06
-Nodes (51): afficher(), racine, correspond(), decider(), droits, Regle, Journal, avertissement() (+43 more)
+Nodes (53): afficher(), racine, correspond(), decider(), droits, Regle, Journal, avertissement() (+45 more)
 
-### Community 3 - "main.ts"
-Cohesion: 0.33
-Nodes (3): Gestionnaire, setup(), trace()
+### Community 4 - "atelier.ts"
+Cohesion: 0.15
+Nodes (6): Atelier, creerAtelier(), estUnAtelier(), consignesDuProf(), contenus, nouvelAtelier()
 
 ### Community 5 - "moteur/package.json"
 Cohesion: 0.11
@@ -126,8 +125,8 @@ Cohesion: 0.17
 Nodes (11): compilerOptions, exactOptionalPropertyTypes, module, moduleResolution, noEmit, noUncheckedIndexedAccess, skipLibCheck, strict (+3 more)
 
 ### Community 10 - "plugin/src/index.ts"
-Cohesion: 0.10
-Nodes (20): Contrat, EntreeCommencer, EntreePage, EntreeRepondre, EtapeUI, EtatMission, EtatUI, objet (+12 more)
+Cohesion: 0.08
+Nodes (23): Contrat, EntreeCommencer, EntreePage, EntreeRepondre, EtapeUI, EtatMission, EtatUI, objet (+15 more)
 
 ### Community 11 - "Règles du dépôt (pour les agents et les humains)"
 Cohesion: 0.25
@@ -146,8 +145,8 @@ Cohesion: 0.29
 Nodes (5): args, cibles, MODIFICATEURS, TOUCHES, ws
 
 ### Community 15 - "Journal des modifications"
-Cohesion: 0.40
-Nodes (4): Ajouté, Journal des modifications, Modifié, Non publié
+Cohesion: 0.33
+Nodes (5): Ajouté, Journal des modifications, Modifié, Non publié, Vérifié dans l'application
 
 ### Community 16 - "Le défi final"
 Cohesion: 0.50
@@ -182,8 +181,8 @@ Cohesion: 0.50
 Nodes (3): extends, include, ../moteur/tsconfig.json
 
 ### Community 37 - "ref_node_fs"
-Cohesion: 0.20
-Nodes (8): contenus, racine, fabriquer(), Jeu, missions, pagesCitees(), rapportsLighthouse(), yaml
+Cohesion: 0.24
+Nodes (4): Jeu, pagesCitees(), rapportsLighthouse(), yaml
 
 ### Community 40 - "opencode.ts"
 Cohesion: 0.13
@@ -197,13 +196,9 @@ Nodes (3): actionDeLOutil(), ContexteOpenCode, plusStrict()
 Cohesion: 0.29
 Nodes (5): cible, opencode, racine, seulementCopier, verrou
 
-### Community 43 - "atelier.test.ts"
-Cohesion: 0.40
-Nodes (4): creerAtelier(), estUnAtelier(), contenus, nouvelAtelier()
-
 ## Knowledge Gaps
 - **7 isolated node(s):** `@types/bun`, `@types/bun`, `typescript`, `@le-harnais/moteur`, `@types/bun` (+2 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 217 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 218 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -216,9 +211,9 @@ _Questions this graph is uniquely positioned to answer:_
 - **Should `Développer` be split into smaller, more focused modules?**
   _Cohesion score 0.08333333333333333 - nodes in this community are weakly interconnected._
 - **Why does `Phase 0 · Faisabilité` connect `Développer` to `chargement.ts`?**
-  _High betweenness centrality (0.062) - this node is a cross-community bridge._
+  _High betweenness centrality (0.061) - this node is a cross-community bridge._
 - **Should `moteur/src/index.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.06015037593984962 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05907172995780591 - nodes in this community are weakly interconnected._
 - **Should `moteur/package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.10526315789473684 - nodes in this community are weakly interconnected._
 - **Should `package.json` be split into smaller, more focused modules?**

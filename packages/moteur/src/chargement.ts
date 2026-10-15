@@ -4,7 +4,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs"
 import path from "node:path"
 import { parse } from "yaml"
-import type { Action, Capacite, Catalogue, Chapitre, Contenus, Effet, Mission, Parcours, Preuve, Question, Systeme } from "./types"
+import type { Action, Capacite, Catalogue, Chapitre, Connecteur, Contenus, Effet, Mission, Parcours, Preuve, Question, Systeme } from "./types"
 
 export class ErreurContenu extends Error {
   constructor(fichier: string, message: string) {
@@ -15,6 +15,7 @@ export class ErreurContenu extends Error {
 
 export function chargerContenus(racine: string): Contenus {
   const catalogue = chargerCatalogue(path.join(racine, "capacites.yaml"))
+  const connecteurs = chargerConnecteurs(path.join(racine, "mcp.yaml"))
   const missions = new Map(
     sousDossiers(path.join(racine, "missions")).map((dossier) => {
       const mission = chargerMission(dossier)
@@ -27,7 +28,25 @@ export function chargerContenus(racine: string): Contenus {
       return [p.id, p] as const
     }),
   )
-  return { catalogue, missions, parcours }
+  return { catalogue, connecteurs, missions, parcours }
+}
+
+/** Facultatif : sans mcp.yaml, aucun connecteur. */
+export function chargerConnecteurs(fichier: string): Map<string, Connecteur> {
+  if (!existsSync(fichier)) return new Map()
+  const brut = lireYaml(fichier)
+  return new Map(
+    tableau(fichier, brut, "connecteurs").map((valeur) => {
+      const o = objet(fichier, valeur)
+      const c: Connecteur = {
+        id: texte(fichier, o, "id"),
+        titre: texte(fichier, o, "titre"),
+        commande: listeTextes(fichier, o, "commande"),
+        codemode: o.codemode === undefined ? true : booleen(fichier, o, "codemode"),
+      }
+      return [c.id, c] as const
+    }),
+  )
 }
 
 export function chargerCatalogue(fichier: string): Catalogue {
