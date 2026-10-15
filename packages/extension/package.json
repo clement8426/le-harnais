@@ -1,0 +1,13 @@
+{
+  "name": "@le-harnais/extension",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "L'extension d'interface du Harnais pour OpenCode Desktop : le panneau des missions. Copiée dans OpenCode par scripts/preparer.ts.",
+  "scripts": {
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "@types/bun": "1.3.0"
+  }
+}

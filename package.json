@@ -8,10 +8,11 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "bun run --filter '*' test",
+    "test": "bun run --cwd packages/moteur test && bun run --cwd packages/plugin test && bun run --cwd packages/extension test",
     "verifier": "bun run --cwd packages/moteur verifier",
-    "typecheck": "bun run --filter '*' typecheck",
+    "typecheck": "bun run --cwd packages/moteur typecheck && bun run --cwd packages/plugin typecheck",
     "preparer": "bun ./scripts/preparer.ts",
+    "dev": "bun ./scripts/dev.ts",
     "graphe": "graphify update ."
   }
 }

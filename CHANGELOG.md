@@ -12,7 +12,11 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 - Le guide `docs/ecrire-une-mission.md`.
 - La commande `bun run verifier`, qui affiche le parcours numéroté et bloque si une mission est mal placée.
 - Le script `scripts/capture.ts`, qui pilote l'application lancée en mode développement (capture, clic, frappe, évaluation).
-- L'extension « le-labo » (`packages/extension`) : un onglet « Missions » dans la zone latérale des sessions.
-- Le script `scripts/preparer.ts` et le premier patch d'OpenCode (`upstream/patches/01-enregistrer-extension-le-labo.patch`, 7 lignes).
+- L'extension « le-labo » (`packages/extension`) : l'onglet « Missions » (parcours numéroté, mission en cours, cours mis en forme, preuves, questions, indice).
+- Le plugin serveur (`packages/plugin`) : restreint les droits de l'IA aux capacités débloquées, retire de sa vue les outils interdits, lui donne les consignes du prof, tient le journal et valide les missions toutes seules ; RPC « le-harnais » avec le panneau.
+- Le patch 02 : au premier lancement, le projet par défaut est l'atelier `Documents/LeLabo`.
+- `bun run dev` (`scripts/dev.ts`) : lance l'application isolée dans `~/.le-harnais-dev`, plugin installé.
+- `docs/architecture.md`.
+- Le script `scripts/preparer.ts` et le premier patch d'OpenCode (`upstream/patches/01-enregistrer-extension-le-labo.patch`, 7 lignes). Sous Windows, il remplace aussi les liens symboliques du dépôt d'OpenCode par des copies.
 - La documentation de départ : README, règles du dépôt, feuille de route, guide de développement, questions ouvertes, licences.
 - OpenCode figé sur v2.0.29 (`upstream/opencode.lock.json`).

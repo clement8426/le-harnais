@@ -16,9 +16,22 @@
         "typescript": "5.9.3",
       },
     },
+    "packages/plugin": {
+      "name": "@le-harnais/plugin",
+      "version": "0.1.0",
+      "dependencies": {
+        "@le-harnais/moteur": "workspace:*",
+      },
+      "devDependencies": {
+        "@types/bun": "1.3.0",
+        "typescript": "5.9.3",
+      },
+    },
   },
   "packages": {
     "@le-harnais/moteur": ["@le-harnais/moteur@workspace:packages/moteur"],
+
+    "@le-harnais/plugin": ["@le-harnais/plugin@workspace:packages/plugin"],
 
     "@types/bun": ["@types/bun@1.3.0", "", { "dependencies": { "bun-types": "1.3.0" } }, "sha512-+lAGCYjXjip2qY375xX/scJeVRmZ5cY0wyHYyCYxNcdEXrQ4AOe3gACgd4iQ8ksOslJtW4VNxBJ8llUwc3a6AA=="],
 

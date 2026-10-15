@@ -1,0 +1,194 @@
+// L'atelier : le dossier LeLabo d'un élève, avec sa progression et son journal.
+// Ne connaît pas OpenCode : le plugin (index.ts) lui transmet des événements déjà traduits.
+//
+// LeLabo/
+// ├── .labo/
+// │   ├── harnais.json       marque le dossier comme atelier, et dit quel parcours suivre
+// │   ├── progression.json   missions commencées et réussies, rangées par nom
+// │   ├── en-cours.json      la mission en cours
+// │   └── journal.jsonl      tout ce qui s'est passé, une ligne par événement
+// └── missions/<nom>/fichiers/   copiés au début de chaque mission
+
+import { cpSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import path from "node:path"
+import {
+  capacitesActives,
+  chargerContenus,
+  commencer,
+  droits,
+  etats,
+  evaluerMission,
+  Journal,
+  missionValidee,
+  numeroter,
+  prochaine,
+  progressionVide,
+  reussir,
+  type Contenus,
+  type Evenement,
+  type Mission,
+  type Progression,
+  type Systeme,
+} from "@le-harnais/moteur"
+import type { EtapeUI, EtatUI } from "../../extension/src/contrat"
+
+export const DOSSIER_LABO = ".labo"
+
+export function estUnAtelier(dossier: string) {
+  return existsSync(path.join(dossier, DOSSIER_LABO, "harnais.json"))
+}
+
+/** Crée un atelier vide : utilisé au premier lancement, et par les tests. */
+export function creerAtelier(dossier: string, parcours = "debutant") {
+  mkdirSync(path.join(dossier, DOSSIER_LABO), { recursive: true })
+  mkdirSync(path.join(dossier, "missions"), { recursive: true })
+  const marque = path.join(dossier, DOSSIER_LABO, "harnais.json")
+  if (!existsSync(marque)) writeFileSync(marque, JSON.stringify({ parcours }, null, 2))
+}
+
+export class Atelier {
+  readonly contenus: Contenus
+  private annonce?: string
+
+  constructor(
+    readonly dossier: string,
+    racineContenus: string,
+    private readonly systeme?: Systeme,
+  ) {
+    this.contenus = chargerContenus(racineContenus)
+  }
+
+  private chemin(nom: string) {
+    return path.join(this.dossier, DOSSIER_LABO, nom)
+  }
+
+  private lireJson<T>(nom: string, defaut: T): T {
+    try {
+      return JSON.parse(readFileSync(this.chemin(nom), "utf8")) as T
+    } catch {
+      return defaut
+    }
+  }
+
+  private ecrireJson(nom: string, valeur: unknown) {
+    writeFileSync(this.chemin(nom), JSON.stringify(valeur, null, 2))
+  }
+
+  get parcoursId() {
+    return this.lireJson<{ parcours?: string }>("harnais.json", {}).parcours ?? "debutant"
+  }
+
+  get parcours() {
+    const p = this.contenus.parcours.get(this.parcoursId)
+    if (!p) throw new Error(`Parcours « ${this.parcoursId} » introuvable dans les contenus.`)
+    return p
+  }
+
+  get progression(): Progression {
+    return this.lireJson("progression.json", progressionVide(this.parcoursId))
+  }
+
+  get enCours(): Mission | undefined {
+    const id = this.lireJson<{ mission?: string }>("en-cours.json", {}).mission
+    return id ? this.contenus.missions.get(id) : undefined
+  }
+
+  get journal() {
+    return Journal.lire(this.chemin("journal.jsonl"))
+  }
+
+  /** Les capacités actives, y compris celles que prête la mission en cours. */
+  capacites() {
+    return capacitesActives(this.progression, this.parcours, this.contenus.missions, this.enCours)
+  }
+
+  droits() {
+    return droits(this.capacites(), this.contenus.catalogue)
+  }
+
+  private ordre() {
+    return numeroter(this.parcours, this.contenus.missions, this.systeme)
+  }
+
+  commencer(id: string) {
+    const mission = this.contenus.missions.get(id)
+    if (!mission) throw new Error(`Mission « ${id} » inconnue.`)
+    const etat = etats(this.progression, this.ordre().map((e) => e.mission), this.parcours, this.contenus.missions).get(id)
+    if (etat === "verrouillee") throw new Error(`La mission « ${mission.titre} » est encore verrouillée.`)
+    const fichiers = path.join(mission.dossier, "fichiers")
+    const cible = path.join(this.dossier, "missions", id, "fichiers")
+    if (existsSync(fichiers) && !existsSync(cible)) cpSync(fichiers, cible, { recursive: true })
+    this.ecrireJson("progression.json", commencer(this.progression, id))
+    this.ecrireJson("en-cours.json", { mission: id })
+  }
+
+  /** Ajoute un événement au journal, puis valide la mission en cours si toutes ses preuves sont vertes. */
+  enregistrer(evenement: Evenement) {
+    Journal.ajouter(this.chemin("journal.jsonl"), evenement)
+    return this.validerSiPret()
+  }
+
+  /** Vrai si la mission en cours vient d'être réussie. */
+  validerSiPret() {
+    const mission = this.enCours
+    if (!mission || !missionValidee(this.resultats(mission))) return false
+    this.ecrireJson("progression.json", reussir(this.progression, mission))
+    this.ecrireJson("en-cours.json", {})
+    this.annonce = `Mission réussie : ${mission.titre}.`
+    return true
+  }
+
+  resultats(mission: Mission) {
+    return evaluerMission(mission, {
+      journal: this.journal,
+      disque: {
+        existe: (c) => existsSync(path.join(this.dossier, c)),
+        lire: (c) => {
+          try {
+            return readFileSync(path.join(this.dossier, c), "utf8")
+          } catch {
+            return undefined
+          }
+        },
+      },
+      depuis: this.progression.commencees[mission.id],
+    })
+  }
+
+  etat(fournisseur?: { id: string; modele: string }): EtatUI {
+    const progression = this.progression
+    const ordre = this.ordre()
+    const enCours = this.enCours
+    const etatsMissions = etats(progression, ordre.map((e) => e.mission), this.parcours, this.contenus.missions)
+    const etapes = ordre.map((e): EtapeUI => {
+      const m = e.mission
+      const encours = enCours?.id === m.id
+      return {
+        numero: e.numero,
+        chapitre: e.chapitre,
+        id: m.id,
+        titre: m.titre,
+        resume: m.resume,
+        etat: encours ? "en-cours" : (etatsMissions.get(m.id) ?? "verrouillee"),
+        ...(m.cours ? { cours: m.cours } : {}),
+        indice: m.indice,
+        questions: m.questions.map((q) => ({ id: q.id, enonce: q.enonce, choix: q.choix })),
+        ...(encours ? { preuves: this.resultats(m).map((r) => ({ ok: r.ok, detail: r.detail })) } : {}),
+      }
+    })
+    const annonce = this.annonce
+    this.annonce = undefined
+    const suivante = prochaine(etatsMissions)
+    return {
+      actif: true,
+      dossier: this.dossier,
+      parcours: { id: this.parcours.id, titre: this.parcours.titre },
+      etapes,
+      ...(enCours ? { enCours: enCours.id } : {}),
+      ...(suivante ? { prochaine: suivante } : {}),
+      capacites: [...this.capacites()].sort(),
+      ...(fournisseur ? { fournisseur } : {}),
+      ...(annonce ? { annonce } : {}),
+    }
+  }
+}

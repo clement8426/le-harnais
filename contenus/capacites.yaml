@@ -119,7 +119,6 @@ toujours:
   - { type: permission, outil: external_directory, action: deny }
   - { type: permission, outil: read, motif: "*.env", action: deny }
   - { type: permission, outil: read, motif: "*.env.*", action: deny }
-  - { type: permission, outil: read, motif: "*.env.example", action: allow }
   - { type: permission, outil: edit, motif: "*.labo/*", action: deny }
   - { type: permission, outil: shell, motif: "rm *", action: deny }
   - { type: permission, outil: shell, motif: "del *", action: deny }

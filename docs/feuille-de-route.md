@@ -10,9 +10,10 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 - [x] Choisir comment voir les commandes de l'élève : lire la sortie du terminal, sans modifier OpenCode
 - [x] Parler à une IA dans l'application : le modèle gratuit par défaut répond
 - [x] Ajouter une extension « le-labo » aux extensions intégrées (patch de 7 lignes, `scripts/preparer.ts`) : l'onglet « Missions » s'affiche
+- [x] Écrire un plugin qui retire des outils à l'IA selon les capacités (vérifié : sans capacité, l'IA ne voit plus que `question`)
+- [x] Atelier `LeLabo` créé au premier lancement (patch 02)
 - [ ] Vérifier que le terminal lance PowerShell dans le dossier de l'élève
 - [ ] Vérifier le navigateur intégré et l'audit Lighthouse
-- [ ] Écrire un plugin qui retire un outil à l'IA, puis le lui rend
 - [ ] Retirer Sentry et changer l'identifiant de l'application
 
 ## Phase 1 · Le moteur
@@ -23,9 +24,12 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 - [x] Preuves (10 types) et droits de l'IA (traduction en permissions OpenCode)
 - [x] Lecture des commandes dans l'affichage du terminal
 - [x] Contenus du parcours débutant (15 missions, 6 chapitres), vérifiés par les tests
-- [ ] Panneau des missions dans l'application
-- [ ] Journal alimenté par le plugin et l'extension
-- [ ] Agent « prof »
+- [x] Panneau des missions dans l'application : parcours, mission, cours, preuves, questions, indice
+- [x] Plugin serveur : droits de l'IA, journal, validation automatique, RPC avec le panneau
+- [x] Agent « prof » : consignes ajoutées au prompt système (mission en cours, preuves, droits)
+- [x] Mission 1 jouée de bout en bout dans l'application : validée dès la réponse de l'IA
+- [ ] Allumer et éteindre les extensions (terminal, fichiers, revue, navigateur) selon les capacités
+- [ ] Preuves du terminal : intégration PowerShell (patch 03)
 
 ## Phases suivantes
 

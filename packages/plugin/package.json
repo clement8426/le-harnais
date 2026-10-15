@@ -1,0 +1,20 @@
+{
+  "name": "@le-harnais/plugin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Le plugin serveur du Harnais pour OpenCode V2 : droits de l'IA, journal, consignes du prof, RPC du panneau.",
+  "main": "./src/index.ts",
+  "scripts": {
+    "test": "bun test",
+    "construire": "bun build ./src/index.ts --target=node --format=esm --outfile=dist/le-harnais.js",
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@le-harnais/moteur": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/bun": "1.3.0",
+    "typescript": "5.9.3"
+  }
+}

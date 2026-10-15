@@ -15,14 +15,26 @@ bun run verifier
 
 ## Lancer l'application en mode développement
 
+La première fois :
+
 ```bash
 bun scripts/preparer.ts
-cd .upstream/opencode
-bun install
-bun run dev:desktop
+cd .upstream/opencode && bun install
 ```
 
-`preparer.ts` récupère OpenCode à la version figée, applique nos patchs (`upstream/patches/`) et copie notre extension dans `packages/gui-extensions/src/le-labo`. Après une modification de l'extension, `bun scripts/preparer.ts --copier` suffit ; Vite recharge la fenêtre.
+Ensuite, depuis la racine :
+
+```bash
+bun run dev
+```
+
+`scripts/dev.ts` prépare OpenCode (version figée, patchs, copie de l'extension), construit le plugin, l'installe dans une configuration isolée (`~/.le-harnais-dev`), et lance l'application. `bun run dev -- --neuf` repart de zéro, comme un premier lancement. Les traces du plugin vont dans `~/.le-harnais-dev/LeLabo/.labo/trace.log`.
+
+Pendant que l'application tourne :
+
+- extension modifiée : `bun scripts/preparer.ts --copier` (Vite recharge la fenêtre) ;
+- plugin modifié : `bun run --cwd packages/plugin construire`, puis copier `dist/le-harnais.js` dans `~/.le-harnais-dev/config/opencode/plugins/` (le serveur le recharge) ;
+- contenus modifiés : rien à faire, ils sont lus depuis `contenus/` à chaque appel.
 
 La première compilation prend environ deux minutes. L'onglet « Missions » apparaît dans la zone latérale d'une session (bouton « Basculer la revue »).
 

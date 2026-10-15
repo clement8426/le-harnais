@@ -9,7 +9,7 @@
 //   bun scripts/preparer.ts --copier   recopie seulement l'extension (pendant le développement)
 
 import { $ } from "bun"
-import { cpSync, existsSync, readdirSync, rmSync } from "node:fs"
+import { cpSync, existsSync, readdirSync, readFileSync, rmSync, statSync } from "node:fs"
 import path from "node:path"
 
 const racine = path.join(import.meta.dir, "..")
@@ -26,6 +26,19 @@ if (!seulementCopier) {
   if (commit !== verrou.commit) throw new Error(`OpenCode est sur ${commit}, le verrou attend ${verrou.commit}. Supprimez .upstream/ et relancez.`)
 
   await $`git -C ${opencode} checkout -- packages`
+
+  // Sous Windows sans mode développeur, Git écrit les liens symboliques comme de petits fichiers contenant le chemin
+  // de leur cible. On les remplace par une copie de la cible, sinon la vérification des types échoue.
+  if (process.platform === "win32") {
+    const liens = (await $`git -C ${opencode} ls-files -s`.text()).split("\n").filter((l) => l.startsWith("120000 ")).map((l) => l.split("\t")[1]!)
+    for (const lien of liens) {
+      const fichier = path.join(opencode, lien)
+      const cibleLien = path.resolve(path.dirname(fichier), readFileSync(fichier, "utf8").trim())
+      if (existsSync(cibleLien) && statSync(cibleLien).isFile()) cpSync(cibleLien, fichier)
+    }
+    console.log(`✓ ${liens.length} lien(s) symbolique(s) remplacé(s) par une copie`)
+  }
+
   const patchs = readdirSync(path.join(racine, "upstream/patches")).filter((f) => f.endsWith(".patch")).sort()
   for (const patch of patchs) {
     await $`git -C ${opencode} apply --whitespace=nowarn ${path.join(racine, "upstream/patches", patch)}`
