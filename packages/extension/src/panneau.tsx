@@ -113,6 +113,10 @@ export default function Panneau(props: { session: MountedSession; navigateur: Na
               </div>
             </header>
 
+            <Show when={reussies() === 0 && !e().enCours}>
+              <Accueil />
+            </Show>
+
             <Show when={e().capacites.includes("voix.dicter")}>
               <Dictee />
             </Show>
@@ -170,6 +174,31 @@ const LIBELLES_DICTEE = {
   ouverture: "Ouverture du micro…",
   ecoute: "■ Arrêter et transcrire",
   calcul: "Transcription sur ton ordinateur…",
+}
+
+/** L'explication du départ, tant qu'aucune mission n'est réussie : comment ça va se passer. */
+function Accueil() {
+  return (
+    <section class="lh-accueil" aria-labelledby="lh-accueil-titre">
+      <h2 id="lh-accueil-titre">Bienvenue dans Le Harnais</h2>
+      <p>
+        Ton IA arrive avec ses outils <strong>verrouillés</strong>. Tu les débloques un par un, en t'en servant pour de vrai.
+        Ici, à droite, tu suis les missions. À gauche, tu parles à l'IA.
+      </p>
+      <ol>
+        <li>
+          <strong>Branche ton IA.</strong> Sous la zone de saisie, à gauche, clique sur le nom du modèle, puis connecte ton
+          abonnement ChatGPT ou une clé d'API.
+        </li>
+        <li>
+          <strong>Commence la mission</strong> proposée ci-dessous : elle te dit quoi faire, et ce que le harnais vérifie.
+        </li>
+        <li>
+          <strong>Écris un message à l'IA.</strong> La mission se valide toute seule, et la suivante s'ouvre.
+        </li>
+      </ol>
+    </section>
+  )
 }
 
 /** Dicter un message : le micro, Whisper sur l'ordinateur, puis le presse-papiers. L'élève colle et envoie lui-même. */

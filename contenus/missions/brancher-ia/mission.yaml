@@ -6,4 +6,4 @@ requiert: [chat]
 debloque: []
 preuves:
   - type: ia.reponse
-indice: Ouvre le menu des modèles sous la zone de saisie, connecte un fournisseur (par exemple OpenRouter et un modèle gratuit), choisis un modèle, puis écris « Bonjour, qui es-tu ? » et envoie.
+indice: Ouvre le menu des modèles sous la zone de saisie, connecte ton abonnement ChatGPT (ou une clé d'API), choisis un modèle, puis écris « Bonjour, qui es-tu ? » et envoie.

@@ -6,11 +6,11 @@ Ton harnais a besoin d'un cerveau : un modèle d'IA. C'est lui qui te répond, t
 
 | Façon | Comment | Ce qu'il faut savoir |
 | --- | --- | --- |
+| Un abonnement ChatGPT | Tu te connectes à ton compte, dans une page de ton navigateur | Le plus simple si tu as ChatGPT Plus ou Pro : rien de plus à payer |
 | Une API | Tu colles une clé ; tu paies à l'usage | Infomaniak (Suisse), OpenRouter (des dizaines de modèles avec une seule clé), Anthropic, OpenAI |
-| Un abonnement | Tu te connectes à ton compte | ChatGPT Plus ou Pro fonctionne directement. Pour Claude, ce sera Claude Code dans le terminal, plus tard |
-| Sur ton ordinateur | Un modèle local, avec Ollama ou LM Studio | Gratuit et privé, mais plus lent |
+| Sur ton ordinateur | Un modèle local, avec Ollama ou LM Studio | Gratuit et privé, mais lent sans carte graphique : compte plusieurs minutes avant la première réponse |
 
-Pour commencer sans rien payer : OpenRouter propose des modèles gratuits (une clé gratuite, avec des limites d'usage), et un modèle local ne coûte rien. Le modèle gratuit affiché au départ est réservé à OpenCode : dans Le Harnais, il refuse de répondre.
+Un abonnement Claude ne se branche pas ici : pour Claude, il faut une clé d'API.
 
 ## Le réflexe à prendre
 
@@ -18,7 +18,7 @@ Regarde toujours **où** part ce que tu écris. Ce qui compte pour tes données,
 
 ## À faire
 
-1. Sous la zone de saisie, ouvre le menu des modèles, connecte un fournisseur (colle sa clé) et choisis un de ses modèles.
+1. Sous la zone de saisie, clique sur le nom du modèle, connecte ton abonnement ChatGPT (ou colle une clé d'API) et choisis un modèle.
 2. Écris « Bonjour, qui es-tu ? » et envoie.
 3. Lis sa réponse : elle te dit quel modèle elle est.
 

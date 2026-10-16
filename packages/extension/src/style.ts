@@ -2,7 +2,8 @@
 // avec les repères du Labo : la bande des six couleurs, le safran pour ce qui est gagné, le vert pour ce qui est validé.
 
 export const STYLE = `
-.lh { padding: 16px 18px 32px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; font-size: 14px; line-height: 1.55; }
+/* Le conteneur d'OpenCode coupe ce qui dépasse (overflow: hidden) : le panneau défile lui-même. */
+.lh { box-sizing: border-box; height: 100%; min-height: 0; overflow-y: auto; align-content: start; padding: 16px 18px 32px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; font-size: 14px; line-height: 1.55; }
 .lh h2 { margin: 6px 0 0; font-size: 20px; letter-spacing: -.01em; }
 .lh h3 { margin: 2px 0 4px; font-size: 22px; letter-spacing: -.02em; line-height: 1.15; }
 .lh h4 { margin: 14px 0 6px; font-size: 13px; text-transform: none; opacity: .8; }
@@ -35,6 +36,13 @@ export const STYLE = `
 .lh-dictee { display: grid; gap: 6px; justify-items: start; }
 .lh-dictee p { margin: 0; }
 .lh-texte-dicte { width: 100%; box-sizing: border-box; padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(127, 127, 127, .35); background: rgba(127, 127, 127, .08); color: inherit; font: inherit; resize: vertical; }
+.lh-bienvenue { box-sizing: border-box; padding: 12px 20px 14px; border-top: 1.5px solid #2B44E8; background: rgba(43, 68, 232, .1); font-size: 14px; line-height: 1.5; }
+.lh-bienvenue-titre { margin: 0 0 4px; font-weight: 700; }
+.lh-bienvenue ol { margin: 0; padding-left: 24px; display: grid; gap: 2px; list-style: decimal; }
+.lh-accueil { padding: 14px 16px; border-radius: 12px; border: 1.5px solid #2B44E8; background: rgba(43, 68, 232, .08); }
+.lh-accueil h2 { font-size: 16px; margin: 0 0 6px; }
+.lh-accueil p { margin: 0 0 8px; }
+.lh-accueil ol { margin: 0; padding-left: 22px; display: grid; gap: 6px; list-style: decimal; }
 .lh-cours { margin-top: 14px; }
 .lh-cours summary { cursor: pointer; font-weight: 600; }
 .lh-cours h2, .lh-cours h3 { font-size: 15px; margin: 14px 0 6px; }

@@ -20,6 +20,9 @@ const config: Configuration = {
   publish: null,
   files: [...(base.files as string[]), "!resources/le-harnais{,/**/*}"],
   extraResources: [...(base.extraResources as object[]), { from: "resources/le-harnais", to: "le-harnais" }],
+  // On ne retouche pas Electron.exe (nom, icône) : modifié, son empreinte devient inconnue de Windows 11, dont le
+  // contrôle intelligent des applications refuse alors de le lancer. Intact, il se lance comme en développement.
+  win: { ...base.win, signAndEditExecutable: false },
   nsis: { ...base.nsis, shortcutName: "Le Harnais", uninstallDisplayName: "Le Harnais" },
 }
 

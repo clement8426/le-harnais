@@ -45,6 +45,8 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 - [x] Installeur Windows (`bun scripts/empaqueter.ts`), nom, identifiant, icône
 - [x] Isolation d'un OpenCode installé : données, service d'arrière-plan, protocole (vérifié : le fichier d'état d'OpenCode n'est plus touché)
 - [x] Application construite vérifiée : atelier créé, plugin chargé, panneau des missions
+- [x] Lancement par un raccourci du bureau (exécutable gardé intact : Windows 11 le laisse passer ; copie du dossier décompressé)
+- [x] Accueil de l'élève : bande « Bienvenue », panneau ouvert tout seul, défilement
 - [ ] Installeur vérifié sur un poste neuf (installation, désinstallation)
 - [ ] Signature de l'installeur (question 4) : nécessaire, le contrôle intelligent des applications de Windows 11 bloque la version non signée
 - [ ] Mises à jour du Harnais (aucun mécanisme pour l'instant)

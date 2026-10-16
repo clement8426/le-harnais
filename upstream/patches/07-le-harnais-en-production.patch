@@ -73,16 +73,16 @@ index 4b9b4e1..5b2ad28 100644
      runFork(scoped("protocol", level === "error" ? Effect.logError(message, data) : Effect.logWarning(message, data))),
 diff --git a/packages/desktop/src/main/lifecycle/le-harnais.ts b/packages/desktop/src/main/lifecycle/le-harnais.ts
 new file mode 100644
-index 0000000..b308519
+index 0000000..1b285c2
 --- /dev/null
 +++ b/packages/desktop/src/main/lifecycle/le-harnais.ts
-@@ -0,0 +1,30 @@
+@@ -0,0 +1,35 @@
 +// Le Harnais, application publiée : ses propres dossiers de données (rien de partagé avec un OpenCode installé),
 +// son plugin réinstallé à chaque démarrage (il suit la version de l'application), et les chemins de ses contenus
 +// et de l'intégration du shell, lus par le plugin et par la création des terminaux (patch 04).
 +// En développement, scripts/dev.ts du dépôt Le Harnais fait la même chose avec OPENCODE_DESKTOP_TEST_ROOT.
 +
-+import { copyFileSync, mkdirSync } from "node:fs"
++import { copyFileSync, existsSync, mkdirSync, writeFileSync } from "node:fs"
 +import path from "node:path"
 +
 +export function configurerLeHarnais(donnees: string) {
@@ -102,11 +102,41 @@ index 0000000..b308519
 +  mkdirSync(plugins, { recursive: true })
 +  copyFileSync(path.join(ressources, "plugin", "le-harnais.js"), path.join(plugins, "le-harnais.js"))
 +
++  // Le modèle gratuit d'OpenCode refuse de répondre hors de ses propres applications : on ne le propose pas.
++  // Le fichier n'est écrit qu'une fois : l'élève ou le formateur peut ensuite le modifier.
++  const config = path.join(plugins, "..", "opencode.json")
++  if (!existsSync(config)) writeFileSync(config, JSON.stringify({ disabled_providers: ["opencode"] }, null, 2))
++
 +  process.env.LABO_CONTENUS ??= path.join(ressources, "contenus")
 +  process.env.LE_HARNAIS_POWERSHELL_INIT ??= path.join(ressources, "shell", "integration.ps1")
 +  // bash lit ce chemin dans PROMPT_COMMAND : barres obliques normales, que Git Bash comprend aussi.
 +  process.env.LE_HARNAIS_BASH_INIT ??= path.join(ressources, "shell", "integration.sh").replaceAll("\\", "/")
 +}
+diff --git a/packages/desktop/src/main/service/background-service.ts b/packages/desktop/src/main/service/background-service.ts
+index 2d156b2..7eff150 100644
+--- a/packages/desktop/src/main/service/background-service.ts
++++ b/packages/desktop/src/main/service/background-service.ts
+@@ -65,7 +65,19 @@ const connect = Effect.fn("BackgroundService.connect")(function* (mode: "initial
+   const early = mode === "initial" && !isolated ? yield* Effect.promise(sidecarProbe) : undefined
+ 
+   if (early) yield* Effect.sync(() => void ensure().catch(() => undefined))
+-  const service = early ?? (yield* Effect.tryPromise(ensure))
++  // Le Harnais : un service lent à répondre (Windows analyse les fichiers qu'on vient de copier) passe pour absent,
++  // et son port occupé fait échouer le démarrage d'un second. On réessaie alors d'adopter le service existant.
++  const adopter = () =>
++    ensure().catch(async (error: unknown) => {
++      if (!String(error).includes("already in use")) throw error
++      for (let essai = 0; essai < 20; essai++) {
++        await new Promise((fini) => setTimeout(fini, 3000))
++        const trouve = await client.Service.discover({ version }).catch(() => undefined)
++        if (trouve) return trouve
++      }
++      throw error
++    })
++  const service = early ?? (yield* Effect.tryPromise(adopter))
+ 
+   if (service.auth?.type !== "basic") throw new Error("V2 CLI background service did not provide authentication")
+   const url = new URL(service.url)
 diff --git a/packages/desktop/src/renderer/index.html b/packages/desktop/src/renderer/index.html
 index b7c429f..bd71d2c 100644
 --- a/packages/desktop/src/renderer/index.html

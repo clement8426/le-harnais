@@ -81,7 +81,7 @@ Les deux écrivent une ligne JSON par commande dans `.labo/terminal.jsonl`, sans
 | `04-integration-shell` | La création des terminaux (`core/src/pty.ts`) | Charger l'intégration PowerShell ou bash qui note les commandes |
 | `05-dependances-des-sens` | Les dépendances de `gui-extensions` (3 lignes) | Tesseract, pdf.js et transformers.js pour les sens, dans la fenêtre |
 | `06-micro-pour-la-dictee` | Les permissions de la fenêtre (`desktop/src/main/windows/security.ts`) | Autoriser le micro, audio seul, pour la dictée de l'élève |
-| `07-le-harnais-en-production` | Le nom, l'identifiant, le titre de la fenêtre, le protocole ; un nouveau fichier `lifecycle/le-harnais.ts` | Une application publiée isolée de tout OpenCode installé (voir ci-dessous) |
+| `07-le-harnais-en-production` | Le nom, l'identifiant, le titre de la fenêtre, le protocole ; le démarrage du service d'arrière-plan ; un nouveau fichier `lifecycle/le-harnais.ts` | Une application publiée isolée de tout OpenCode installé, qui n'affiche pas le modèle gratuit d'OpenCode, et qui reprend son service même quand il répond lentement (voir ci-dessous) |
 
 ## L'application publiée
 
@@ -92,6 +92,9 @@ Les deux écrivent une ligne JSON par commande dans `.labo/terminal.jsonl`, sans
 - **Au démarrage** (patch 07, `lifecycle/le-harnais.ts`), l'application range toutes ses données dans `%APPDATA%\app.leharnais.desktop` (dossiers XDG compris : configuration, données, état du service), réinstalle le plugin, et indique au serveur où sont les contenus et l'intégration du shell. Rien n'est partagé avec un OpenCode installé : ni son service d'arrière-plan, ni sa configuration, ni ses liens `opencode://`.
 - **Pas de mise à jour automatique** (canal « dev » d'OpenCode, aucun serveur de publication) : celle d'OpenCode remplacerait Le Harnais par OpenCode. **Pas de Sentry** : il ne s'active qu'avec `VITE_SENTRY_DSN`, que nous ne fournissons pas.
 - **La configuration d'empaquetage** (`upstream/electron-builder.le-harnais.ts`) reprend celle d'OpenCode avec notre nom, notre identifiant (`app.leharnais.desktop`), notre icône (`marque/`) et nos ressources.
+
+- **Le service d'arrière-plan survit à la fenêtre** : fermer l'application ne l'arrête pas, et la fois suivante elle le reprend. Quand l'application change de version, elle le remplace. Si le service met plus de 2 secondes à répondre à la sonde de démarrage (Windows analyse les fichiers qu'on vient de copier), OpenCode le croit absent et tente d'en lancer un second sur le port déjà pris : le patch 07 réessaie alors de reprendre le service existant, pendant une minute, au lieu d'échouer.
+- **Le panneau des missions s'ouvre tout seul** au premier message de chaque session (`renderer.tsx`) : avant, OpenCode n'a pas de session, et l'élève ne devine pas le bouton « Basculer la revue ». L'écran de départ porte une bande d'accueil (`bienvenue.tsx`, emplacement `window.bottom`).
 
 Deux limites, propres à l'application publiée :
 
