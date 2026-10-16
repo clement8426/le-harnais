@@ -32,7 +32,7 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 
 ## Phases suivantes
 
-- [ ] Phase 2 · Poste de travail et web
+- [x] Phase 2 · Poste de travail et web (terminal, fichiers, navigateur, Lighthouse, skills, MCP, plugins : missions jouées)
 - [ ] Phase 3 · Les sens et les extensions
   - [x] Outils des sens fournis par le plugin, calculés dans la fenêtre (patch 05)
   - [x] Missions « Dicter », « Écouter », « Lire un document » et « Voir une image » jouées dans l'application
