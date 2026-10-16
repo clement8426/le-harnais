@@ -48,5 +48,12 @@ const env = { ...process.env, OPENCODE_CHANNEL: "dev", LE_HARNAIS_VERSION: versi
 await $`bun run build`.cwd(bureau).env(env)
 await $`bunx electron-builder --config electron-builder.le-harnais.ts`.cwd(bureau).env(env)
 
+// L'archive que l'élève télécharge : le dossier de l'application (exécutable d'Electron intact) et son lanceur.
 const sortie = path.join(bureau, "dist")
-console.log(`✓ Le Harnais ${version} : ${readdirSync(sortie).filter((f) => f.startsWith("le-harnais-")).join(", ")} dans ${path.relative(racine, sortie)}`)
+cpSync(path.join(racine, "upstream/Lancer-Le-Harnais.bat"), path.join(sortie, "win-unpacked/Lancer-Le-Harnais.bat"))
+const archive = `le-harnais-${version}-win-x64.zip`
+rmSync(path.join(sortie, archive), { force: true })
+// tar (bsdtar, livré avec Windows 10 et 11) écrit un .zip bien plus vite que Compress-Archive.
+await $`tar -a -cf ${archive} -C ${sortie} win-unpacked`.cwd(sortie)
+
+console.log(`✓ Le Harnais ${version} : ${readdirSync(sortie).filter((f) => f.startsWith("le-harnais-") && !f.endsWith(".blockmap")).join(", ")} dans ${path.relative(racine, sortie)}`)

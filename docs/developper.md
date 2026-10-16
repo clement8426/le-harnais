@@ -44,7 +44,7 @@ La première compilation prend environ deux minutes. L'onglet « Missions » app
 bun scripts/empaqueter.ts
 ```
 
-Prépare OpenCode, construit le plugin, le serveur (depuis notre copie patchée) et l'application, puis l'installeur : `.upstream/opencode/packages/desktop/dist/le-harnais-<version>-win-x64.exe` sous Windows. Compter une dizaine de minutes la première fois (electron-builder télécharge Electron et NSIS). L'installeur n'est pas signé.
+Prépare OpenCode, construit le plugin, le serveur (depuis notre copie patchée) et l'application, puis l'archive à distribuer, `.upstream/opencode/packages/desktop/dist/le-harnais-<version>-win-x64.zip` (le dossier de l'application avec son lanceur `Lancer-Le-Harnais.bat`), et un installeur : `.upstream/opencode/packages/desktop/dist/le-harnais-<version>-win-x64.exe` sous Windows. Compter une dizaine de minutes la première fois (electron-builder télécharge Electron et NSIS). L'installeur n'est pas signé.
 
 Pour essayer l'application construite sans l'installer, et sans écrire dans tes Documents :
 
