@@ -52,6 +52,10 @@ Puis choisis un modèle de ce fournisseur dans le menu. Un abonnement Claude ne 
 
 Ton IA gagne un droit à chaque mission. Si elle veut faire quelque chose qu'elle n'a pas encore gagné (par exemple lire un fichier), le harnais le lui refuse et te l'explique.
 
+> **Mission 3, le terminal :** pour l'ouvrir, tape `/terminal` puis Entrée dans la zone de saisie (le terminal s'ouvre en bas de la fenêtre). Les trois commandes se tapent **dans le terminal**, pas dans la conversation : si c'est l'IA qui les lance, ou si tu les passes par « + > commande shell » de la zone de saisie, la mission ne les compte pas.
+
+![Le terminal ouvert par /terminal, en bas du panneau](images/t2-terminal-ouvert.png)
+
 ## 6. Les missions
 
 | Mission | Ce que tu fais | Capture |

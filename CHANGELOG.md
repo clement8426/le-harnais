@@ -49,6 +49,7 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 - Le cours « Ton IA agit, avec ton accord » : un refus arrête l'IA (« Interrompu »).
 - Un outil fourni par une capacité (`effet: outil`) est aussi autorisé : la règle de base « tout refuser » le retirait de la vue de l'IA.
 - La mission « Dicter » ne demande plus « poignet gauche » mot pour mot : Whisper base entend parfois « poignage ». Le cours invite à repérer l'erreur.
+- Le cours et l'indice de la mission « Le terminal » : le « bouton en bas de la fenêtre » n'existe pas. On ouvre le terminal avec `/terminal` dans la zone de saisie (ou Ctrl+`, peu pratique au clavier français), et on précise que les commandes se tapent dans le terminal, pas dans la conversation (ni par « + > commande shell » de la zone de saisie, que le harnais ne voit pas).
 - Le panneau des missions défile : le conteneur d'OpenCode coupe ce qui dépasse (`overflow: hidden`), le contenu des missions n'était lisible qu'en partie.
 - Le patch 07 réessaie d'adopter le service d'arrière-plan existant quand le démarrage d'un second échoue sur le port déjà pris (jusqu'à une minute). Un service lent à répondre (Windows analyse un dossier tout juste copié) passait pour absent.
 - Application publiée : le modèle gratuit d'OpenCode n'est plus proposé (`disabled_providers`, écrit une seule fois dans la configuration de l'application).

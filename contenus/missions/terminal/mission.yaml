@@ -12,4 +12,4 @@ preuves:
     motif: "^(cd|Set-Location|sl|chdir)\\s+.*missions"
   - type: terminal.commande
     motif: "^(ls|dir|Get-ChildItem|gci)(\\s|$)"
-indice: Ouvre le terminal avec le bouton en bas de la fenêtre (ou Ctrl+`). Tape chaque commande puis appuie sur Entrée. Si « node » n'est pas reconnu, demande de l'aide à ton IA.
+indice: "Dans la zone de saisie, tape /terminal puis Entrée : le terminal s'ouvre en bas. Clique dedans, tape chaque commande, puis appuie sur Entrée (pas dans la conversation avec l'IA). Si « node » n'est pas reconnu, demande de l'aide à ton IA."

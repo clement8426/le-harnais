@@ -14,10 +14,12 @@ Les agents comme Claude Code travaillent surtout par là. Comprendre le terminal
 
 ## À faire
 
-1. Ouvre le terminal (bouton en bas de la fenêtre, ou Ctrl+`).
-2. Tape `node --version` puis Entrée. Tu dois voir un numéro qui commence par `v`.
+1. Ouvre le terminal : dans la **zone de saisie** (là où tu écris à l'IA), tape `/terminal` puis Entrée. Le terminal apparaît en bas de la fenêtre, avec une invite qui ressemble à `PS C:\...\LeLabo>`. (Raccourci : Ctrl+`.)
+2. **Clique dans le terminal**, puis tape `node --version` et Entrée. Tu dois voir un numéro qui commence par `v`.
 3. Tape `cd missions` puis Entrée.
 4. Tape `ls` puis Entrée : tu vois les dossiers de tes missions.
+
+Attention : ces commandes se tapent **dans le terminal**, pas dans la conversation. Si tu les écris à l'IA, c'est elle qui les lance. Et le bouton « + » de la zone de saisie, avec son option « commande shell », ressemble à un terminal sans en être un : il lance la commande dans la conversation (tu verras « Shell utilisé »). Le harnais ne le voit pas, la mission ne compte que ce que tu tapes dans le vrai terminal.
 
 Pendant cette mission, le terminal t'est prêté. Une fois les trois commandes faites, il est à toi pour toujours.
 
