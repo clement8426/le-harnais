@@ -95,7 +95,7 @@ Les deux écrivent une ligne JSON par commande dans `.labo/terminal.jsonl`, sans
 - **La configuration d'empaquetage** (`upstream/electron-builder.le-harnais.ts`) reprend celle d'OpenCode avec notre nom, notre identifiant (`app.leharnais.desktop`), notre icône (`marque/`) et nos ressources.
 
 - **Le service d'arrière-plan survit à la fenêtre** : fermer l'application ne l'arrête pas, et la fois suivante elle le reprend. Quand l'application change de version, elle le remplace. Si le service met plus de 2 secondes à répondre à la sonde de démarrage (Windows analyse les fichiers qu'on vient de copier), OpenCode le croit absent et tente d'en lancer un second sur le port déjà pris : le patch 07 réessaie alors de reprendre le service existant, pendant une minute, au lieu d'échouer.
-- **Le panneau s'adapte à sa largeur** (`panneau.tsx`, `ResizeObserver`, seuil `LARGEUR_GRAND_ECRAN` = 760 px) : large, la liste des missions est une colonne à gauche et la mission une colonne à droite, chacune avec son défilement ; étroit, la liste est un menu repliable en haut.
+- **Le panneau s'adapte à sa largeur** (`panneau.tsx`, `ResizeObserver`, seuil `LARGEUR_GRAND_ECRAN` = 1000 px) : large, la liste des missions est une colonne à gauche et la mission une colonne à droite, chacune avec son défilement ; étroit, la liste est un menu repliable en haut.
 - **Le panneau des missions s'ouvre tout seul** au premier message de chaque session (`renderer.tsx`) : avant, OpenCode n'a pas de session, et l'élève ne devine pas le bouton « Basculer la revue ». L'écran de départ porte une bande d'accueil (`bienvenue.tsx`, emplacement `window.bottom`).
 
 Deux limites, propres à l'application publiée :

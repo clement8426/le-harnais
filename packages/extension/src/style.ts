@@ -9,12 +9,22 @@ export const STYLE = `
 .lh-colonne-mission { display: grid; gap: 18px; align-content: start; min-width: 0; }
 .lh-liste { border: 1px solid rgba(127, 127, 127, .25); border-radius: 12px; padding: 4px 10px; }
 .lh-liste summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
-/* Grand écran : la liste à gauche, la mission à droite, chacune défile de son côté. */
-.lh-large { overflow: hidden; }
-.lh-large .lh-corps { flex: 1; min-height: 0; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; }
-.lh-large .lh-colonne-liste, .lh-large .lh-colonne-mission { overflow-y: auto; min-height: 0; padding-right: 8px; }
-.lh-large .lh-colonne-liste { border-right: 1px solid rgba(127, 127, 127, .2); }
+/* Grand écran : deux volets séparés, comme la conversation et le panneau d'OpenCode, chacun avec son défilement. */
+.lh-large { overflow: hidden; padding: 10px; gap: 10px; }
+.lh-large .lh-corps { flex: 1; min-height: 0; grid-template-columns: 280px minmax(0, 1fr); gap: 10px; }
+.lh-large .lh-colonne-liste, .lh-large .lh-colonne-mission { overflow-y: auto; min-height: 0; padding: 16px 16px 24px; border-radius: 14px; border: 1px solid rgba(127, 127, 127, .24); background: rgba(127, 127, 127, .06); }
+.lh-large .lh-colonne-mission { align-content: start; }
 .lh-large .lh-mission { max-width: 860px; }
+.lh-colonne-mission > * { min-width: 0; }
+.lh-large .lh-colonne-mission { overflow-x: hidden; }
+/* Défilement discret, partout dans le panneau. */
+.lh, .lh * { scrollbar-width: thin; scrollbar-color: rgba(127, 127, 127, .35) transparent; }
+.lh *::-webkit-scrollbar { width: 8px; height: 8px; }
+/* Invisible au repos, visible quand la souris est sur le volet. */
+.lh *::-webkit-scrollbar-thumb { background: transparent; border-radius: 8px; border: 2px solid transparent; background-clip: content-box; }
+.lh *:hover::-webkit-scrollbar-thumb { background: rgba(127, 127, 127, .4); background-clip: content-box; }
+.lh *::-webkit-scrollbar-thumb:hover { background: rgba(127, 127, 127, .65); background-clip: content-box; }
+.lh *::-webkit-scrollbar-track, .lh *::-webkit-scrollbar-button, .lh *::-webkit-scrollbar-corner { background: transparent; display: none; }
 .lh h2 { margin: 6px 0 0; font-size: 20px; letter-spacing: -.01em; }
 .lh h3 { margin: 2px 0 4px; font-size: 22px; letter-spacing: -.02em; line-height: 1.15; }
 .lh h4 { margin: 14px 0 6px; font-size: 13px; text-transform: none; opacity: .8; }

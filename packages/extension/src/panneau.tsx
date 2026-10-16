@@ -9,7 +9,7 @@ import { copier, enregistrer, transcrireSon } from "./micro"
 import { STYLE } from "./style"
 
 /** Largeur du panneau, en pixels, à partir de laquelle la liste des missions passe à gauche. */
-const LARGEUR_GRAND_ECRAN = 760
+const LARGEUR_GRAND_ECRAN = 1000
 
 const ICONES: Record<EtapeUI["etat"], string> = {
   reussie: "✓",
@@ -103,23 +103,9 @@ export default function Panneau(props: { session: MountedSession; navigateur: Na
       <Show when={etat()} fallback={<p class="lh-discret">Chargement de ton parcours…</p>}>
         {(e) => (
           <>
-            <header class="lh-tete">
-              <div class="lh-bande" aria-hidden="true">
-                <i />
-                <i />
-                <i />
-                <i />
-                <i />
-                <i />
-              </div>
-              <h2>{e().parcours?.titre}</h2>
-              <p class="lh-discret">
-                {reussies()} mission{reussies() > 1 ? "s" : ""} réussie{reussies() > 1 ? "s" : ""} sur {e().etapes.length}
-              </p>
-              <div class="lh-progres" aria-hidden="true">
-                <span style={{ width: `${(100 * reussies()) / Math.max(1, e().etapes.length)}%` }} />
-              </div>
-            </header>
+            <Show when={!large()}>
+              <Entete titre={e().parcours?.titre} reussies={reussies()} total={e().etapes.length} />
+            </Show>
 
             <div class="lh-corps">
               <Show
@@ -160,7 +146,8 @@ export default function Panneau(props: { session: MountedSession; navigateur: Na
                   </details>
                 }
               >
-                <aside class="lh-colonne-liste">
+                <aside class="lh-colonne-liste" aria-label="Les missions">
+                  <Entete titre={e().parcours?.titre} reussies={reussies()} total={e().etapes.length} />
             <nav class="lh-parcours" aria-label="Le parcours">
               <For each={e().etapes}>
                 {(etape, i) => (
@@ -227,6 +214,29 @@ const LIBELLES_DICTEE = {
   ouverture: "Ouverture du micro…",
   ecoute: "■ Arrêter et transcrire",
   calcul: "Transcription sur ton ordinateur…",
+}
+
+/** Le titre du parcours et sa progression. */
+function Entete(props: { titre?: string; reussies: number; total: number }) {
+  return (
+    <header class="lh-tete">
+      <div class="lh-bande" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+        <i />
+        <i />
+        <i />
+      </div>
+      <h2>{props.titre}</h2>
+      <p class="lh-discret">
+        {props.reussies} mission{props.reussies > 1 ? "s" : ""} réussie{props.reussies > 1 ? "s" : ""} sur {props.total}
+      </p>
+      <div class="lh-progres" aria-hidden="true">
+        <span style={{ width: `${(100 * props.reussies) / Math.max(1, props.total)}%` }} />
+      </div>
+    </header>
+  )
 }
 
 /** L'explication du départ, tant qu'aucune mission n'est réussie : comment ça va se passer. */
