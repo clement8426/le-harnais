@@ -8,6 +8,9 @@ import { versHtml } from "./markdown"
 import { copier, enregistrer, transcrireSon } from "./micro"
 import { STYLE } from "./style"
 
+/** Largeur du panneau, en pixels, à partir de laquelle la liste des missions passe à gauche. */
+const LARGEUR_GRAND_ECRAN = 760
+
 const ICONES: Record<EtapeUI["etat"], string> = {
   reussie: "✓",
   "mise-a-jour": "✓",
@@ -26,6 +29,11 @@ export default function Panneau(props: { session: MountedSession; navigateur: Na
   const [choisie, setChoisie] = createSignal<string>()
   const [annonce, setAnnonce] = createSignal<string>()
   const [indice, setIndice] = createSignal(false)
+  // Un panneau large (grand écran) met la liste des missions à gauche ; un panneau étroit la replie en haut.
+  const [large, setLarge] = createSignal(false)
+  const [listeOuverte, setListeOuverte] = createSignal(false)
+  const observer = new ResizeObserver(([entree]) => setLarge((entree?.contentRect.width ?? 0) >= LARGEUR_GRAND_ECRAN))
+  onCleanup(() => observer.disconnect())
 
   const rpc = () => props.session.server.client.rpc(Contrat)
   const options = () => ({ location: { directory: props.session.directory } })
@@ -77,7 +85,7 @@ export default function Panneau(props: { session: MountedSession; navigateur: Na
   }
 
   return (
-    <div class="lh">
+    <div class="lh" classList={{ "lh-large": large() }} ref={(el) => observer.observe(el)}>
       <style>{STYLE}</style>
       <Show when={erreur()}>
         <p class="lh-erreur">Le Harnais ne répond pas : {erreur()}</p>
@@ -113,28 +121,46 @@ export default function Panneau(props: { session: MountedSession; navigateur: Na
               </div>
             </header>
 
-            <Show when={reussies() === 0 && !e().enCours}>
-              <Accueil />
-            </Show>
-
-            <Show when={e().capacites.includes("voix.dicter")}>
-              <Dictee />
-            </Show>
-
-            <Show when={affichee()}>
-              {(m) => (
-                <Mission
-                  etape={m()}
-                  enCours={e().enCours === m().id}
-                  indice={indice()}
-                  montrerIndice={() => setIndice(!indice())}
-                  commencer={commencer}
-                  repondre={repondre}
-                  ouvrirPage={navigateurPret() ? ouvrirPage : undefined}
-                />
-              )}
-            </Show>
-
+            <div class="lh-corps">
+              <Show
+                when={large()}
+                fallback={
+                  <details class="lh-liste" open={listeOuverte()} onToggle={(ev) => setListeOuverte(ev.currentTarget.open)}>
+                    <summary>
+                      Les {e().etapes.length} missions · {reussies()} réussie{reussies() > 1 ? "s" : ""}
+                    </summary>
+            <nav class="lh-parcours" aria-label="Le parcours">
+              <For each={e().etapes}>
+                {(etape, i) => (
+                  <>
+                    <Show when={i() === 0 || e().etapes[i() - 1]!.chapitre.id !== etape.chapitre.id}>
+                      <p class="lh-chapitre">{etape.chapitre.titre}</p>
+                    </Show>
+                    <button
+                      type="button"
+                      class={`lh-etape lh-${etape.etat}`}
+                      aria-current={affichee()?.id === etape.id ? "step" : undefined}
+                      disabled={etape.etat === "verrouillee"}
+                      onClick={() => {
+                        setIndice(false)
+                        setChoisie(etape.id)
+                        setListeOuverte(false)
+                      }}
+                    >
+                      <span class="lh-noeud" aria-hidden="true">
+                        {ICONES[etape.etat]}
+                      </span>
+                      <span class="lh-numero">{etape.numero}</span>
+                      <span class="lh-titre">{etape.titre}</span>
+                    </button>
+                  </>
+                )}
+              </For>
+            </nav>
+                  </details>
+                }
+              >
+                <aside class="lh-colonne-liste">
             <nav class="lh-parcours" aria-label="Le parcours">
               <For each={e().etapes}>
                 {(etape, i) => (
@@ -162,6 +188,33 @@ export default function Panneau(props: { session: MountedSession; navigateur: Na
                 )}
               </For>
             </nav>
+                </aside>
+              </Show>
+              <div class="lh-colonne-mission">
+            <Show when={reussies() === 0 && !e().enCours}>
+              <Accueil />
+            </Show>
+
+            <Show when={e().capacites.includes("voix.dicter")}>
+              <Dictee />
+            </Show>
+
+            <Show when={affichee()}>
+              {(m) => (
+                <Mission
+                  etape={m()}
+                  enCours={e().enCours === m().id}
+                  indice={indice()}
+                  montrerIndice={() => setIndice(!indice())}
+                  commencer={commencer}
+                  repondre={repondre}
+                  ouvrirPage={navigateurPret() ? ouvrirPage : undefined}
+                />
+              )}
+            </Show>
+
+              </div>
+            </div>
           </>
         )}
       </Show>

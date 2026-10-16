@@ -3,7 +3,18 @@
 
 export const STYLE = `
 /* Le conteneur d'OpenCode coupe ce qui dépasse (overflow: hidden) : le panneau défile lui-même. */
-.lh { box-sizing: border-box; height: 100%; min-height: 0; overflow-y: auto; align-content: start; padding: 16px 18px 32px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; font-size: 14px; line-height: 1.55; }
+.lh { box-sizing: border-box; height: 100%; min-height: 0; overflow-y: auto; align-content: start; padding: 16px 18px 32px; display: flex; flex-direction: column; gap: 18px; font-size: 14px; line-height: 1.55; }
+.lh > * { min-width: 0; }
+.lh-corps { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+.lh-colonne-mission { display: grid; gap: 18px; align-content: start; min-width: 0; }
+.lh-liste { border: 1px solid rgba(127, 127, 127, .25); border-radius: 12px; padding: 4px 10px; }
+.lh-liste summary { cursor: pointer; font-weight: 600; padding: 6px 0; }
+/* Grand écran : la liste à gauche, la mission à droite, chacune défile de son côté. */
+.lh-large { overflow: hidden; }
+.lh-large .lh-corps { flex: 1; min-height: 0; grid-template-columns: 280px minmax(0, 1fr); gap: 24px; }
+.lh-large .lh-colonne-liste, .lh-large .lh-colonne-mission { overflow-y: auto; min-height: 0; padding-right: 8px; }
+.lh-large .lh-colonne-liste { border-right: 1px solid rgba(127, 127, 127, .2); }
+.lh-large .lh-mission { max-width: 860px; }
 .lh h2 { margin: 6px 0 0; font-size: 20px; letter-spacing: -.01em; }
 .lh h3 { margin: 2px 0 4px; font-size: 22px; letter-spacing: -.02em; line-height: 1.15; }
 .lh h4 { margin: 14px 0 6px; font-size: 13px; text-transform: none; opacity: .8; }

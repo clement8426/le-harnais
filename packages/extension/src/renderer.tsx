@@ -43,6 +43,7 @@ const setup: Setup<typeof definition> = (ctx) => {
   ctx.add(Panel, {
     id: "missions",
     region: "side",
+    wide: true,
     list: () => [{ id: "missions", title: ctx.t("title"), pinned: true, closable: false, fallback: true }],
     render: (props) => (
       <Suspense fallback={<p>{ctx.t("loading")}</p>}>
