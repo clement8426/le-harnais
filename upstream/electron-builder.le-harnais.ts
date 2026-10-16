@@ -23,6 +23,9 @@ const config: Configuration = {
   // On ne retouche pas Electron.exe (nom, icône) : modifié, son empreinte devient inconnue de Windows 11, dont le
   // contrôle intelligent des applications refuse alors de le lancer. Intact, il se lance comme en développement.
   win: { ...base.win, signAndEditExecutable: false },
+  // Ni l'empreinte du code (asar) inscrite dans l'exécutable : elle le modifie à chaque construction, et Windows juge
+  // chaque nouvelle empreinte au cas par cas. Laissé tel quel, il reste celui d'Electron, que Windows connaît.
+  disableAsarIntegrity: true,
   nsis: { ...base.nsis, shortcutName: "Le Harnais", uninstallDisplayName: "Le Harnais" },
 }
 
