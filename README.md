@@ -25,10 +25,9 @@ Choisis ton rôle.
 
 Suis le guide pas à pas, avec captures d'écran : **[docs/demarrer-eleve.md](docs/demarrer-eleve.md)**. En résumé :
 
-1. Télécharge l'archive `le-harnais-<version>-win-x64.zip` (page *Releases* du dépôt) et décompresse-la.
-2. Double-clique sur `Lancer-Le-Harnais.bat`.
-3. Branche ton IA (ton abonnement ChatGPT, ou une clé d'API), écris « Bonjour ».
-4. Le panneau des missions s'ouvre : suis-les dans l'ordre.
+1. Télécharge `Installer-Le-Harnais.bat` et `installer.ps1` (page *Releases*), dans le même dossier, et double-clique sur le `.bat` : il télécharge Le Harnais, l'installe sans droits d'administrateur, crée un raccourci sur le bureau et l'ouvre. (Ou une seule ligne dans PowerShell : `irm https://raw.githubusercontent.com/clement8426/le-harnais/main/installer/installer.ps1 | iex`. Ou à la main : décompresse l'archive `.zip` et lance `Lancer-Le-Harnais.bat`.)
+2. Branche ton IA : clique sur le nom du modèle, puis *Gérer les modèles > Connecter un fournisseur* (OpenAI avec ton abonnement ChatGPT, Anthropic, Google, OpenRouter…).
+3. Écris « Bonjour » : le panneau des missions s'ouvre, la première mission se valide toute seule. Suis-les dans l'ordre.
 
 ### Je suis formateur
 
@@ -37,6 +36,8 @@ Prépare ta classe avec **[docs/formateur.md](docs/formateur.md)** : ce qu'il fa
 ### Je suis développeur
 
 Prérequis : [Bun](https://bun.sh) 1.4 ou plus, Node.js 24, Git.
+
+Le plus simple : `git clone` ce dépôt puis double-clique sur **`Lancer-en-developpement.bat`** (il vérifie Git, Node et Bun, installe les dépendances et lance l'application). Ou à la main :
 
 ```bash
 git clone <ce dépôt> && cd le-harnais
@@ -82,6 +83,7 @@ L'application est [OpenCode Desktop](https://github.com/anomalyco/opencode) (lic
 | `contenus/` | Les missions et les parcours, en YAML et Markdown. |
 | `upstream/` | La version figée d'OpenCode, nos patchs et la configuration d'empaquetage. |
 | `marque/` | L'icône et son script de dessin. |
+| `installer/` | L'installateur automatique pour les élèves (`Installer-Le-Harnais.bat`, `installer.ps1`) et son désinstallateur. |
 | `scripts/` | Préparer OpenCode, lancer en développement, empaqueter, capturer l'application. |
 | `docs/` | Guides, architecture, feuille de route, questions ouvertes. |
 

@@ -5,6 +5,10 @@
 - [Bun](https://bun.sh) 1.4 ou plus, Node.js 24, Git.
 - [Graphify](https://github.com/Graphify-Labs/graphify) pour le graphe du dépôt : `uv tool install graphifyy` (deux y).
 
+## Le plus simple : un double-clic
+
+`Lancer-en-developpement.bat` (à la racine) vérifie Git, Node.js et Bun (et propose de les installer avec winget s'il en manque), installe les dépendances, puis lance l'application. `scripts/demarrer-dev.ps1 -Verifier` ne fait que contrôler les outils. Le détail, étape par étape, est ci-dessous.
+
 ## Lancer les tests du moteur
 
 ```bash

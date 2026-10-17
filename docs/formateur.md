@@ -31,8 +31,13 @@ La dernière mission traite un dossier médical **fictif**. Elle exige que l'IA 
 ## Distribuer l'application
 
 1. `bun scripts/empaqueter.ts` construit `le-harnais-<version>-win-x64.zip` (voir [developper.md](developper.md)).
-2. Publie-le (page *Releases* du dépôt, ou un partage de ton choix). L'archive pèse environ 0,8 Go.
-3. Les élèves la décompressent et lancent `Lancer-Le-Harnais.bat`. Le guide à leur donner : [demarrer-eleve.md](demarrer-eleve.md).
+2. Publie une *Release* GitHub avec trois fichiers : l'archive (environ 0,9 Go), `installer/Installer-Le-Harnais.bat` et `installer/installer.ps1`. Exemple :
+   ```bash
+   gh release create v0.1.0 .upstream/opencode/packages/desktop/dist/le-harnais-0.1.0-win-x64.zip installer/Installer-Le-Harnais.bat installer/installer.ps1 --title "Le Harnais 0.1.0" --notes "Première version"
+   ```
+3. Les élèves téléchargent `Installer-Le-Harnais.bat` et `installer.ps1`, double-cliquent sur le `.bat` : l'installateur télécharge la **dernière release**, l'installe, crée le raccourci et lance l'application. Le guide à leur donner : [demarrer-eleve.md](demarrer-eleve.md).
+
+L'installateur lit la dernière release par l'API publique de GitHub : **le dépôt doit être public** (sinon l'élève reçoit l'archive de toi et lance `installer.ps1 -Zip C:\chemin\archive.zip`, ce qui marche aussi hors ligne). Il n'a besoin d'aucun droit d'administrateur ; `Desinstaller-Le-Harnais.bat` retire l'application et garde les données de l'élève (`desinstaller.ps1 -Donnees` les supprime aussi, après confirmation).
 
 ## Si Windows bloque l'application
 

@@ -27,6 +27,8 @@ mkdirSync(path.join(ressources, "plugin"), { recursive: true })
 cpSync(path.join(racine, "packages/plugin/dist/le-harnais.js"), path.join(ressources, "plugin/le-harnais.js"))
 cpSync(path.join(racine, "contenus"), path.join(ressources, "contenus"), { recursive: true })
 cpSync(path.join(racine, "packages/plugin/shell"), path.join(ressources, "shell"), { recursive: true })
+// L'icône du raccourci que crée l'installateur (l'exécutable est celui d'Electron, intact : on ne lui change pas son icône).
+cpSync(path.join(racine, "marque/icones/icon.ico"), path.join(ressources, "icone.ico"))
 
 console.log("Serveur d'OpenCode (version figée, patchée)…")
 const cli = path.join(opencode, "packages/cli")

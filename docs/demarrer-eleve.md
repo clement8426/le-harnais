@@ -4,11 +4,29 @@ Ce guide est pour toi qui découvres l'IA. Il te faut un ordinateur **Windows 10
 
 ## 1. Installer
 
-1. Télécharge `le-harnais-<version>-win-x64.zip` (ton formateur te donne le lien, ou la page *Releases* de ce dépôt).
+Choisis **une** des deux façons. La première est la plus simple.
+
+### A. L'installateur automatique (recommandé)
+
+1. Télécharge deux fichiers depuis la page *Releases* du dépôt, dans le **même dossier** : `Installer-Le-Harnais.bat` et `installer.ps1`.
+2. Double-clique sur **`Installer-Le-Harnais.bat`**. Si Windows affiche « Windows a protégé votre ordinateur », clique sur *Informations complémentaires* puis *Exécuter quand même*.
+3. Attends : l'installateur télécharge Le Harnais (environ 0,9 Go), l'installe dans `%LOCALAPPDATA%\LeHarnais`, crée un raccourci **Le Harnais** sur ton bureau et l'ouvre.
+
+Pas de droits d'administrateur. Pour le relancer plus tard : le raccourci du bureau. Pour mettre à jour : relance l'installateur (tes conversations et ta progression sont conservées).
+
+Variante en une ligne, dans une fenêtre PowerShell (si ton formateur te l'indique) :
+
+```powershell
+irm https://raw.githubusercontent.com/clement8426/le-harnais/main/installer/installer.ps1 | iex
+```
+
+### B. À la main, avec l'archive
+
+1. Télécharge `le-harnais-<version>-win-x64.zip` (ton formateur te donne le lien, ou la page *Releases*).
 2. Clic droit sur le fichier, **Extraire tout…**, et choisis un dossier simple, par exemple `C:\LeHarnais`.
 3. Dans le dossier extrait, double-clique sur **`Lancer-Le-Harnais.bat`** (ou sur `Le Harnais.exe`, c'est la même chose).
 
-Rien ne s'installe sur ton ordinateur : l'application vit dans ce dossier. Pour la retrouver, crée un raccourci vers le `.bat` sur ton bureau.
+Dans les deux cas, rien n'est installé dans Windows : l'application vit dans son dossier. Pour la retirer : `Desinstaller-Le-Harnais.bat` (de l'installateur), ou supprime le dossier.
 
 > **Premier lancement :** compte une trentaine de secondes. Si Windows affiche « Une stratégie de contrôle d'application a bloqué ce fichier », dis-le à ton formateur : [la page qui l'explique](formateur.md#si-windows-bloque-lapplication).
 
@@ -22,14 +40,22 @@ Tu vois l'accueil du Harnais et, juste en dessous, la zone de saisie. Le projet 
 
 Sous la zone de saisie, clique sur **le nom du modèle**. La liste des modèles s'ouvre.
 
-![Le menu des modèles](images/02-menu-des-modeles.png)
+![Le menu des modèles, avec « Gérer les modèles » en bas](images/04-menu-modeles.png)
 
-En bas de la liste, **Gérer les modèles** ouvre les réglages où connecter un fournisseur (les intitulés exacts peuvent varier un peu selon la version). Choisis :
+Tout en bas de la liste, clique sur **Gérer les modèles**. Une fenêtre s'ouvre : en haut à droite, le bouton **Connecter un fournisseur**.
 
-- **ChatGPT** si tu as un abonnement : une page de ton navigateur s'ouvre, clique sur *Autoriser*, puis reviens dans l'application ;
-- ou **un fournisseur d'API** (Infomaniak, OpenRouter, OpenAI, Anthropic…) : colle ta clé.
+![La fenêtre « Gérer les modèles » et son bouton « Connecter un fournisseur »](images/05-gerer-les-modeles.png)
 
-Puis choisis un modèle de ce fournisseur dans le menu. Un abonnement Claude ne se branche pas ici : pour Claude, il faut une clé d'API.
+Clique dessus : la liste des fournisseurs apparaît. Les plus courants :
+
+![La liste des fournisseurs : Anthropic, OpenAI, Google, OpenRouter…](images/06-connecter-un-fournisseur.png)
+
+- **OpenAI**, pour utiliser ton **abonnement ChatGPT** (choisis « Sign in with ChatGPT » : une page de ton navigateur s'ouvre, clique sur *Autoriser*, puis reviens dans l'application) ou une **clé d'API** (« Clé API »).
+- **Anthropic** (Claude), **Google** (Gemini), **OpenRouter** (des dizaines de modèles avec une seule clé) : colle ta **clé d'API**.
+
+![OpenAI propose une clé d'API ou la connexion avec ton compte ChatGPT](images/07-methodes-openai.png)
+
+Une fois connecté, ferme la fenêtre et choisis un modèle de ce fournisseur dans le menu. Un abonnement Claude ne se branche pas ici (Anthropic ne le permet pas) : pour Claude, il faut une clé d'API.
 
 > Le modèle « Gratuit » d'OpenCode **ne répond pas** dans Le Harnais. Si tu écris à l'IA avant de t'être branché, tu vois un message d'erreur : c'est normal, branche ton IA.
 
