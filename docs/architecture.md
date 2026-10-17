@@ -82,6 +82,7 @@ Les deux écrivent une ligne JSON par commande dans `.labo/terminal.jsonl`, sans
 | `05-dependances-des-sens` | Les dépendances de `gui-extensions` (3 lignes) | Tesseract, pdf.js et transformers.js pour les sens, dans la fenêtre |
 | `06-micro-pour-la-dictee` | Les permissions de la fenêtre (`desktop/src/main/windows/security.ts`) | Autoriser le micro, audio seul, pour la dictée de l'élève |
 | `08-atelier-toujours-ouvert` | L'accueil de la fenêtre (`renderer/onboarding/index.tsx`) | Sans onglet ouvert, rouvrir l'atelier avec une nouvelle session, à chaque lancement : jamais d'écran vide |
+| `09-accueil-du-harnais` | L'écran de départ (`app/src/new-session/wordmark.tsx`) | Remplacer le logo d'OpenCode par l'accueil du Harnais (brancher l'IA, écrire « Bonjour ») |
 | `07-le-harnais-en-production` | Le nom, l'identifiant, le titre de la fenêtre, le protocole ; le démarrage du service d'arrière-plan ; un nouveau fichier `lifecycle/le-harnais.ts` | Une application publiée isolée de tout OpenCode installé, qui n'affiche pas le modèle gratuit d'OpenCode, et qui reprend son service même quand il répond lentement (voir ci-dessous) |
 
 ## L'application publiée
@@ -97,7 +98,8 @@ Les deux écrivent une ligne JSON par commande dans `.labo/terminal.jsonl`, sans
 
 - **Le service d'arrière-plan survit à la fenêtre** : fermer l'application ne l'arrête pas, et la fois suivante elle le reprend. Quand l'application change de version, elle le remplace. Si le service met plus de 2 secondes à répondre à la sonde de démarrage (Windows analyse les fichiers qu'on vient de copier), OpenCode le croit absent et tente d'en lancer un second sur le port déjà pris : le patch 07 réessaie alors de reprendre le service existant, pendant une minute, au lieu d'échouer.
 - **Le panneau s'adapte à sa largeur** (`panneau.tsx`, `ResizeObserver`, seuil `LARGEUR_GRAND_ECRAN` = 1000 px) : large, la liste des missions est une colonne à gauche et la mission une colonne à droite, chacune avec son défilement ; étroit, la liste est un menu repliable en haut.
-- **Le panneau des missions s'ouvre tout seul** au premier message de chaque session (`renderer.tsx`) : avant, OpenCode n'a pas de session, et l'élève ne devine pas le bouton « Basculer la revue ». L'écran de départ porte une bande d'accueil (`bienvenue.tsx`, emplacement `window.bottom`).
+- **L'écran de départ** (avant la première conversation) est l'accueil du Harnais, au centre au-dessus de la zone de saisie (patch 09, `app/src/new-session/wordmark.tsx`, qui remplace le logo d'OpenCode). Les missions démarrent toutes seules (`Atelier.demarrerLaSuivante`) : la première dès l'ouverture de l'atelier, les suivantes quand la précédente est réussie.
+- **Le panneau des missions s'ouvre tout seul** au premier message de chaque session (`renderer.tsx`) : avant, OpenCode n'a pas de session, et l'élève ne devine pas le bouton « Basculer la revue ».
 
 Deux limites, propres à l'application publiée :
 

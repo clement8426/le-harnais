@@ -92,6 +92,18 @@ describe("atelier", () => {
     expect(a.progression.reussies["lire-scan"]).toBeDefined()
   })
 
+  test("la mission suivante démarre toute seule, et ce que l'élève a déjà fait compte", () => {
+    const a = nouvelAtelier()
+    // L'élève écrit à l'IA avant d'avoir ouvert le panneau.
+    expect(a.demarrerLaSuivante()).toBe(true)
+    expect(a.etat().enCours).toBe("brancher-ia")
+    expect(a.demarrerLaSuivante()).toBe(false) // une mission est déjà en cours
+    expect(a.enregistrer({ quand: new Date().toISOString(), type: "ia.reponse", fournisseur: "openai" })).toBe(true)
+    expect(a.etat().enCours).toBeUndefined()
+    expect(a.demarrerLaSuivante()).toBe(true) // la suivante démarre
+    expect(a.etat().enCours).toBe("harnais-c-est-quoi")
+  })
+
   test("une mission verrouillée ne peut pas être commencée", () => {
     expect(() => nouvelAtelier().commencer("defi-dossier-exemple")).toThrow("encore verrouillée")
   })

@@ -14,9 +14,9 @@ Rien ne s'installe sur ton ordinateur : l'application vit dans ce dossier. Pour 
 
 ## 2. L'écran de départ
 
-![L'écran de départ, avec la bande de bienvenue](images/01-ecran-de-depart.png)
+![L'écran de départ du Harnais](images/01-ecran-de-depart.png)
 
-Tu vois la zone de saisie (au centre) et, en bas, trois étapes. Le projet **LeLabo** est ton atelier : l'application l'a créé dans tes *Documents*. L'IA ne travaillera que là.
+Tu vois l'accueil du Harnais et, juste en dessous, la zone de saisie. Le projet **LeLabo** est ton atelier : l'application l'a créé dans tes *Documents*. L'IA ne travaillera que là.
 
 ## 3. Brancher ton IA
 

@@ -72,7 +72,7 @@ Une mission n'a jamais de numéro : elle a un nom (`terminal`, `dicter`…). L'o
 
 ## Construit sur OpenCode
 
-L'application est [OpenCode Desktop](https://github.com/anomalyco/opencode) (licence MIT), figé sur une version, avec notre surcouche. On garde son cœur intact pour suivre ses mises à jour : nos modifications tiennent dans 8 petits patchs.
+L'application est [OpenCode Desktop](https://github.com/anomalyco/opencode) (licence MIT), figé sur une version, avec notre surcouche. On garde son cœur intact pour suivre ses mises à jour : nos modifications tiennent dans 9 petits patchs.
 
 | Dossier | Contenu |
 | --- | --- |

@@ -57,9 +57,6 @@ export const STYLE = `
 .lh-dictee { display: grid; gap: 6px; justify-items: start; }
 .lh-dictee p { margin: 0; }
 .lh-texte-dicte { width: 100%; box-sizing: border-box; padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(127, 127, 127, .35); background: rgba(127, 127, 127, .08); color: inherit; font: inherit; resize: vertical; }
-.lh-bienvenue { box-sizing: border-box; padding: 12px 20px 14px; border-top: 1.5px solid #2B44E8; background: rgba(43, 68, 232, .1); font-size: 14px; line-height: 1.5; }
-.lh-bienvenue-titre { margin: 0 0 4px; font-weight: 700; }
-.lh-bienvenue ol { margin: 0; padding-left: 24px; display: grid; gap: 2px; list-style: decimal; }
 .lh-accueil { padding: 14px 16px; border-radius: 12px; border: 1.5px solid #2B44E8; background: rgba(43, 68, 232, .08); }
 .lh-accueil h2 { font-size: 16px; margin: 0 0 6px; }
 .lh-accueil p { margin: 0 0 8px; }

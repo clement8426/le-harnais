@@ -127,6 +127,19 @@ export class Atelier {
     this.ecrireJson("en-cours.json", { mission: id })
   }
 
+  /**
+   * Lance la mission suivante quand aucune n'est en cours : l'élève n'a pas à cliquer « Commencer la mission » pour
+   * avancer, et ce qu'il a déjà fait depuis (un « Bonjour » à l'IA, par exemple) compte. Vrai si une mission démarre.
+   */
+  demarrerLaSuivante() {
+    if (this.enCours) return false
+    const ordre = this.ordre().map((e) => e.mission)
+    const suivante = prochaine(etats(this.progression, ordre, this.parcours, this.contenus.missions))
+    if (!suivante) return false
+    this.commencer(suivante)
+    return true
+  }
+
   private lus = 0
 
   /** Marque tout le contenu actuel de .labo/terminal.jsonl comme déjà importé. */

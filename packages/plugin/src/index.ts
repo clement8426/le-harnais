@@ -48,6 +48,8 @@ export default {
       if (process.env.LE_HARNAIS_TRACE) appendFileSync(path.join(dossier, ".labo", "trace.log"), `${maintenant()} ${message}\n`)
     }
     trace("setup")
+    // La première mission démarre dès l'ouverture de l'atelier : un message envoyé avant d'ouvrir le panneau compte.
+    atelier.demarrerLaSuivante()
 
     // Le fournisseur et le modèle utilisés par la dernière requête de chaque session.
     const modeles = new Map<string, { id: string; modele: string }>()
@@ -58,7 +60,10 @@ export default {
 
     const rpc = await ctx.rpc.register(Contrat, {
       resultatSens: async (reponse: ReponseSens) => ({ attendue: sens.repondre(reponse) }),
-      etat: async () => atelier.etat(dernier),
+      etat: async () => {
+        if (atelier.demarrerLaSuivante()) await changement()
+        return atelier.etat(dernier)
+      },
       commencer: async (entree: EntreeCommencer) => {
         atelier.commencer(entree.mission)
         await changement()

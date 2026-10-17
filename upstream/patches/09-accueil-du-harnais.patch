@@ -1,0 +1,43 @@
+diff --git a/packages/app/src/new-session/wordmark.tsx b/packages/app/src/new-session/wordmark.tsx
+index f691cbe..7cd7b2e 100644
+--- a/packages/app/src/new-session/wordmark.tsx
++++ b/packages/app/src/new-session/wordmark.tsx
+@@ -1,17 +1,27 @@
+-import { Logo } from "@opencode/ui/logo"
+-import "./wordmark.css"
+-
++// Le Harnais : à la place du logo d'OpenCode, l'écran de départ explique à l'élève ce qu'il doit faire,
++// juste au-dessus de la zone de saisie. Le composant garde son nom pour que le patch reste minimal.
+ export function NewSessionWordmark() {
+   return (
+-    <div
+-      data-component="new-session-wordmark"
+-      aria-hidden="true"
+-      class="pointer-events-none mx-auto w-full max-w-[720px] text-v2-background-bg-inverse"
+-    >
+-      <div data-slot="wordmark-reveal" class="relative mx-auto w-4/5">
+-        <Logo class="block aspect-[720/129] w-full opacity-[0.16]" />
+-        <Logo class="wordmark-shimmer absolute inset-0 aspect-[720/129] w-full" />
++    <div data-component="new-session-wordmark" class="mx-auto w-full max-w-[720px] text-v2-text-base">
++      <div style={{ display: "flex", width: "168px", height: "8px", "border-radius": "4px", overflow: "hidden", "margin-bottom": "20px" }}>
++        {["#6E4A8E", "#A63F17", "#24609A", "#C9A227", "#2F7356", "#A3304F"].map((couleur) => (
++          <div style={{ flex: "1", background: couleur }} />
++        ))}
+       </div>
++      <h1 style={{ "font-size": "40px", "font-weight": "600", "line-height": "1.1", margin: "0 0 10px" }}>Bienvenue dans Le Harnais</h1>
++      <p style={{ "font-size": "17px", "line-height": "1.5", margin: "0 0 18px", opacity: "0.8" }}>
++        Ici, ton IA arrive avec ses outils verrouillés. Tu les débloques un par un, en t’en servant pour de vrai. Pour commencer, deux gestes :
++      </p>
++      <ol style={{ "font-size": "17px", "line-height": "1.5", margin: "0", "padding-left": "24px", display: "grid", gap: "10px" }}>
++        <li>
++          <strong>Branche ton IA.</strong> Dans la zone de saisie ci-dessous, clique sur le nom du modèle (en bas à gauche), puis connecte ton
++          abonnement ChatGPT ou une clé d’API.
++        </li>
++        <li>
++          <strong>Écris « Bonjour »</strong> dans la zone de saisie, puis appuie sur Entrée. Le panneau des missions s’ouvre alors à droite,
++          et la première mission se valide toute seule.
++        </li>
++      </ol>
+     </div>
+   )
+ }

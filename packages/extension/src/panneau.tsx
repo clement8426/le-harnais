@@ -243,21 +243,19 @@ function Entete(props: { titre?: string; reussies: number; total: number }) {
 function Accueil() {
   return (
     <section class="lh-accueil" aria-labelledby="lh-accueil-titre">
-      <h2 id="lh-accueil-titre">Bienvenue dans Le Harnais</h2>
+      <h2 id="lh-accueil-titre">Voici tes missions</h2>
       <p>
-        Ton IA arrive avec ses outils <strong>verrouillés</strong>. Tu les débloques un par un, en t'en servant pour de vrai.
-        Ici, à droite, tu suis les missions. À gauche, tu parles à l'IA.
+        À gauche, tu parles à ton IA. Ici, à droite, tu suis les missions : chacune te dit quoi faire, et se valide toute seule.
       </p>
       <ol>
         <li>
-          <strong>Branche ton IA.</strong> Sous la zone de saisie, à gauche, clique sur le nom du modèle, puis connecte ton
-          abonnement ChatGPT ou une clé d'API.
+          La première, <strong>« Brancher ton IA »</strong>, se coche dès que ton IA t’a répondu.
         </li>
         <li>
-          <strong>Commence la mission</strong> proposée ci-dessous : elle te dit quoi faire, et ce que le harnais vérifie.
+          Si tu vois un message d’erreur à gauche, ton IA n’est pas branchée : clique sur le nom du modèle, sous la zone de saisie.
         </li>
         <li>
-          <strong>Écris un message à l'IA.</strong> La mission se valide toute seule, et la suivante s'ouvre.
+          Pas besoin de « démarrer » quoi que ce soit : la mission suivante s’ouvre dès que tu réussis la précédente.
         </li>
       </ol>
     </section>
