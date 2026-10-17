@@ -1,5 +1,5 @@
 diff --git a/packages/app/src/new-session/wordmark.tsx b/packages/app/src/new-session/wordmark.tsx
-index f691cbe..7cd7b2e 100644
+index f691cbe..472f530 100644
 --- a/packages/app/src/new-session/wordmark.tsx
 +++ b/packages/app/src/new-session/wordmark.tsx
 @@ -1,17 +1,27 @@
@@ -28,7 +28,7 @@ index f691cbe..7cd7b2e 100644
 +      <p style={{ "font-size": "17px", "line-height": "1.5", margin: "0 0 18px", opacity: "0.8" }}>
 +        Ici, ton IA arrive avec ses outils verrouillés. Tu les débloques un par un, en t’en servant pour de vrai. Pour commencer, deux gestes :
 +      </p>
-+      <ol style={{ "font-size": "17px", "line-height": "1.5", margin: "0", "padding-left": "24px", display: "grid", gap: "10px" }}>
++      <ol style={{ "font-size": "17px", "line-height": "1.5", margin: "0", "padding-left": "24px", display: "grid", gap: "10px", "list-style": "decimal" }}>
 +        <li>
 +          <strong>Branche ton IA.</strong> Dans la zone de saisie ci-dessous, clique sur le nom du modèle (en bas à gauche), puis connecte ton
 +          abonnement ChatGPT ou une clé d’API.

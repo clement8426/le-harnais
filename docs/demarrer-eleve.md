@@ -37,7 +37,7 @@ Puis choisis un modèle de ce fournisseur dans le menu. Un abonnement Claude ne 
 
 Écris ton premier message et envoie-le. **Le panneau des missions s'ouvre tout seul à droite.**
 
-![Le panneau des missions et la carte d'accueil](images/03-premier-message.png)
+![La mission 1 se valide toute seule, la 2 s'ouvre](images/03-premier-message.png)
 
 À gauche, tu parles à l'IA. À droite, deux volets :
 
@@ -46,8 +46,10 @@ Puis choisis un modèle de ce fournisseur dans le menu. Un abonnement Claude ne 
 
 ## 5. Faire une mission
 
-1. Clique sur **Commencer la mission**.
-2. Lis le cours, puis fais ce qui est demandé (écrire à l'IA, lancer une commande, ouvrir un fichier…).
+La première mission, « Brancher ton IA », se valide toute seule dès que ton IA t'a répondu. Ensuite :
+
+1. Lis le cours de la mission en cours (elle s'ouvre toute seule : rien à démarrer).
+2. Fais ce qui est demandé (écrire à l'IA, lancer une commande, ouvrir un fichier…).
 3. Les preuves se cochent toutes seules. Quand elles sont toutes vertes, un bandeau jaune annonce **Mission réussie** et la suivante s'ouvre.
 
 Ton IA gagne un droit à chaque mission. Si elle veut faire quelque chose qu'elle n'a pas encore gagné (par exemple lire un fichier), le harnais le lui refuse et te l'explique.
