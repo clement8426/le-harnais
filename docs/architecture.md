@@ -76,11 +76,12 @@ Les deux écrivent une ligne JSON par commande dans `.labo/terminal.jsonl`, sans
 | Patch | Ce qu'il change | Pourquoi |
 | --- | --- | --- |
 | `01-enregistrer-extension-le-labo` | 2 listes d'extensions intégrées (7 lignes) | Charger notre extension |
-| `02-atelier-lelabo-par-defaut` | Le projet créé au premier lancement | C'est l'atelier `Documents/LeLabo`, marqué `.labo/harnais.json` |
+| `02-atelier-lelabo-par-defaut` | Le projet par défaut (`main/lifecycle/onboarding.ts`) | C'est l'atelier `Documents/LeLabo`, marqué `.labo/harnais.json`, renvoyé à chaque lancement |
 | `03-le-labo-gere-les-extensions` | Le contexte « processus principal » de l'extension `le-labo` | Lui permettre d'allumer et d'éteindre les autres extensions |
 | `04-integration-shell` | La création des terminaux (`core/src/pty.ts`) | Charger l'intégration PowerShell ou bash qui note les commandes |
 | `05-dependances-des-sens` | Les dépendances de `gui-extensions` (3 lignes) | Tesseract, pdf.js et transformers.js pour les sens, dans la fenêtre |
 | `06-micro-pour-la-dictee` | Les permissions de la fenêtre (`desktop/src/main/windows/security.ts`) | Autoriser le micro, audio seul, pour la dictée de l'élève |
+| `08-atelier-toujours-ouvert` | L'accueil de la fenêtre (`renderer/onboarding/index.tsx`) | Sans onglet ouvert, rouvrir l'atelier avec une nouvelle session, à chaque lancement : jamais d'écran vide |
 | `07-le-harnais-en-production` | Le nom, l'identifiant, le titre de la fenêtre, le protocole ; le démarrage du service d'arrière-plan ; un nouveau fichier `lifecycle/le-harnais.ts` | Une application publiée isolée de tout OpenCode installé, qui n'affiche pas le modèle gratuit d'OpenCode, et qui reprend son service même quand il répond lentement (voir ci-dessous) |
 
 ## L'application publiée

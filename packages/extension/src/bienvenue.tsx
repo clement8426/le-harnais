@@ -8,16 +8,16 @@ export default function Bienvenue() {
   return (
     <div class="lh-bienvenue" role="region" aria-label="Bienvenue dans Le Harnais">
       <style>{STYLE}</style>
-      <p class="lh-bienvenue-titre">Bienvenue dans Le Harnais</p>
+      <p class="lh-bienvenue-titre">Bienvenue dans Le Harnais. Tu commences ici, en trois étapes :</p>
       <ol>
         <li>
-          <strong>Branche ton IA.</strong> Clique sur le nom du modèle, juste sous la zone de saisie : connecte ton abonnement ChatGPT ou une clé d'API.
+          <strong>Branche ton IA.</strong> En bas de la zone de saisie, clique sur le nom du modèle (à gauche, sous « Demandez n’importe quoi… »), puis connecte ton abonnement ChatGPT ou une clé d’API.
         </li>
         <li>
-          <strong>Écris « Bonjour ».</strong> Dès ton premier message, le panneau des missions s'ouvre à droite.
+          <strong>Écris « Bonjour »</strong> dans la zone de saisie au centre de l’écran, puis appuie sur Entrée. Le panneau des missions s’ouvre alors à droite.
         </li>
         <li>
-          <strong>Suis les missions.</strong> Elles te disent quoi faire, et chaque outil de ton IA se débloque quand tu réussis la mission.
+          <strong>Suis les missions.</strong> Chacune te dit quoi faire. Quand tu la réussis, un outil de ton IA se débloque.
         </li>
       </ol>
     </div>

@@ -1,0 +1,15 @@
+diff --git a/packages/desktop/src/renderer/onboarding/index.tsx b/packages/desktop/src/renderer/onboarding/index.tsx
+index d31367a..47890a0 100644
+--- a/packages/desktop/src/renderer/onboarding/index.tsx
++++ b/packages/desktop/src/renderer/onboarding/index.tsx
+@@ -21,8 +21,8 @@ export function DesktopFirstLaunchOnboarding(props: {
+ 
+   async function runFirstLaunchOnboarding() {
+     try {
+-      if (!props.pending) return
+-
++      // Le Harnais : on ne s'arrête pas quand ce n'est plus le premier lancement. Sans onglet ouvert, on rouvre
++      // l'atelier avec une zone de saisie : l'élève ne doit jamais se retrouver devant un écran vide.
+       await Promise.all([tabs.ready.promise, tabs.recentReady.promise].map((p) => p ?? Promise.resolve()))
+ 
+       const shouldTrigger =
