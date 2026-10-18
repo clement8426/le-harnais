@@ -2,9 +2,20 @@
 
 **Apprendre l'IA en débloquant ses outils un par un.** Une application de bureau où l'IA arrive avec son terminal, ses fichiers, son navigateur, sa voix et sa vue **verrouillés**. L'élève les débloque en s'en servant pour de vrai, et l'IA gagne des droits à mesure : lire, puis proposer, puis agir avec son accord.
 
+**Le Harnais est une surcouche d'[OpenCode](https://opencode.ai)** (licence MIT, [code source](https://github.com/anomalyco/opencode)) : tout le travail sur l'application elle-même, c'est celui de l'équipe d'OpenCode. Notre surcouche ajoute les missions, les droits de l'IA et les sens locaux, pour apprendre comment fonctionne un harnais en le manipulant. Ce n'est ni un produit officiel d'OpenCode, ni approuvé par lui.
+
 ![Le panneau des missions s'ouvre tout seul au premier message](docs/images/03-premier-message.png)
 
-> **État :** utilisable sur Windows 10 et 11, en bêta. Les 15 missions sont jouées de bout en bout dans l'application. Ce qui reste à faire (signature, macOS, mises à jour) est dans la [feuille de route](docs/feuille-de-route.md).
+> **⚠ Prototype : pas fini.** Version 0.1.0, en bêta : des défauts sont possibles, sans garantie ni assistance. Conditions :
+>
+> - **Windows 10 ou 11 (64 bits) uniquement.** Pas de macOS, pas de Linux.
+> - **Application non signée** : Windows 11 peut la bloquer ([détails](docs/formateur.md#si-windows-bloque-lapplication)).
+> - Environ **0,9 Go à télécharger**, puis les modèles de voix et d'image à la première utilisation (environ 3 Go sur le disque, 8 Go de mémoire conseillés).
+> - Une **IA à brancher** : un abonnement ChatGPT ou une clé d'API. Un abonnement Claude ne se branche pas, et les modèles gratuits d'OpenCode ne répondent pas ici.
+> - **Pas de mise à jour automatique** : on relance l'installateur.
+> - **Données fictives uniquement.**
+
+> Les 15 missions sont jouées de bout en bout dans l'application. Ce qui reste à faire (signature, macOS, mises à jour) est dans la [feuille de route](docs/feuille-de-route.md).
 
 ## À quoi sert ce dépôt
 
@@ -88,6 +99,8 @@ L'application est [OpenCode Desktop](https://github.com/anomalyco/opencode) (lic
 | `docs/` | Guides, architecture, feuille de route, questions ouvertes. |
 
 ## Limites connues
+
+C'est un **prototype** (voir l'encadré en haut de cette page).
 
 - **Windows seulement** pour l'instant (macOS n'est pas fait).
 - **Non signé** : le contrôle intelligent des applications de Windows 11 peut refuser de le lancer ([détails](docs/formateur.md#si-windows-bloque-lapplication)).

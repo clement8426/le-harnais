@@ -50,6 +50,8 @@ La source de vérité sur l'avancement. Une case cochée = fait et vérifié. Le
 - [x] Documentation de A à Z : README, guide élève avec captures, guide formateur
 - [x] Archive zip et lanceur `.bat` pour les élèves
 - [x] Installateur automatique (`installer/`) et lanceur développeur (`Lancer-en-developpement.bat`), testés depuis une archive locale
+- [x] Mention de prototype (README, guide élève) : Windows seulement, non signé, pas fini
+- [ ] Passer le dépôt en public (Settings > Danger zone > Change visibility) : action de Clément
 - [ ] Première release GitHub (archive + installateur) : le dépôt est privé, l'installateur lit la dernière release par l'API publique
 - [ ] Installeur vérifié sur un poste neuf (installation, désinstallation)
 - [ ] Signature de l'installeur (question 4) : nécessaire, le contrôle intelligent des applications de Windows 11 bloque la version non signée

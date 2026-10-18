@@ -6,6 +6,8 @@ Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Ver
 
 ### Ajouté
 
+- Le crédit à OpenCode, en tête du README et du guide élève : Le Harnais est une surcouche d'OpenCode (MIT), pas un produit officiel d'OpenCode.
+- Une mention de prototype, visible : encadré en tête du README et du guide élève (version 0.1.0 en bêta, Windows 10 ou 11 seulement, non signé, 0,9 Go à télécharger, IA à brancher, pas de mise à jour automatique, données fictives uniquement). Le dépôt est destiné à devenir public.
 - Le moteur (`packages/moteur`) : capacités, missions, parcours, vérificateur, progression, preuves, droits de l'IA. Ses tests vérifient aussi les vrais contenus.
 - Le parcours débutant : 15 missions en 6 chapitres (`contenus/`), avec cours, questions, fichiers fictifs (scan, note vocale, page Tilleul à défauts volontaires, page piégée, petit projet pour Graphify) et le catalogue des capacités.
 - Les missions peuvent prêter des capacités le temps de la mission (`prete`), exiger un fournisseur d'IA précis (`ia.reponse` + `fournisseurs`) et proposer une page à ouvrir (`page`).

@@ -1,5 +1,9 @@
 # Démarrer avec Le Harnais, de A à Z
 
+> **Prototype, pas fini.** Le Harnais est une version 0.1.0 en bêta : des défauts sont possibles, sans garantie ni assistance. Il ne fonctionne que sur **Windows 10 ou 11**, il n'est pas signé (Windows 11 peut le bloquer), et il se met à jour à la main. N'y mets que des **données fictives**.
+
+Le Harnais est une **surcouche d'[OpenCode](https://opencode.ai)** (licence MIT) : l'application est celle d'OpenCode, avec nos missions par-dessus, pour que tu comprennes comment fonctionne un harnais. Ce n'est pas un produit officiel d'OpenCode.
+
 Ce guide est pour toi qui découvres l'IA. Il te faut un ordinateur **Windows 10 ou 11**, une connexion internet, et un abonnement ChatGPT **ou** une clé d'API d'un fournisseur d'IA (ton formateur te dit lequel).
 
 ## 1. Installer
