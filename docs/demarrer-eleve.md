@@ -117,7 +117,7 @@ Ton IA gagne un droit à chaque mission. Si elle veut faire quelque chose qu'ell
 | « OpenCode's free tier can only be used from within OpenCode » | Tu n'as pas branché ton IA : reprends l'étape 3 |
 | Une mission ne se coche pas | Relis la preuve : elle dit ce qui manque. Ouvre « Je bloque : un indice » |
 | L'IA répond qu'elle n'a pas le droit | C'est voulu : elle gagnera ce droit à une mission suivante |
-| « Managed service port … is already in use » | Ferme complètement l'application (fenêtre et barre des tâches), attends 10 secondes, relance. Si ça persiste, redémarre l'ordinateur |
+| « Managed service port … is already in use » | Normalement l'application se répare toute seule (compte jusqu'à 30 secondes au lancement). Sinon : ferme complètement l'application (fenêtre et barre des tâches), attends 10 secondes, relance ; si ça persiste, redémarre l'ordinateur |
 | La dictée ne démarre pas | Autorise le micro dans Windows (*Paramètres > Confidentialité > Microphone*). Le micro peut mettre quelques secondes à s'ouvrir |
 | La première dictée ou lecture de scan est très lente | Normal : le modèle se télécharge la première fois (internet), puis il reste sur ton ordinateur |
 | Un modèle local met plusieurs minutes à répondre | Normal sans carte graphique. Préfère ChatGPT ou une API |

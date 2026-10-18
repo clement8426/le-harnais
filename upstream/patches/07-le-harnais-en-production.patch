@@ -113,30 +113,61 @@ index 0000000..1b285c2
 +  process.env.LE_HARNAIS_BASH_INIT ??= path.join(ressources, "shell", "integration.sh").replaceAll("\\", "/")
 +}
 diff --git a/packages/desktop/src/main/service/background-service.ts b/packages/desktop/src/main/service/background-service.ts
-index 2d156b2..7eff150 100644
+index 2d156b2..915fc72 100644
 --- a/packages/desktop/src/main/service/background-service.ts
 +++ b/packages/desktop/src/main/service/background-service.ts
-@@ -65,7 +65,19 @@ const connect = Effect.fn("BackgroundService.connect")(function* (mode: "initial
+@@ -1,3 +1,4 @@
++import { execFile } from "node:child_process"
+ import { app } from "electron"
+ import { Context, Effect, FileSystem, Layer, Path } from "effect"
+ import { BackgroundServiceState } from "./background-service-state"
+@@ -65,7 +66,22 @@ const connect = Effect.fn("BackgroundService.connect")(function* (mode: "initial
    const early = mode === "initial" && !isolated ? yield* Effect.promise(sidecarProbe) : undefined
  
    if (early) yield* Effect.sync(() => void ensure().catch(() => undefined))
 -  const service = early ?? (yield* Effect.tryPromise(ensure))
-+  // Le Harnais : un service lent à répondre (Windows analyse les fichiers qu'on vient de copier) passe pour absent,
-+  // et son port occupé fait échouer le démarrage d'un second. On réessaie alors d'adopter le service existant.
++  // Le Harnais : un service lent à répondre (Windows analyse les fichiers qu'on vient de copier, ou l'ordinateur sort de
++  // veille) passe pour absent, et son port occupé fait échouer le démarrage d'un second. On réessaie d'abord de le
++  // reprendre ; s'il ne répond toujours pas, c'est un service oublié d'un lancement précédent : on l'arrête et on repart.
 +  const adopter = () =>
 +    ensure().catch(async (error: unknown) => {
 +      if (!String(error).includes("already in use")) throw error
-+      for (let essai = 0; essai < 20; essai++) {
++      for (let essai = 0; essai < 4; essai++) {
 +        await new Promise((fini) => setTimeout(fini, 3000))
 +        const trouve = await client.Service.discover({ version }).catch(() => undefined)
 +        if (trouve) return trouve
 +      }
-+      throw error
++      const port = /port (\d+)/.exec(String(error))?.[1]
++      if (!port || !(await arreterServiceOublie(port))) throw error
++      return ensure()
 +    })
 +  const service = early ?? (yield* Effect.tryPromise(adopter))
  
    if (service.auth?.type !== "basic") throw new Error("V2 CLI background service did not provide authentication")
    const url = new URL(service.url)
+@@ -91,6 +107,22 @@ const connect = Effect.fn("BackgroundService.connect")(function* (mode: "initial
+   return ready
+ })
+ 
++// Arrête le processus qui écoute sur ce port, seulement s'il vient du dossier de données du Harnais (jamais le service
++// d'un autre OpenCode). Renvoie vrai si un processus a été arrêté. Windows seulement pour l'instant.
++function arreterServiceOublie(port: string) {
++  if (process.platform !== "win32" || !/^\d+$/.test(port)) return Promise.resolve(false)
++  const dossier = app.getPath("userData").replaceAll("'", "''")
++  const commande = [
++    `$c = Get-NetTCPConnection -LocalPort ${port} -State Listen -ErrorAction SilentlyContinue | Select-Object -First 1`,
++    `if ($c) { $p = Get-Process -Id $c.OwningProcess -ErrorAction SilentlyContinue; if ($p -and $p.Path -like '${dossier}\\*') { Stop-Process -Id $p.Id -Force; 'arrete' } }`,
++  ].join("; ")
++  return new Promise<boolean>((fini) =>
++    execFile("powershell.exe", ["-NoProfile", "-NonInteractive", "-Command", commande], { windowsHide: true, timeout: 15_000 }, (_erreur, sortie) =>
++      fini(String(sortie).includes("arrete")),
++    ),
++  )
++}
++
+ function endpoint(url: string | undefined) {
+   if (!url || !URL.canParse(url)) return {}
+   const parsed = new URL(url)
 diff --git a/packages/desktop/src/renderer/index.html b/packages/desktop/src/renderer/index.html
 index b7c429f..bd71d2c 100644
 --- a/packages/desktop/src/renderer/index.html
